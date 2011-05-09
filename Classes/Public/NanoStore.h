@@ -344,7 +344,11 @@
  While several attempts have been made to make the documentation easy to read and understand, it's far from perfect. If you find that the documentation is
  incomplete, incorrect or needs some clarification, please file a bug. I'll appreciate it and correct it as soon as possible:
  
+ - NanoStore Documentation: http://dl.dropbox.com/u/2601212/NanoStore%202.0/html/index.html
  - NanoStore Bug Tracker: https://github.com/tciuro/NanoStore/issues
- - NanoStore Developer List: http://groups.google.com/group/nanostore-dev
  - Twitter: http://twitter.com/nanostoredev
+ 
+ @section officialsourcerepo_sec Official Source Repository
+ The official repository for NanoStore is hosted on GitHub: https://github.com/tciuro/NanoStore
+ 
  */
