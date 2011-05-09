@@ -109,7 +109,7 @@ There are three basic operations that NanoStore can perform with a NanoObject:
 * Update an existing object in the document store
 * Remove it from the document store
 
-To add an object, instantiate a `NanoObject`, populate it and add it to the document store.
+To add an object, instantiate a `NSFNanoObject`, populate it and add it to the document store.
 
 ### Example:
 
@@ -198,7 +198,7 @@ While `NSFNanoStore` provides some convenience methods to obtain standard object
 
 (*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to another method, such as NSFNanoStore `-(BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError` method.
 
-## Example: finding all objects with the attribute 'LastName' and value 'Doe'.
+## Example: finding all objects with the attribute 'LastName' and value 'Doe'
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -209,7 +209,7 @@ While `NSFNanoStore` provides some convenience methods to obtain standard object
     // Returns a dictionary with the UUID of the object (key) and the NanoObject (value).
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
 
-## Example: removing all objects with the attribute 'LastName' and value 'Doe'.
+## Example: removing all objects with the attribute 'LastName' and value 'Doe'
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -228,9 +228,9 @@ While `NSFNanoStore` provides some convenience methods to obtain standard object
        NSLog(@"An error has occurred while removing the matching objects. Reason: %@", [outError localizedDescription]);
     }
 
-Another cool feature is the possibility to invoke aggregated functions (count, avg, min, max and total) on the search results. Using the search snippet above, calculating the average salary of all people with last name equal to 'Doe' is very easy.
+## Example: calculating the average salary of all objects with the attribute 'LastName' and value 'Doe'
 
-## Example: calculating the average salary of all objects with the attribute 'LastName' and value 'Doe'.
+Another cool feature is the possibility to invoke aggregated functions (count, avg, min, max and total) on the search results. Using the search snippet above, calculating the average salary of all people with last name equal to 'Doe' is very easy.
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -244,7 +244,7 @@ Another cool feature is the possibility to invoke aggregated functions (count, a
 
 NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's `saveInterval` property.
 
-Example:
+## Example:
 
     // Instantiate and open a NanoStore
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
@@ -270,12 +270,9 @@ There are two quick ways to find answers: reading the documentation and browsing
 
 While several attempts have been made to make the documentation easy to read and understand, it's far from perfect. If you find that the documentation is incomplete, incorrect or needs some clarification, please file a bug. I'll appreciate it and correct it as soon as possible:
 
-NanoStore Bug Tracker: https://github.com/tciuro/NanoStore/issues
-
-Other ways to be in touch:
-
-NanoStore Developer List: http://groups.google.com/group/nanostore-dev
-Twitter: http://twitter.com/nanostoredev
+* NanoStore Bug Tracker: https://github.com/tciuro/NanoStore/issues
+* NanoStore Developer List: http://groups.google.com/group/nanostore-dev
+* Twitter: http://twitter.com/nanostoredev
 
 # Official Source Repository
 
