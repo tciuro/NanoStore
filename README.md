@@ -18,11 +18,10 @@ Relational databases tend to have a rich understanding of the structure of your 
 * Full index support, inner-objects, embedded arrays and dictionaries
 * Convenience methods to access, manipulate and maintain SQLite databases
 * Full SQLite access available
-* How does it work?
 
-The basic unit of data in NanoStore is called `NanoObject`. A `NanoObject` is any object which conforms to the `NSFNanoObjectProtocol` protocol.
+# How does it work?
 
-# Structure of a NanoObject object
+The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the `NSFNanoObjectProtocol` protocol.
 
 At its core, a `NanoObject` is nothing more than a wrapper around two properties:
 
