@@ -344,12 +344,7 @@
  While several attempts have been made to make the documentation easy to read and understand, it's far from perfect. If you find that the documentation is
  incomplete, incorrect or needs some clarification, please file a bug. I'll appreciate it and correct it as soon as possible:
  
- - NanoStore Bug Tracker: http://code.google.com/p/nanostore/issues/list
- 
- Other ways to be in touch:
+ - NanoStore Bug Tracker: https://github.com/tciuro/NanoStore/issues
  - NanoStore Developer List: http://groups.google.com/group/nanostore-dev
  - Twitter: http://twitter.com/nanostoredev
-
- @section officialsource_sec Official Source Repository
- The official repository for NanoStore is hosted on Google Code: http://code.google.com/p/nanostore/
  */
