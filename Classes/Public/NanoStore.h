@@ -64,8 +64,6 @@
  
  The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the NSFNanoObjectProtocol protocol.
  
- <b>Structure of a NanoObject object</b>
- 
  At its core, a NanoObject is nothing more than a wrapper around two properties:
  
  - A dictionary which contains the metadata (provided by the developer)
