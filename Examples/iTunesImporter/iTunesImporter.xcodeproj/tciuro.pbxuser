@@ -1,0 +1,256 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 74CACA5D12E3787100D98931 /* iTunesImporter */;
+		activeTarget = 8DD76F960486AA7600D96B5E /* iTunesImporter */;
+		addToTargets = (
+			8DD76F960486AA7600D96B5E /* iTunesImporter */,
+		);
+		breakpoints = (
+			7401411312F7418300F204CF /* NSFNanoStore.m:621 */,
+		);
+		codeSenseManager = 74CACA6512E3788F00D98931 /* Code sense */;
+		executables = (
+			74CACA5D12E3787100D98931 /* iTunesImporter */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					827,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 319272806;
+			PBXWorkspaceStateSaveDate = 319272806;
+		};
+		perUserProjectItems = {
+			743486511307B7D600653409 /* PBXTextBookmark */ = 743486511307B7D600653409 /* PBXTextBookmark */;
+			7434866A1307B80600653409 /* PBXTextBookmark */ = 7434866A1307B80600653409 /* PBXTextBookmark */;
+			7434866B1307B80600653409 /* PBXTextBookmark */ = 7434866B1307B80600653409 /* PBXTextBookmark */;
+			74E5F9D112E7DE2600818795 /* PBXTextBookmark */ = 74E5F9D112E7DE2600818795 /* PBXTextBookmark */;
+			74FB595812E3C77C0070E4D0 /* PBXTextBookmark */ = 74FB595812E3C77C0070E4D0 /* PBXTextBookmark */;
+			74FB595912E3C77C0070E4D0 /* PBXTextBookmark */ = 74FB595912E3C77C0070E4D0 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 74CACA6412E3788F00D98931 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	08FB7796FE84155DC02AAC07 /* iTunesImporter.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {754, 1372}}";
+			sepNavSelRange = "{1490, 0}";
+			sepNavVisRange = "{1158, 1197}";
+		};
+	};
+	7401411312F7418300F204CF /* NSFNanoStore.m:621 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 74FB58F312E3C1B60070E4D0 /* NSFNanoStore.m */;
+		functionName = "-_initializePreparedStatements";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 621;
+		location = iTunesImporter;
+		modificationTime = 318194059.266837;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	743486511307B7D600653409 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 74FB58F312E3C1B60070E4D0 /* NSFNanoStore.m */;
+		name = "NSFNanoStore.m: 32";
+		rLen = 29;
+		rLoc = 1731;
+		rType = 0;
+		vrLen = 2334;
+		vrLoc = 919;
+	};
+	7434866A1307B80600653409 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* iTunesImporter.m */;
+		name = "iTunesImporter.m: 46";
+		rLen = 0;
+		rLoc = 1490;
+		rType = 0;
+		vrLen = 1197;
+		vrLoc = 1158;
+	};
+	7434866B1307B80600653409 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* iTunesImporter.m */;
+		name = "iTunesImporter.m: 46";
+		rLen = 0;
+		rLoc = 1490;
+		rType = 0;
+		vrLen = 2050;
+		vrLoc = 1107;
+	};
+	74CACA5D12E3787100D98931 /* iTunesImporter */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = iTunesImporter;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	74CACA6412E3788F00D98931 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	74CACA6512E3788F00D98931 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	74E5F9D112E7DE2600818795 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 74FB58E912E3C1B60070E4D0 /* NSFNanoGlobals.h */;
+		name = "NSFNanoGlobals.h: 91";
+		rLen = 27;
+		rLoc = 5046;
+		rType = 0;
+		vrLen = 2183;
+		vrLoc = 3878;
+	};
+	74FB58D512E3C1B60070E4D0 /* NSFNanoEngine.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {810, 25984}}";
+			sepNavSelRange = "{7787, 0}";
+			sepNavVisRange = "{7627, 557}";
+		};
+	};
+	74FB58DD12E3C1B60070E4D0 /* NSFNanoGlobals_Private.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1017, 1330}}";
+			sepNavSelRange = "{2141, 7}";
+			sepNavVisRange = "{1697, 1345}";
+		};
+	};
+	74FB58E912E3C1B60070E4D0 /* NSFNanoGlobals.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1258, 4438}}";
+			sepNavSelRange = "{5046, 27}";
+			sepNavVisRange = "{3878, 2183}";
+		};
+	};
+	74FB58EA12E3C1B60070E4D0 /* NSFNanoGlobals.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1017, 1918}}";
+			sepNavSelRange = "{1680, 15}";
+			sepNavVisRange = "{46, 2233}";
+		};
+	};
+	74FB58EC12E3C1B60070E4D0 /* NSFNanoObject.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1237, 2492}}";
+			sepNavSelRange = "{4768, 0}";
+			sepNavVisRange = "{1672, 910}";
+		};
+	};
+	74FB58F012E3C1B60070E4D0 /* NSFNanoSearch.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1867, 4802}}";
+			sepNavSelRange = "{4750, 0}";
+			sepNavVisRange = "{4238, 1584}";
+		};
+	};
+	74FB58F112E3C1B60070E4D0 /* NSFNanoSearch.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1440, 12936}}";
+			sepNavSelRange = "{5473, 112}";
+			sepNavVisRange = "{4349, 1601}";
+		};
+	};
+	74FB58F212E3C1B60070E4D0 /* NSFNanoStore.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1356, 6454}}";
+			sepNavSelRange = "{4655, 55}";
+			sepNavVisRange = "{3211, 2831}";
+		};
+	};
+	74FB58F312E3C1B60070E4D0 /* NSFNanoStore.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1017, 18536}}";
+			sepNavSelRange = "{1731, 29}";
+			sepNavVisRange = "{919, 2334}";
+			sepNavWindowFrame = "{{81, 0}, {1729, 1178}}";
+		};
+	};
+	74FB595812E3C77C0070E4D0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 74FB58DD12E3C1B60070E4D0 /* NSFNanoGlobals_Private.h */;
+		name = "NSFNanoGlobals_Private.h: 56";
+		rLen = 7;
+		rLoc = 2141;
+		rType = 0;
+		vrLen = 1345;
+		vrLoc = 1697;
+	};
+	74FB595912E3C77C0070E4D0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 74FB58EA12E3C1B60070E4D0 /* NSFNanoGlobals.m */;
+		name = "NSFNanoGlobals.m: 31";
+		rLen = 15;
+		rLoc = 1680;
+		rType = 0;
+		vrLen = 2233;
+		vrLoc = 46;
+	};
+	8DD76F960486AA7600D96B5E /* iTunesImporter */ = {
+		activeExec = 0;
+		executables = (
+			74CACA5D12E3787100D98931 /* iTunesImporter */,
+		);
+	};
+}
