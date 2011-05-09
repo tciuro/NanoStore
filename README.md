@@ -20,11 +20,11 @@ Relational databases tend to have a rich understanding of the structure of your 
 * Full SQLite access available
 * How does it work?
 
-The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the NSFNanoObjectProtocol protocol.
+The basic unit of data in NanoStore is called `NanoObject`. A `NanoObject` is any object which conforms to the `NSFNanoObjectProtocol` protocol.
 
 # Structure of a NanoObject object
 
-At its core, a NanoObject is nothing more than a wrapper around two properties:
+At its core, a `NanoObject` is nothing more than a wrapper around two properties:
 
 * A dictionary which contains the metadata (provided by the developer)
 * A key (UUID) that identifies the object (provided by NanoStore)
@@ -42,33 +42,33 @@ The dictionary must be serializable, which means that only the following data ty
 
 To save and retrieve objects from the document store, NanoStore moves the data around by encapsulating it in NanoObjects. In order to store the objects in NanoStore the developer has three options:
 
-* Use the NSFNanoObject class directly
-* Expand your custom classes by inheriting from NSFNanoObject
-* Expand your custom classes by implementing the NSFNanoObjectProtocol protocol
+* Use the `NSFNanoObject` class directly
+* Expand your custom classes by inheriting from `NSFNanoObject`
+* Expand your custom classes by implementing the `NSFNanoObjectProtocol` protocol
 
 Regardless of the route you decide to take, NanoStore will be able to store and retrieve objects from the document store seamlessly. The beauty of this system is that NanoStore returns the object as it was stored, that is, instantiating an object of the class that was originally stored.
 
 *Note:
 If the document store is opened by another application that doesn't implement the object that was stored, NanoStore will instantiate a NSFNanoObject instead, thus allowing the app to retrieve the data seamlessly. If the object is then updated by this application, the original class name will be honored.*
 
-Example:
+## Example:
 
 * App A stores an object of class Car.
-* App B retrieves the object, but since it doesn't know anything about the class Car, NanoStore returns a NSFNanoObject.
-* App B updates the object, perhaps adding a timestamp or additional information. NanoStore saves it as a Car, not as a NSFNanoObject.
+* App B retrieves the object, but since it doesn't know anything about the class Car, NanoStore returns a `NSFNanoObject`.
+* App B updates the object, perhaps adding a timestamp or additional information. NanoStore saves it as a Car, not as a `NSFNanoObject`.
 * App A retrieves the updated object as a Car object, in exactly the same format as it was originally stored.
 
 # Types of Document Stores
 
-There are three types of document stores available in NanoStore: in-memory, temporary and file-based. These document stores are defined by the NSFNanoStoreType type:
+There are three types of document stores available in NanoStore: in-memory, temporary and file-based. These document stores are defined by the `NSFNanoStoreType` type:
 
-* NSFMemoryStoreType: create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM.
-* NSFTemporaryStoreType: create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
-* NSFPersistentStoreType:create a persistent backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
+* `NSFMemoryStoreType`: create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM.
+* `NSFTemporaryStoreType`: create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
+* `NSFPersistentStoreType`:create a persistent backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
 
 Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's `+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError` method.
 
-### Example:
+## Example:
 
     // Instantiate an in-memory document store and open it. The path parameter is unused.
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
@@ -109,7 +109,7 @@ There are three basic operations that NanoStore can perform with a NanoObject:
 * Update an existing object in the document store
 * Remove it from the document store
 
-To add an object, instantiate a NanoObject, populate it and add it to the document store.
+To add an object, instantiate a `NanoObject`, populate it and add it to the document store.
 
 ### Example:
 
@@ -130,7 +130,7 @@ To add an object, instantiate a NanoObject, populate it and add it to the docume
     // Close the document store
     [nanoStore closeWithError:nil];
 
-Alternatively, you can instantiate a NanoObject providing a dictionary via `+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary`. NanoStore will assign a UUID automatically when the NanoObject is instantiated. This means that requesting the key from the NanoObject will return a valid UUID. The same holds true for objects that inherit from NSFNanoObject. However, classes that implement the NSFNanoObjectProtocol protocol should make sure they return a valid key via `- (NSString *)nanoObjectKey`.
+Alternatively, you can instantiate a NanoObject providing a dictionary via `+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary`. NanoStore will assign a UUID automatically when the NanoObject is instantiated. This means that requesting the key from the NanoObject will return a valid UUID. The same holds true for objects that inherit from `NSFNanoObject`. However, classes that implement the `NSFNanoObjectProtocol` protocol should make sure they return a valid key via `- (NSString *)nanoObjectKey`.
 
 **Warning:
 If an attempt is made to add or remove an object without a valid key, an exception of type NSFNanoObjectBehaviorException will be raised.
@@ -182,15 +182,15 @@ Example:
 
 Most database solutions force the developer to think in a two-dimensional space (rows and columns), forcing the developer to plan the schema ahead of time. This situation is not ideal because in most cases schema refinements could be required, oftentimes impacting the code as well.
 
-NanoStore goes beyond that allowing the developer to store objects in their natural form. These objects must conform to the NSFNanoObjectProtocol protocol, providing NanoStore with the NSDictionary that will be stored. By using a dictionary data can be inspected very quickly, and it also allows the structure to be defined in a hierarchical fashion as well, due to the fact that it includes support for nested collections (of type NSDictionary and NSArray.) Each inner-object is indexed automatically, thus allowing to quickly find objects which contain a specific key and/or value.
+NanoStore goes beyond that allowing the developer to store objects in their natural form. These objects must conform to the `NSFNanoObjectProtocol` protocol, providing NanoStore with the NSDictionary that will be stored. By using a dictionary data can be inspected very quickly, and it also allows the structure to be defined in a hierarchical fashion as well, due to the fact that it includes support for nested collections (of type NSDictionary and NSArray.) Each inner-object is indexed automatically, thus allowing to quickly find objects which contain a specific key and/or value.
 
-By default, NanoStore allows objects to be stored without any sense of relationship to other objects. This simple format, while powerful, is limited because the developer has to keep track of the relationships among objects. Some applications may need to relate objects, some of them perhaps of different nature or class type. This is exactly what NanoBag (represented by the NSFNanoBag class) does: it allows any object conforming to the NSFNanoObjectProtocol protocol to be added to the bag. By saving the bag with one single call, the new and/or modified are taken care of seamlessly.
+By default, NanoStore allows objects to be stored without any sense of relationship to other objects. This simple format, while powerful, is limited because the developer has to keep track of the relationships among objects. Some applications may need to relate objects, some of them perhaps of different nature or class type. This is exactly what NanoBag (represented by the `NSFNanoBag` class) does: it allows any object conforming to the `NSFNanoObjectProtocol` protocol to be added to the bag. By saving the bag with one single call, the new and/or modified are taken care of seamlessly.
 
-The NSFNanoBag API is rich, allowing the developer to add, remove, reload and undo its changes, deflate it (thus saving memory) and inflate it whenever it's required. In addition, it provides methods to obtain all bags, specific bags matching some keys, and bags containing a specific object (see NSFNanoStore for more information).
+The `NSFNanoBag` API is rich, allowing the developer to add, remove, reload and undo its changes, deflate it (thus saving memory) and inflate it whenever it's required. In addition, it provides methods to obtain all bags, specific bags matching some keys, and bags containing a specific object (see `NSFNanoStore` for more information).
 
 # Where are my objects?
 
-While NSFNanoStore provides some convenience methods to obtain standard objects such as bags, the bulk of the search mechanism is handled by NSFNanoSearch. The steps involved to perform a search are quite simple:
+While `NSFNanoStore` provides some convenience methods to obtain standard objects such as bags, the bulk of the search mechanism is handled by `NSFNanoSearch`. The steps involved to perform a search are quite simple:
 
 1. Instantiate a search object
 2. Configure the search via its accessors
@@ -198,7 +198,7 @@ While NSFNanoStore provides some convenience methods to obtain standard objects 
 
 (*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to another method, such as NSFNanoStore `-(BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError` method.
 
-Example: finding all objects with the attribute 'LastName' and value 'Doe'.
+## Example: finding all objects with the attribute 'LastName' and value 'Doe'.
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -209,7 +209,7 @@ Example: finding all objects with the attribute 'LastName' and value 'Doe'.
     // Returns a dictionary with the UUID of the object (key) and the NanoObject (value).
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
 
-Example: removing all objects with the attribute 'LastName' and value 'Doe'.
+## Example: removing all objects with the attribute 'LastName' and value 'Doe'.
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -230,7 +230,7 @@ Example: removing all objects with the attribute 'LastName' and value 'Doe'.
 
 Another cool feature is the possibility to invoke aggregated functions (count, avg, min, max and total) on the search results. Using the search snippet above, calculating the average salary of all people with last name equal to 'Doe' is very easy.
 
-Example: calculating the average salary of all objects with the attribute 'LastName' and value 'Doe'.
+## Example: calculating the average salary of all objects with the attribute 'LastName' and value 'Doe'.
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -242,7 +242,7 @@ Example: calculating the average salary of all objects with the attribute 'LastN
 
 # Performance Tips
 
-NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's saveInterval property.
+NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's `saveInterval` property.
 
 Example:
 
@@ -270,7 +270,8 @@ There are two quick ways to find answers: reading the documentation and browsing
 
 While several attempts have been made to make the documentation easy to read and understand, it's far from perfect. If you find that the documentation is incomplete, incorrect or needs some clarification, please file a bug. I'll appreciate it and correct it as soon as possible:
 
-NanoStore Bug Tracker: http://code.google.com/p/nanostore/issues/list
+NanoStore Bug Tracker: https://github.com/tciuro/NanoStore/issues
+
 Other ways to be in touch:
 
 NanoStore Developer List: http://groups.google.com/group/nanostore-dev
@@ -278,4 +279,4 @@ Twitter: http://twitter.com/nanostoredev
 
 # Official Source Repository
 
-The official repository for NanoStore is hosted on Google Code: http://code.google.com/p/nanostore/
+The official repository for NanoStore is hosted on Google Code: https://github.com/tciuro/NanoStore
