@@ -106,9 +106,13 @@
 
  There are three types of document stores available in NanoStore: in-memory, temporary and file-based. These document stores are defined by the \link NSFGlobals::NSFNanoStoreType NSFNanoStoreType \endlink type:
  
- - <i>NSFMemoryStoreType</i>: create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM.
- - <i>NSFTemporaryStoreType</i>: create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
- - <i>NSFPersistentStoreType</i>:create a persistant backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
+ - NSFMemoryStoreType: create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM (*).
+ - NSFTemporaryStoreType: create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
+ - NSFPersistentStoreType:create a persistant backing store on disk. Slower, uses less RAM than NSFMemoryStoreType (*).
+ 
+ @note
+ Until the limit set by NSFNanoEngine's \link NSFNanoEngine::cacheSize - (NSUInteger)cacheSize \endlink has been reached, memory usage would be the same for in-memory store and on-disk store. When the size
+ of the store grows beyond \link NSFNanoEngine::cacheSize - (NSUInteger)cacheSize \endlink in-memory stores start to consume more memory than on-disk ones, because it has nowhere to push pages out of the cache.
  
  Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError \endlink method.
  
