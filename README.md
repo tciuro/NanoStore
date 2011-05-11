@@ -23,7 +23,7 @@ Relational databases tend to have a rich understanding of the structure of your 
 
 The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the `NSFNanoObjectProtocol` protocol.
 
-At its core, a `NanoObject` is nothing more than a wrapper around two properties:
+At its core, a NanoObject is nothing more than a wrapper around two properties:
 
 * A dictionary which contains the metadata (provided by the developer)
 * A key (UUID) that identifies the object (provided by NanoStore)
@@ -37,7 +37,8 @@ The dictionary must be serializable, which means that only the following data ty
 * NSDate
 * NSNumber
 
-(*) The data type NSData is allowed, but it will be excluded from the indexing process.
+### Note
+	(*) The data type NSData is allowed, but it will be excluded from the indexing process.
 
 To save and retrieve objects from the document store, NanoStore moves the data around by encapsulating it in NanoObjects. In order to store the objects in NanoStore the developer has three options:
 
@@ -47,33 +48,44 @@ To save and retrieve objects from the document store, NanoStore moves the data a
 
 Regardless of the route you decide to take, NanoStore will be able to store and retrieve objects from the document store seamlessly. The beauty of this system is that NanoStore returns the object as it was stored, that is, instantiating an object of the class that was originally stored.
 
-*Note:
-If the document store is opened by another application that doesn't implement the object that was stored, NanoStore will instantiate a NSFNanoObject instead, thus allowing the app to retrieve the data seamlessly. If the object is then updated by this application, the original class name will be honored.*
+### Note
+	If the document store is opened by another application that doesn't implement the object that was stored, NanoStore
+	will instantiate a NSFNanoObject instead, thus allowing the app to retrieve the data seamlessly. If the object is then
+	updated by this application, the original class name will be honored.
 
-### Example:
-
-* App A stores an object of class Car.
-* App B retrieves the object, but since it doesn't know anything about the class Car, NanoStore returns a `NSFNanoObject`.
-* App B updates the object, perhaps adding a timestamp or additional information. NanoStore saves it as a Car, not as a `NSFNanoObject`.
-* App A retrieves the updated object as a Car object, in exactly the same format as it was originally stored.
+### Example
+	App A stores an object of class Car.
+	App B retrieves the object, but since it doesn't know anything about the class Car, NanoStore returns a `NSFNanoObject`.
+	App B updates the object, perhaps adding a timestamp or additional information. NanoStore saves it as a Car, not as a `NSFNanoObject`.
+	App A retrieves the updated object as a Car object, in exactly the same format as it was originally stored.
 
 # Types of Document Stores
 
 There are three types of document stores available in NanoStore: in-memory, temporary and file-based. These document stores are defined by the `NSFNanoStoreType` type:
 
-* `NSFMemoryStoreType`: create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM (*).
-* `NSFTemporaryStoreType`: create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType.
-* `NSFPersistentStoreType`:create a persistent backing store on disk. Slower, uses less RAM than NSFMemoryStoreType (*).
+`NSFMemoryStoreType`
+
+    Create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM (*).
+
+`NSFTemporaryStoreType`
+
+    Create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less
+	RAM than NSFMemoryStoreType.
+	
+`NSFPersistentStoreType`
+
+	Create a persistent backing store on disk. Slower, uses less RAM than NSFMemoryStoreType (*).
 
 ### Note
-    Until the limit set by NSFNanoEngine's - (NSUInteger)cacheSize has been reached, memory usage would be the same for in-memory
-	and on-disk stores. When the size of the store grows beyond - (NSUInteger)cacheSize in-memory stores start to consume more
-	memory than on-disk ones, because it has nowhere to push pages out of the cache.
+    Until the limit set by NSFNanoEngine's - (NSUInteger)cacheSize has been reached, memory usage would be the same for
+	in-memory and on-disk stores. When the size of the store grows beyond - (NSUInteger)cacheSize in-memory stores start to
+	consume more memory than on-disk ones, because it has nowhere to push pages out of the cache.
 
-Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's `+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError` method.
+	Typically, most developers may want to create and open the document store. To do that, use the following method:
+
+	+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError
 
 ### Example
-
     // Instantiate an in-memory document store and open it. The path parameter is unused.
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
  
@@ -81,20 +93,21 @@ Typically, most developers may want to create and open the document store. To do
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFTemporaryStoreType path:nil error:nil];
  
     // Instantiate a file-based document store and open it. The path parameter must be specified.
-    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:@"~/Desktop/myDatabase.database" error:nil];
+	NSString *thePath = @"~/Desktop/myDatabase.database";
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:thePath error:nil];
 
 ### Note
-    In the case of file-based document stores, the file gets created automatically if it doesn't exist and then opened. If it
-	already exists, it gets opened and made available for use right away. There are instances where you may want to fine-tune the
-	engine. Tuning the engine has to be performed before the document store is opened. Another method is available in NSFNanoStore
-	for this purpose:
+    In the case of file-based document stores, the file gets created automatically if it doesn't exist and then opened. If
+	it already exists, it gets opened and made available for use right away. There are instances where you may want to
+	fine-tune the engine. Tuning the engine has to be performed before the document store is opened. Another method is
+	available in NSFNanoStore for this purpose:
 	
 	+ (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath.
 
 ### Example
-
     // Instantiate a file-based document store but don't open it right away. The path parameter must be specified.
-    NSFNanoStore *nanoStore = [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:@"~/Desktop/myDatabase.database" error:nil];
+	NSString *thePath = @"~/Desktop/myDatabase.database";
+    NSFNanoStore *nanoStore = [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:thePath error:nil];
     
     // Obtain the engine
     NSFNanoEngine *nanoStoreEngine = [nanoStore nanoStoreEngine];
@@ -120,7 +133,6 @@ There are three basic operations that NanoStore can perform with a NanoObject:
 To add an object, instantiate a `NSFNanoObject`, populate it and add it to the document store.
 
 ### Example
-
     // Instantiate a NanoStore and open it
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     
@@ -138,15 +150,20 @@ To add an object, instantiate a `NSFNanoObject`, populate it and add it to the d
     // Close the document store
     [nanoStore closeWithError:nil];
 
-Alternatively, you can instantiate a NanoObject providing a dictionary via `+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary`. NanoStore will assign a UUID automatically when the NanoObject is instantiated. This means that requesting the key from the NanoObject will return a valid UUID. The same holds true for objects that inherit from `NSFNanoObject`. However, classes that implement the `NSFNanoObjectProtocol` protocol should make sure they return a valid key via `- (NSString *)nanoObjectKey`.
+Alternatively, you can instantiate a NanoObject providing a dictionary via:
+
+	+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary
+
+NanoStore will assign a UUID automatically when the NanoObject is instantiated. This means that requesting the key from the NanoObject will return a valid UUID. The same holds true for objects that inherit from `NSFNanoObject`. However, classes that implement the `NSFNanoObjectProtocol` protocol should make sure they return a valid key via:
+
+	- (NSString *)nanoObjectKey
 
 ### Warning
-    If an attempt is made to add or remove an object without a valid key, an exception of type NSFNanoObjectBehaviorException will
-	be raised. To update an object, simply modify the object and add it to the document store. NanoStore will replace the existing
-	object with the one being added.
+    If an attempt is made to add or remove an object without a valid key, an exception of type NSFNanoObjectBehaviorException
+	will be raised. To update an object, simply modify the object and add it to the document store. NanoStore will replace
+	the existing object with the one being added.
 
 ### Example
-
     // Instantiate and open a NanoStore
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     
@@ -165,12 +182,11 @@ Alternatively, you can instantiate a NanoObject providing a dictionary via `+ (N
 
 To remove an object, there are several options available. The most common methods are found in NSFNanoStore:
 
-* - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError
-* - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError
-* - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError
+	- (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError
+	- (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError
+	- (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError
 
 ### Example
-
     // Instantiate and open a NanoStore
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     
@@ -205,7 +221,11 @@ While `NSFNanoStore` provides some convenience methods to obtain standard object
 2. Configure the search via its accessors
 3. Obtain the results specifying whether objects or keys should be returned (*)
 
-(*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to another method, such as NSFNanoStore `-(BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError` method.
+### Note
+	(*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to
+	another method, such as the following method in NSFNanoStore:
+	
+	-(BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError
 
 ### Example: finding all objects with the attribute 'LastName' and value 'Doe'
 
@@ -267,18 +287,18 @@ NanoStore by defaults saves every object to disk one by one. To speed up inserts
     [nanoStore saveStoreAndReturnError:nil];
 
 ### Note
-	If you set the saveInterval value to anything other one, keep in mind that some objects may still be left unsaved after being
-	added or modified. To make sure they're saved properly, call:
+	If you set the saveInterval value to anything other one, keep in mind that some objects may still be left unsaved after
+	being added or modified. To make sure they're saved properly, call:
 	
 	- (BOOL)saveStoreAndReturnError:(out NSError **)outError .
 	
-	Choosing a good saveInterval value is more art than science. While testing NanoStore using a medium-sized dictionary (iTunes'
-	MP3 dictionary) setting saveInterval to 1000 resulted in the best performance. You may want to test with different numbers and
-	fine-tune it for your data set.
+	Choosing a good saveInterval value is more art than science. While testing NanoStore using a medium-sized dictionary
+	(iTunes MP3 dictionary) setting saveInterval to 1000 resulted in the best performance. You may want to test with
+	different numbers and fine-tune it for your data set.
 
 ### Warning
-	Setting saveInterval to a large number could result in decreased performance because SQLite's would have to spend more time
-	reading the journal file and writing the changes to the store.
+	Setting saveInterval to a large number could result in decreased performance because SQLite's would have to spend more
+	time reading the journal file and writing the changes to the store.
 
 # Need more help?
 
