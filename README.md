@@ -55,8 +55,8 @@ Regardless of the route you decide to take, NanoStore will be able to store and 
 
 ### Example
 	App A stores an object of class Car.
-	App B retrieves the object, but since it doesn't know anything about the class Car, NanoStore returns a `NSFNanoObject`.
-	App B updates the object, perhaps adding a timestamp or additional information. NanoStore saves it as a Car, not as a `NSFNanoObject`.
+	App B retrieves the object, but since it doesn't know anything about the class Car, NanoStore returns a NSFNanoObject.
+	App B updates the object, with additional information. NanoStore saves it as a Car, not as a NSFNanoObject.
 	App A retrieves the updated object as a Car object, in exactly the same format as it was originally stored.
 
 # Types of Document Stores
@@ -83,7 +83,7 @@ There are three types of document stores available in NanoStore: in-memory, temp
 
 	Typically, most developers may want to create and open the document store. To do that, use the following method:
 
-	+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError
+	+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)aType path:(NSString *)aPath error:(out NSError **)outError
 
 ### Example
     // Instantiate an in-memory document store and open it. The path parameter is unused.
