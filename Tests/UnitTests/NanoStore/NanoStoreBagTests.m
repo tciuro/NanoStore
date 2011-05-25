@@ -65,6 +65,91 @@
     STAssertTrue ((YES == hasUnsavedChanges) && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
 
+- (void)testBagSettingNameManually
+{
+    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:nil];
+    STAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
+    bag.name = @"FooBar";
+    STAssertTrue (YES == [bag hasUnsavedChanges], @"Expected the bag to have unsaved changes.");
+    STAssertTrue (nil != [bag name], @"Expected the name of the bag to be hold a value.");
+    bag.name = nil;
+    STAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
+}
+
+- (void)testBagWithNameEmptyBag
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bagWithName:@"FooBar" andObjects:nil];
+    STAssertTrue (nil != [bag name], @"Expected the name of the bag to be nil.");
+    
+    NSError *error = nil;
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:&error];
+    STAssertTrue (nil == error, @"Saving bag A should have succeded.");
+    
+    NSFNanoBag *retrievedBag = [nanoStore bagWithName:bag.name];
+    STAssertTrue ([[retrievedBag name]isEqualToString:bag.name] == YES, @"We should have found the bag by name.");
+    
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testBagWithNameBagNotEmpty
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSArray *objects = [NSArray arrayWithObjects:
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        nil];
+    NSFNanoBag *bag = [NSFNanoBag bagWithName:@"FooBar" andObjects:objects];
+    STAssertTrue (nil != [bag name], @"Expected the name of the bag to be nil.");
+    
+    NSError *error = nil;
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:&error];
+    STAssertTrue (nil == error, @"Saving bag A should have succeded.");
+    
+    NSFNanoBag *retrievedBag = [nanoStore bagWithName:bag.name];
+    STAssertTrue ([[retrievedBag name]isEqualToString:bag.name] == YES, @"We should have found the bag by name.");
+    
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testBagForUniqueName
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSError *error = nil;
+    NSFNanoBag *bagA = [NSFNanoBag bag];
+    bagA.name = @"FooBar A";
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bagA] error:&error];
+    STAssertTrue (nil == error, @"Saving bag A should have succeded.");
+
+    NSFNanoBag *bagB = [NSFNanoBag bag];
+    bagB.name = @"FooBar A";
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bagB] error:&error];
+    STAssertTrue (nil != error, @"Saving bag B should have failed because a bag with the same name exists.");
+    
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testBagSearchByName
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    bag.name = @"FooBar";
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+
+    NSFNanoBag *retrievedBag = [nanoStore bagWithName:bag.name];
+    STAssertTrue ([[retrievedBag name]isEqualToString:bag.name] == YES, @"We should have found the bag by name.");
+
+    [nanoStore closeWithError:nil];
+}
+
 - (void)testBagInitEmptyListOfObjects
 {
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:[NSArray array]];

@@ -67,7 +67,7 @@
 
 #import <sqlite3.h>
 
-@class NSFNanoEngine, NSFNanoResult;
+@class NSFNanoEngine, NSFNanoResult, NSFNanoBag;
 
 @interface NSFNanoStore : NSObject
 {
@@ -301,6 +301,14 @@
  */
 
 - (NSArray *)bags;
+
+/** * Retrieves the bag associated with the specified name.
+ * @param theName the name of the bag.
+ * @returns The bag that matches the specified name, nil otherwise.
+ * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
+ */
+
+- (NSFNanoBag *)bagWithName:(NSString *)theName;
 
 /** * Returns a new array containing the bags found in the document store matching the specified list of keys.
  * @param theKeys the list of bag keys.

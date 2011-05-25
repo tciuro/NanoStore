@@ -193,9 +193,26 @@
     NSMutableArray *nonBagObjects = [[NSMutableArray alloc]initWithCapacity:[someObjects count]];
     
     for (id object in someObjects) {
-        // If it's a bag, process it first by gathering
+        // If it's a bag, make sure the name is unique
         if (YES == [object isKindOfClass:[NSFNanoBag class]]) {
-            // If it's not dirty, there's no need to save...
+            NSFNanoBag *bag = (NSFNanoBag *)object;
+            NSString *bagName = bag.name;
+            if (bagName.length > 0) {
+                NSFNanoBag *bagWithSameName = [self bagWithName:bagName];
+                if (nil != bagWithSameName) {
+                    if (nil != outError) {
+                        *outError = [NSError errorWithDomain:NSFDomainKey
+                                                        code:NSFNanoStoreErrorKey
+                                                    userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: a bag named '%@' already exists.", [self class], _cmd, bagName]
+                                                                                         forKey:NSLocalizedFailureReasonErrorKey]];
+                        
+                        return NO;
+                    }
+                }
+            }
+            
+            
+            // If it's a bag, process it first by gathering. If it's not dirty, there's no need to save...
             if (YES == [object hasUnsavedChanges]) {
                 NSError *error = nil;
                 
@@ -346,6 +363,18 @@
     
     return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil]allValues];
 
+}
+
+- (NSFNanoBag *)bagWithName:(NSString *)theName
+{
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
+    
+    search.attribute = NSF_Private_NSFNanoBag_Name;
+    search.match = NSFEqualTo;
+    search.value = theName;
+    
+    // Returns a dictionary with the UUID of the object (key) and the NanoObject (value).
+    return [[[search searchObjectsWithReturnType:NSFReturnObjects error:nil]allObjects]lastObject];
 }
 
 - (NSArray *)bagsWithKeysInArray:(NSArray *)someKeys

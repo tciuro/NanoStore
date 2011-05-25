@@ -69,6 +69,7 @@
 @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
 {
     NSFNanoStore            *store;
+    NSString                *name;
     NSString                *key;
     BOOL                    hasUnsavedChanges;
     
@@ -82,6 +83,8 @@
 
 /** * The store where the bag is located.  */
 @property (assign, readonly) NSFNanoStore *store;
+/** * The name of the bag.  */
+@property (copy, readwrite) NSString *name;
 /** * The UUID of the bag.  */
 @property (copy, readonly) NSString *key;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
@@ -112,13 +115,30 @@
 
 + (NSFNanoBag *)bagWithObjects:(NSArray *)theObjects;
 
-/** * Initializes a newly allocated bag adding to it the objects contained in the given array.
+/** * Creates and returns an empty bag with the specified name
+ * @param theName the name of the bag. Can be nil.
+ * @return An empty bag upon success, nil otherwise.
+ */
+
++ bagWithName:(NSString *)theName;
+
+/** * Creates and returns a bag with the specified name adding to it the objects contained in the given array.
+ * @param theName the name of the bag. Can be nil.
+ * @param theObjects an array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
+ * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
+ * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
+ */
+
++ bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
+
+/** * Initializes a newly allocated bag with the specified name adding to it the objects contained in the given array.
+ * @param theName the name of the bag. Can be nil.
  * @param theObjects an array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
  * @see \link bagWithObjects: + (NSFNanoBag*)bagWithObjects:(NSArray *)theObjects \endlink
  */
 
-- (id)initBagWithObjects:(NSArray *)theObjects;
+- (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects;
 
 //@}
 

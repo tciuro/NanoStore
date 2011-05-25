@@ -75,6 +75,7 @@ extern NSString * const NSF_Private_NSFKeys_NSFPlist;
 extern NSString * const NSF_Private_NSFValues_NSFKey;
 extern NSString * const NSF_Private_NSFValues_NSFAttribute;
 extern NSString * const NSF_Private_NSFValues_NSFValue;
+extern NSString * const NSF_Private_NSFNanoBag_Name;
 extern NSString * const NSF_Private_NSFNanoBag_NSFKey;
 extern NSString * const NSF_Private_NSFNanoBag_NSFObjectKeys;
 extern NSString * const NSF_Private_ToDeleteTableKey;

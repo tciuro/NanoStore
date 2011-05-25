@@ -107,6 +107,7 @@ NSString * const NSF_Private_NSFKeys_NSFPlist           = @"NSFKeys.NSFPlist";
 NSString * const NSF_Private_NSFValues_NSFKey           = @"NSFValues.NSFKey";
 NSString * const NSF_Private_NSFValues_NSFAttribute     = @"NSFValues.NSFAttribute";
 NSString * const NSF_Private_NSFValues_NSFValue         = @"NSFValues.NSFValue";
+NSString * const NSF_Private_NSFNanoBag_Name            = @"NSF_Private_NSFNanoBag_Name";
 NSString * const NSF_Private_NSFNanoBag_NSFKey          = @"NSF_Private_NSFNanoBag_NSFKey";
 NSString * const NSF_Private_NSFNanoBag_NSFObjectKeys   = @"NSF_Private_NSFNanoBag_NSFObjectKeys";
 NSString * const NSF_Private_ToDeleteTableKey           = @"NSF_Private_ToDeleteTableKey";

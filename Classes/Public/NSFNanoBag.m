@@ -33,19 +33,29 @@
 
 @implementation NSFNanoBag
 
-@synthesize store, key, savedObjects, unsavedObjects, removedObjects, hasUnsavedChanges;
+@synthesize store, name, key, savedObjects, unsavedObjects, removedObjects, hasUnsavedChanges;
 
 + (NSFNanoBag*)bag
 {
-    return [[[self alloc]initBagWithObjects:[NSArray array]]autorelease];
+    return [[[self alloc]initBagWithName:nil andObjects:[NSArray array]]autorelease];
 }
 
 + (NSFNanoBag*)bagWithObjects:(NSArray *)someObjects
 {
-    return [[[self alloc]initBagWithObjects:someObjects]autorelease];
+    return [[[self alloc]initBagWithName:nil andObjects:someObjects]autorelease];
 }
 
-- (id)initBagWithObjects:(NSArray *)someObjects
++ bagWithName:(NSString *)theName
+{
+    return [[[self alloc]initBagWithName:theName andObjects:[NSArray array]]autorelease];
+}
+
++ bagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
+{
+    return [[[self alloc]initBagWithName:theName andObjects:someObjects]autorelease];
+}
+
+- (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
 {
     if ((self = [self init])) {
         NSError *outError = nil;
@@ -53,6 +63,7 @@
             NSLog(@"%@", [NSString stringWithFormat:@"*** -[%@ %s]: a problem occurred while initializing the NanoBag, leaving it in an inconsistent state. Reason: %@.", [self class], _cmd, [outError localizedDescription]]);
         }
         
+        name = [theName copy];
         hasUnsavedChanges = YES;
     }
     
@@ -78,6 +89,7 @@
 - (id)initFromDictionaryRepresentation:(NSDictionary *)dictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
 {
     if ((self = [self init])) {
+        name = [[dictionary objectForKey:NSF_Private_NSFNanoBag_Name]copy];
         store = aStore;
         key = [aKey retain];
         savedObjects = [NSMutableDictionary new];
@@ -102,6 +114,7 @@
 
 - (void)dealloc
 {
+    [name release];
     [key release];
     [savedObjects release];
     [unsavedObjects release];
@@ -113,12 +126,27 @@
 
 #pragma mark -
 
+- (void)setName:(NSString *)aName
+{
+    if (aName != name) {
+        [name release];
+        name = [aName copy];
+        hasUnsavedChanges = YES;
+    }
+}
+
+- (NSString *)name
+{
+    return [[name retain]autorelease];
+}
+
 - (NSString*)description
 {
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
     [description appendString:[NSString stringWithFormat:@"NanoBag address      : 0x%x\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Name                 : %@\n", (nil != name) ? name : @"<untitled>"]];
     [description appendString:[NSString stringWithFormat:@"Document store       : 0x%x\n", store]];
     [description appendString:[NSString stringWithFormat:@"Has unsaved changes? : %@\n", (hasUnsavedChanges ? @"YES" : @"NO")]];
     [description appendString:[NSString stringWithFormat:@"Saved objects        : %ld key/value pairs\n", [savedObjects count]]];
@@ -169,6 +197,10 @@
     }
     
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    
+    if (nil != name) {
+        [info setObject:name forKey:NSF_Private_NSFNanoBag_Name];
+    }
     [info setObject:self.key forKey:NSF_Private_NSFNanoBag_NSFKey];
     [info setObject:objectKeys forKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
