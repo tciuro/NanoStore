@@ -274,6 +274,12 @@
 
 //@{
 
+/** * Returns the number of objects currently in the bag.
+ * @return The number of objects currently in the bag.
+ */
+
+- (NSUInteger)count;
+
 /** * Compares the receiving bag to another bag.
  * @param otherNanoBag is a bag.
  * @return YES if the contents of otherNanoBag are equal to the contents of the receiving bag, otherwise NO.

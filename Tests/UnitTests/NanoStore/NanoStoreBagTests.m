@@ -214,6 +214,71 @@
     STAssertTrue ((nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2) && (nil != info) && ([info count] == 2), @"Expected the bag to provide a properly formatted dictionary.");
 }
 
+- (void)testBagEmptyCount
+{
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    STAssertTrue (0 == bag.count, @"Expected the bag to have zero elements.");
+}
+
+- (void)testBagCountTwo
+{
+    NSArray *objects = [NSArray arrayWithObjects:
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
+    STAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
+}
+
+- (void)testBagCountTwoDeleteOne
+{
+    NSFNanoObject *objectOne = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSArray *objects = [NSArray arrayWithObjects:
+                        objectOne,
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
+    STAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
+    [bag removeObject:objectOne];
+    STAssertTrue (1 == bag.count, @"Expected the bag to have one element.");
+}
+
+- (void)testBagCountAfterSaveEmpty
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bagWithName:@"CountTest"];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    NSFNanoBag *receivedBag = [nanoStore bagWithName:@"CountTest"];
+    STAssertTrue (0 == receivedBag.count, @"Expected the bag to have zero elements.");
+
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testBagCountAfterSaveTwoObjectsDeleteOne
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *objectOne = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSArray *objects = [NSArray arrayWithObjects:
+                        objectOne,
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bagWithName:@"CountTest" andObjects:objects];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    NSFNanoBag *receivedBag = [nanoStore bagWithName:@"CountTest"];
+    STAssertTrue (2 == receivedBag.count, @"Expected the bag to have two elements.");
+    [receivedBag removeObject:objectOne];
+    STAssertTrue (1 == receivedBag.count, @"Expected the bag to have one element.");
+    
+    [nanoStore closeWithError:nil];
+}
+
 #pragma mark -
 
 - (void)testBagAddNilObject

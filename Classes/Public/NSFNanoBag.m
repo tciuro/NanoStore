@@ -140,6 +140,11 @@
     return [[name retain]autorelease];
 }
 
+- (NSUInteger)count
+{
+    return savedObjects.count + unsavedObjects.count;
+}
+
 - (NSString*)description
 {
     NSMutableString *description = [NSMutableString string];
