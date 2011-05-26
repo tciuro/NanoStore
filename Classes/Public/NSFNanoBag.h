@@ -175,9 +175,19 @@
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
  * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
 - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject;
+
+/** * Empties the bag of all its elements.
+ * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
+ * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
+ * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
+ * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
+ */
+
+- (void)removeAllObjects;
 
 /** * Removes the list of objects from the bag.
  * @param theObjects the list of objects to be removed from the bag.
@@ -185,6 +195,7 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
  * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
 - (void)removeObjectsInArray:(NSArray *)theObjects;
@@ -195,6 +206,7 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
 - (void)removeObjectWithKey:(NSString *)theObjectKey;
@@ -205,6 +217,7 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
 - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys;

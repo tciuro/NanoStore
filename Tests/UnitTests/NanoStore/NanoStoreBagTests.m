@@ -279,6 +279,19 @@
     [nanoStore closeWithError:nil];
 }
 
+- (void)testBagCountRemoveAll
+{
+    NSArray *objects = [NSArray arrayWithObjects:
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
+    STAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
+    [bag removeAllObjects];
+    STAssertTrue (0 == bag.count, @"Expected the bag to have zero elements.");
+}
+
 #pragma mark -
 
 - (void)testBagAddNilObject

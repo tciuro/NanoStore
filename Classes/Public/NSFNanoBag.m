@@ -280,6 +280,26 @@
     [self removeObjectWithKey:[(id)object nanoObjectKey]];
 }
 
+- (void)removeAllObjects
+{
+    NSMutableDictionary *objects = [[NSMutableDictionary alloc]initWithCapacity:(savedObjects.count + removedObjects.count)];
+    
+    // Save the object and its key
+    for (id object in savedObjects) {
+        [objects setObject:object forKey:[object performSelector:@selector(key)]];
+    }
+    
+    // Save the previously removed objects (if any)
+    [objects addEntriesFromDictionary:removedObjects];
+    
+    [savedObjects removeAllObjects];
+    [unsavedObjects removeAllObjects];
+    [removedObjects setDictionary:objects];
+    hasUnsavedChanges = YES;
+    
+    [objects release];
+}
+
 - (void)removeObjectsInArray:(NSArray *)someObjects
 {
     for (id object in someObjects) {
