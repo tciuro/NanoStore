@@ -19,6 +19,10 @@
 		74987EEA12DB1B1A00E5D7CB /* OCUnitExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */; };
 		74987F1D12DB1B9D00E5D7CB /* Icon-Fail.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 74987F1B12DB1B9D00E5D7CB /* Icon-Fail.tiff */; };
 		74987F1E12DB1B9D00E5D7CB /* Icon-Pass.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 74987F1C12DB1B9D00E5D7CB /* Icon-Pass.tiff */; };
+		74A4EF12138E3EBD00FBC46C /* NSFNanoSortDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 74A4EF10138E3EBD00FBC46C /* NSFNanoSortDescriptor.h */; };
+		74A4EF13138E3EBD00FBC46C /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
+		74A4EF14138E3EBD00FBC46C /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
+		74A4EF1A138E47B100FBC46C /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
 		74B2098E122B280C0079E2FF /* NanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20983122B280C0079E2FF /* NanoStore.m */; };
 		74B20990122B280C0079E2FF /* NanoStoreExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */; };
 		74B20991122B280C0079E2FF /* NanoStoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */; };
@@ -84,6 +88,10 @@
 		74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCUnitExtensions.m; sourceTree = "<group>"; };
 		74987F1B12DB1B9D00E5D7CB /* Icon-Fail.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Fail.tiff"; sourceTree = "<group>"; };
 		74987F1C12DB1B9D00E5D7CB /* Icon-Pass.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Pass.tiff"; sourceTree = "<group>"; };
+		74A4EF10138E3EBD00FBC46C /* NSFNanoSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NSFNanoSortDescriptor.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NSFNanoSortDescriptor.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		74A4EF18138E47B100FBC46C /* NanoStoreSortTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreSortTests.h; sourceTree = "<group>"; };
+		74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NanoStoreSortTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		74B20983122B280C0079E2FF /* NanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStore.m; sourceTree = "<group>"; };
 		74B20984122B280C0079E2FF /* NanoStoreTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreTester.h; sourceTree = "<group>"; };
 		74B20985122B280C0079E2FF /* NanoStoreTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreTester.m; sourceTree = "<group>"; };
@@ -107,7 +115,7 @@
 		74B63DDC129F25C400B3B2A7 /* NSFNanoResult_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoResult_Private.h; sourceTree = "<group>"; };
 		74B63DDD129F25C400B3B2A7 /* NSFNanoSearch_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoSearch_Private.h; sourceTree = "<group>"; };
 		74B63DDE129F25C400B3B2A7 /* NSFNanoStore_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoStore_Private.h; sourceTree = "<group>"; };
-		74B63DE0129F25C400B3B2A7 /* NanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStore.h; sourceTree = "<group>"; };
+		74B63DE0129F25C400B3B2A7 /* NanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NanoStore.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		74B63DE1129F25C400B3B2A7 /* NSFNanoBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoBag.h; sourceTree = "<group>"; };
 		74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoBag.m; sourceTree = "<group>"; };
 		74B63DE3129F25C400B3B2A7 /* NSFNanoExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoExpression.h; sourceTree = "<group>"; };
@@ -271,6 +279,8 @@
 				745D1E93128B9DCA00D4653D /* NanoStoreResultTests.m */,
 				74B2098A122B280C0079E2FF /* NanoStoreSearchTests.h */,
 				74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */,
+				74A4EF18138E47B100FBC46C /* NanoStoreSortTests.h */,
+				74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */,
 				74B2098C122B280C0079E2FF /* NanoStoreTests.h */,
 				74B2098D122B280C0079E2FF /* NanoStoreTests.m */,
 			);
@@ -332,6 +342,8 @@
 				74B63DEB129F25C400B3B2A7 /* NSFNanoPredicate.m */,
 				74B63DEC129F25C400B3B2A7 /* NSFNanoSearch.h */,
 				74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */,
+				74A4EF10138E3EBD00FBC46C /* NSFNanoSortDescriptor.h */,
+				74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */,
 				74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */,
 				74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */,
 			);
@@ -366,6 +378,7 @@
 				74B63E08129F25C400B3B2A7 /* NSFNanoPredicate.h in Headers */,
 				74B63E0A129F25C400B3B2A7 /* NSFNanoSearch.h in Headers */,
 				74B63E0C129F25C400B3B2A7 /* NSFNanoStore.h in Headers */,
+				74A4EF12138E3EBD00FBC46C /* NSFNanoSortDescriptor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +509,8 @@
 				74B63E15129F25C400B3B2A7 /* NSFNanoSearch.m in Sources */,
 				74B63E16129F25C400B3B2A7 /* NSFNanoStore.m in Sources */,
 				74987EEA12DB1B1A00E5D7CB /* OCUnitExtensions.m in Sources */,
+				74A4EF14138E3EBD00FBC46C /* NSFNanoSortDescriptor.m in Sources */,
+				74A4EF1A138E47B100FBC46C /* NanoStoreSortTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +527,7 @@
 				74B63E09129F25C400B3B2A7 /* NSFNanoPredicate.m in Sources */,
 				74B63E0B129F25C400B3B2A7 /* NSFNanoSearch.m in Sources */,
 				74B63E0D129F25C400B3B2A7 /* NSFNanoStore.m in Sources */,
+				74A4EF13138E3EBD00FBC46C /* NSFNanoSortDescriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

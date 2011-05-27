@@ -163,7 +163,8 @@
     NSFMatchType        match;
     NSArray             *expressions;
     BOOL                groupValues;
-
+    NSArray             *sort;
+    
     /** \cond */
     @protected
     NSFReturnType       returnedObjectType;
@@ -189,6 +190,8 @@
 @property (assign, readwrite) BOOL groupValues;
 /** * The SQL statement used for searching. Set when executeSQL: is invoked. */
 @property (copy, readonly) NSString *sql;
+/** * The sort holds an array of one or more sort descriptors of type \link NSFNanoSortDescriptor NSFNanoSortDescriptor \endlink. */
+@property (retain, readwrite) NSArray *sort;
 
 /** @name Creating and Initializing a Search
  */
@@ -221,7 +224,8 @@
 /** * Performs a search using the values of the properties.
  * @param theReturnType the type of object to be returned. Can be \link Globals::NSFReturnObjects NSFReturnObjects \endlink or \link Globals::NSFReturnKeys NSFReturnKeys \endlink.
  * @param outError is used if an error occurs. May be NULL.
- * @return If theReturnType is \link Globals::NSFReturnObjects NSFReturnObjects \endlink, a dictionary is returned. Otherwise, an array is returned.
+ * @return An array is returned if: 1) the sort has been specified or 2) the return type is \link Globals::NSFReturnKeys NSFReturnKeys \endlink. Otherwise, a dictionary is returned.
+ * @note The sort descriptor will be ignored when returning requesting NSFReturnKeys.
  * @see \link searchObjectsAdded:date:returnType:error: - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
  */
 
@@ -233,6 +237,7 @@
  * @param theReturnType the type of object to be returned. Can be \link Globals::NSFReturnObjects NSFReturnObjects \endlink or \link Globals::NSFReturnKeys NSFReturnKeys \endlink.
  * @param outError is used if an error occurs. May be NULL.
  * @return If theReturnType is \link Globals::NSFReturnObjects NSFReturnObjects \endlink, a dictionary is returned. Otherwise, an array is returned.
+ * @note The sort descriptor will be ignored when returning requesting NSFReturnKeys.
  * @see \link searchObjectsWithReturnType:error: - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
  */
 
@@ -254,6 +259,7 @@
  * NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
  * NSNumber *result = [search aggregateOperation:NSFAverage onAttribute:@"SomeNumber"];
  @endcode
+ @note The sort descriptor will be ignored when executing aggregate operations.
  */
 
 - (NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute;
@@ -290,6 +296,7 @@
  * // The query will be rewritten as @"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys"
  * NSDictionary *results = [search executeSQL:@"SELECT foo, bar FROM NSFKeys" returnType:NSFReturnObjects error:nil];
  * @endcode
+ * @note The sort descriptor will be ignored when executing custom SQL statements.
  * @see \link executeSQL: - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement \endlink
  */
 
@@ -324,6 +331,7 @@
  * NSFNanoResult *result = [search executeSQL:@"SELECT COUNT(*) FROM NSFKEYS"];
  * @endcode
  * @see \link executeSQL:returnType:error: - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
+ * @note The sort descriptor will be ignored when executing custom SQL statements.
  */
 
 - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement;
@@ -377,6 +385,8 @@
  *      - groupValues         = NO;
  *      - attributesReturned  = nil;
  *      - type returned       = NSFReturnObjects;
+ *      - sql                 = nil;
+ *      - sort                = nil;
  *
  * @note
  * When invoked, it sets the values of search to its initial state. Resetting and performing a search will select all records.

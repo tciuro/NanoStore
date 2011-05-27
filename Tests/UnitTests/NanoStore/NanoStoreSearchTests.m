@@ -11,6 +11,7 @@
 #import "NanoStoreSearchTests.h"
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoObject_Private.h"
+#import "NSFNanoSortDescriptor.h"
 
 @implementation NanoStoreSearchTests
 

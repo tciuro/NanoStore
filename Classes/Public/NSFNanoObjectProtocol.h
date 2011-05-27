@@ -77,4 +77,43 @@
 
 - (NSString *)nanoObjectKey;
 
+/** * Returns a reference to the object holding the private data or information that will be used for sorting.
+ * Most custom objects will return <i>self</i>, as is the case for NSFNanoBag. Since we can sort a bag by <i>name</i>, <i>key</i> or <i>hasUnsavedChanges</i>,
+ * NanoStore requires a hint to find the attribute. This hint is the root object, which KVC uses to perform the sort. Taking NSFNanoBag as an example:
+ @code
+ @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
+ {
+    NSFNanoStore            *store;
+    NSString                *name;
+    NSString                *key;
+    BOOL                    hasUnsavedChanges;
+}
+ @endcode
+ * The implementation of <i>rootObject</i> would look like so:
+ @code
+ - (id)rootObject
+ {
+    return self;
+ }
+ @endcode
+ * Other objects may point directly to the collection that holds the information. NSFNanoObject stores all its data in the <i>info</i> dictionary, so the
+ * implementation looks like this:
+ @code
+ - (id)rootObject
+ {
+    return info;
+ }
+ @endcode
+ * Assuming that <i>info</i> contains a key named <i>City</i>, we would specify a NSFNanoSortDescriptor which would sort the cities like so:
+ @code
+ NSFNanoSortDescriptor *sortedCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"City" ascending:YES];
+ @endcode
+ * If we had returned <i>self</i> as the root object, the sort descriptor would have to be written like so:
+ @code
+ NSFNanoSortDescriptor *sortedCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"info.City" ascending:YES];
+ @endcode
+ */
+
+- (id)rootObject;
+
 @end

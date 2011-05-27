@@ -122,7 +122,10 @@
     [super dealloc];
 }
 
-/** \endcond */
+- (id)rootObject
+{
+    return self;
+}
 
 #pragma mark -
 
@@ -134,6 +137,8 @@
         hasUnsavedChanges = YES;
     }
 }
+
+/** \endcond */
 
 - (NSString *)name
 {

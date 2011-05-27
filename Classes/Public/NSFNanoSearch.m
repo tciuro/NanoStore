@@ -38,6 +38,7 @@
 @synthesize expressions;
 @synthesize groupValues;
 @synthesize sql;
+@synthesize sort;
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -122,15 +123,15 @@
 
 - (void)reset
 {
-    self.attributesToBeReturned = nil;
-    self.key = nil;
-    self.attribute = nil;
-    self.value = nil;
-    self.match = NSFContains;
-    self.groupValues = NO;
-    
+    [attributesToBeReturned release]; attributesToBeReturned= nil;
+    [key release]; key = nil;
+    [attribute release]; attribute = nil;
+    [value release]; value = nil;
+    match = NSFContains;
+    groupValues = NO;
     [sql release]; sql = nil;
-    
+    [sort release]; sort = nil;
+
     [self _setObjectTypeReturned:NSFReturnObjects];
 }
 
@@ -148,6 +149,25 @@
     
     if (NSFReturnKeys == theReturnType) {
         results = [results allKeys];
+    } else {
+        if (nil != sort) {
+            NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
+            
+            for (NSFNanoSortDescriptor *descriptor in sort) {
+                NSString *targetKeyPath = [[NSString alloc]initWithFormat:@"rootObject.%@", descriptor.attribute];
+                NSSortDescriptor *cocoaSort = [[NSSortDescriptor alloc]initWithKey:targetKeyPath ascending:descriptor.isAscending];
+                [cocoaSortDescriptors addObject:cocoaSort];
+                [cocoaSort release];
+                [targetKeyPath release];
+            }
+            
+            NSArray *sortedArray = [[results allValues]sortedArrayUsingDescriptors:cocoaSortDescriptors];
+            
+            // Cleanup
+            [cocoaSortDescriptors release];
+            
+            return sortedArray;
+        }
     }
     
     return results;
@@ -247,7 +267,7 @@
     NSMutableDictionary *searchResults = [NSMutableDictionary dictionary];
     
     NSString *aSQLQuery = sql;
-    
+
     if (nil != aSQLQuery) {
         // We are going to check whether the user has specified the proper columns based on the search type selected.
         // This is to avoid crashing, since the user shouldn't have to know which columns are involved on each type

@@ -175,6 +175,11 @@
     return self.key;
 }
 
+- (id)rootObject
+{
+    return info;
+}
+
 #pragma mark -
 
 - (void)_setOriginalClassString:(NSString *)theClassString

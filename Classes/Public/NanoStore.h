@@ -31,6 +31,7 @@
 #import "NSFNanoPredicate.h"
 #import "NSFNanoExpression.h"
 #import "NSFNanoSearch.h"
+#import "NSFNanoSortDescriptor.h"
 #import "NSFNanoResult.h"
 #import "NSFNanoBag.h"
 #import "NSFNanoEngine.h"
