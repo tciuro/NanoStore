@@ -29,6 +29,8 @@
 #import "NanoStore_Private.h"
 #import "NSFNanoStore_Private.h"
 
+#include <stdlib.h>
+
 @implementation NSFNanoStore
 
 @synthesize nanoStoreEngine;
@@ -205,6 +207,9 @@
                                                         code:NSFNanoStoreErrorKey
                                                     userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: a bag named '%@' already exists.", [self class], _cmd, bagName]
                                                                                          forKey:NSLocalizedFailureReasonErrorKey]];
+                        
+                        // Cleanup before we return
+                        [nonBagObjects release];
                         
                         return NO;
                     }
@@ -1227,7 +1232,7 @@
                           @"Tito", @"FirstName",
                           @"Ciuro", @"LastName",
                           countriesInfo, @"Countries",
-                          [NSNumber numberWithInt:(rand() % 32767) + 1.0], @"SomeNumber",
+                          [NSNumber numberWithUnsignedInt:(arc4random() % 32767) + 1], @"SomeNumber",
                           @"To be decided", @"Rating",
                           nil, nil];
     
