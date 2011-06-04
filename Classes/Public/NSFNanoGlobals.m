@@ -67,6 +67,26 @@ NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
     return value;
 }
 
+NSString * NSFStringFromMatchType (NSFMatchType aMatchType)
+{
+    NSString *value = nil;
+    
+    switch (aMatchType) {
+        case NSFEqualTo: value = @"Equal to"; break;
+        case NSFBeginsWith: value = @"Begins with"; break;
+        case NSFContains: value = @"Contains"; break;
+        case NSFEndsWith: value = @"Ends with"; break;
+        case NSFInsensitiveEqualTo: value = @"Equal to (case insensitive)"; break;
+        case NSFInsensitiveBeginsWith: value = @"Begins with (case insensitive)"; break;
+        case NSFInsensitiveContains: value = @"Contains (case insensitive)"; break;
+        case NSFInsensitiveEndsWith: value = @"Ends with (case insensitive)"; break;
+        case NSFGreaterThan: value = @"Greater than"; break;
+        case NSFLessThan: value = @"Less than"; break;
+    }
+    
+    return value;
+}
+
 void _NSFLog (NSString  *format, ...)
 {
     if (__NSFDebugIsOn) {

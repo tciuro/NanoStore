@@ -75,6 +75,25 @@
     return sql;
 }
 
+- (NSString*)description
+{
+    NSMutableString *description = [NSMutableString string];
+    
+    [description appendString:@"\n"];
+    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : 0x%x\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Document store            : 0x%x\n", nanoStore]];
+    [description appendString:[NSString stringWithFormat:@"Attributes to be returned : %@\n", (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All")]];
+    [description appendString:[NSString stringWithFormat:@"Key                       : %@\n", key]];
+    [description appendString:[NSString stringWithFormat:@"Attribute                 : %@\n", attribute]];
+    [description appendString:[NSString stringWithFormat:@"Value                     : %@\n", value]];
+    [description appendString:[NSString stringWithFormat:@"Match                     : %@\n", NSFStringFromMatchType(match)]];
+    [description appendString:[NSString stringWithFormat:@"Expressions               : %@\n", expressions]];
+    [description appendString:[NSString stringWithFormat:@"Group Values?             : %@\n", (groupValues ? @"YES" : @"NO")]];
+    [description appendString:[NSString stringWithFormat:@"Sort                      : %@\n", sort]];
+    
+    return description;
+}
+
 #pragma mark -
 
 - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError

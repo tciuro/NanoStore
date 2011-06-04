@@ -53,6 +53,8 @@
  
  */
 
+extern NSString * NSFStringFromMatchType (NSFMatchType aMatchType);
+
 extern void _NSFLog (NSString  *format, ...);
 
 extern NSString * const NSFVersionKey;
