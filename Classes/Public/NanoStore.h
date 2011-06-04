@@ -61,7 +61,46 @@
  - Convenience methods to access, manipulate and maintain SQLite databases
  - Full SQLite access available
  
- @section howitworks_sec How does it work?
+ @section installation_sec Installation
+ 
+ Building NanoStore is very easy. Just follow these steps:
+ 
+ - 1) Download NanoStore
+ - 2) Open the NanoStore.xcodeproj file
+ - 3) Select Universal > My Mac 64-bit or 32-bit from the Scheme popup
+ - 4) Build (Command-B)
+ 
+ Now you should have a new <i>Distribution</i> directory within the NanoStore project directory which contains the Universal static library (armv6/armv7/i386)
+ as well as the header files. To add it in your project, do the following:
+ 
+ - 1) Drag the Distribution directory to the Project Navigator panel
+ - 2) Include #import "NanoStore.h" in your code
+ 
+ @details <b>Example:</b>
+ @code
+ import "NanoStore.h"
+ 
+ @implementation MyDemoAppDelegate
+ 
+ - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+ {
+     // Override point for customization after application launch.
+     // Instantiate a NanoStore and open it
+ 
+     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+     ...
+ @endcode
+ 
+ @note
+ If you want to add a dependency between your project and NanoStore so that it gets automatically rebuilt when
+ you update NanoStore, do the following (we'll assume your app is called "MyDemoApp"):
+ 
+ - 1) Select the MyDemoApp project in the Project Navigator
+ - 2) Select the MyDemoApp target
+ - 3) Expand the Target Dependencies box
+ - 4) Click "+" and add NanoStore
+ 
+ @section howitworks_sec How does NanoStore work?
  
  The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the NSFNanoObjectProtocol protocol.
  

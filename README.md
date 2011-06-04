@@ -19,7 +19,44 @@ Relational databases tend to have a rich understanding of the structure of your 
 * Convenience methods to access, manipulate and maintain SQLite databases
 * Full SQLite access available
 
-# How does it work?
+# Installation
+
+Building NanoStore is very easy. Just follow these steps:
+
+    1) Download NanoStore
+    2) Open the NanoStore.xcodeproj file
+    3) Select Universal > My Mac 64-bit or 32-bit from the Scheme popup
+    4) Build (Command-B)
+
+Now you should have a new ***Distribution*** directory within the NanoStore project directory which contains the Universal static library (armv6/armv7/i386) as well as the header files. To add it in your project, do the following:
+
+    1) Drag the Distribution directory to the Project Navigator panel
+    2) Include #import "NanoStore.h" in your code
+
+Example:
+
+    import "NanoStore.h"
+    
+    @implementation MyDemoAppDelegate
+    
+    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+    {
+	    // Override point for customization after application launch.
+        // Instantiate a NanoStore and open it
+        
+        NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+        ...
+
+### Note
+	If you want to add a dependency between your project and NanoStore so that it gets automatically rebuilt when
+	you update NanoStore, do the following (we'll assume your app is called "MyDemoApp"):
+
+	1) Select the MyDemoApp project in the Project Navigator
+	2) Select the MyDemoApp target
+	3) Expand the Target Dependencies box
+	4) Click "+" and add NanoStore
+					
+# How does NanoStore work?
 
 The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the `NSFNanoObjectProtocol` protocol.
 
@@ -268,6 +305,51 @@ Another cool feature is the possibility to invoke aggregated functions (count, a
     search.value = @"Doe";
     
     float averageSalary = [[search aggregateOperation:NSFAverage onAttribute:@"Salary"]floatValue];
+
+# Sorting objects
+
+Combining search and sort is an extremely easy operation. There are two simple parts:
+
+1. Preparing your classes for sorting
+2. Setup a search operation and set its sort descriptors
+
+### Preparing your classes for sorting
+
+Since NanoStore relies on KVC to perform the sorts, a hint of the location where the data lives within the object is required. Since KVC uses a key path to reach the element being sorted, we need a way to "point" to it. Most custom classes will return *self*, as is the case for NSFNanoBag. *Self* in this case represents the top level, the location where the variables *name*, *key* and *hasUnsavedChanges* are located:
+
+    @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
+    {
+        NSFNanoStore            *store;
+        NSString                *name;
+        NSString                *key;
+        BOOL                    hasUnsavedChanges;
+    }
+
+If we wanted to retrieve all the existing bags sorted by name we would do the following:
+
+    // Assume NanoStore has been opened elsewhere
+    NSFNanoStore *nanoStore = ...;
+    
+    // Prepare the search
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"LastName";
+    search.match = NSFEqualTo;
+    search.value = @"Doe";
+
+    // Prepare and set the sort descriptor
+    NSFNanoSortDescriptor *sortByName = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"name" ascending:YES];
+    search.sort = [NSArray arrayWithObject: sortByName];
+
+    // Perform the search
+    NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    // Cleanup
+    [sortByName release];
+
+    - (id)rootObject
+    {
+        return self;
+    }
 
 # Performance Tips
 
