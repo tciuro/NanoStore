@@ -79,19 +79,18 @@
 
 - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
-    // Make sure we don't have any lingering parameters that could mess with the results...
+    // Make sure we don't have any lingering parameters that could mess with the results, but keep the sort descriptor(s)
+    NSArray *savedSort = [[self sort]retain];
     [self reset];
+    self.sort = savedSort;
+    [savedSort release];
     
     [self _setObjectTypeReturned:theReturnType];
-    sql = [theSQLStatement retain];
+    sql = [theSQLStatement copy];
     
-    id results = [self _retrieveDataWithError:outError];
+    NSDictionary *results = [self _retrieveDataWithError:outError];
     
-    if (NSFReturnKeys == theReturnType) {
-        results = [results allKeys];
-    }
-    
-    return results;
+    return [self _sortResultsIfApplicable:results returnType:theReturnType];
 }
 
 - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement
@@ -147,30 +146,7 @@
     
     id results = [self _retrieveDataWithError:outError];
     
-    if (NSFReturnKeys == theReturnType) {
-        results = [results allKeys];
-    } else {
-        if (nil != sort) {
-            NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
-            
-            for (NSFNanoSortDescriptor *descriptor in sort) {
-                NSString *targetKeyPath = [[NSString alloc]initWithFormat:@"rootObject.%@", descriptor.attribute];
-                NSSortDescriptor *cocoaSort = [[NSSortDescriptor alloc]initWithKey:targetKeyPath ascending:descriptor.isAscending];
-                [cocoaSortDescriptors addObject:cocoaSort];
-                [cocoaSort release];
-                [targetKeyPath release];
-            }
-            
-            NSArray *sortedArray = [[results allValues]sortedArrayUsingDescriptors:cocoaSortDescriptors];
-            
-            // Cleanup
-            [cocoaSortDescriptors release];
-            
-            return sortedArray;
-        }
-    }
-    
-    return results;
+    return [self _sortResultsIfApplicable:results returnType:theReturnType];
 }
 
 - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
@@ -889,6 +865,34 @@
     [quotedParameters release];
     
     return quotedString;
+}
+
+- (id)_sortResultsIfApplicable:(NSDictionary *)results returnType:(NSFReturnType)theReturnType
+{
+    id theResults = results;
+    
+    if (nil != sort) {
+        NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
+        
+        for (NSFNanoSortDescriptor *descriptor in sort) {
+            NSString *targetKeyPath = [[NSString alloc]initWithFormat:@"rootObject.%@", descriptor.attribute];
+            NSSortDescriptor *cocoaSort = [[NSSortDescriptor alloc]initWithKey:targetKeyPath ascending:descriptor.isAscending];
+            [cocoaSortDescriptors addObject:cocoaSort];
+            [cocoaSort release];
+            [targetKeyPath release];
+        }
+        
+        if (NSFReturnObjects == theReturnType) {
+            theResults = [[results allValues]sortedArrayUsingDescriptors:cocoaSortDescriptors];
+        } else {
+            theResults = [results allKeys];
+        }
+        
+        // Cleanup
+        [cocoaSortDescriptors release];
+    }
+    
+    return theResults;
 }
 
 /** \endcond */

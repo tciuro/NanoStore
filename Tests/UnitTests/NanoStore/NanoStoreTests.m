@@ -653,6 +653,28 @@
     STAssertTrue ([classNames count] == 1, @"Expected to find one object of class NSFNanoBag.");
 }
 
+- (void)testObjectsOfClassNamedSorted
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bagA = [NSFNanoBag bagWithName:@"London"];
+    NSFNanoBag *bagB = [NSFNanoBag bagWithName:@"Paris"];
+    NSFNanoBag *bagC = [NSFNanoBag bagWithName:@"New York"];
+    NSFNanoBag *bagD = [NSFNanoBag bagWithName:@"San Francisco"];
+
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bagA, bagB, bagC, bagD, nil] error:nil];
+    
+    NSFNanoSortDescriptor *sortDescriptor = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"name" ascending:YES];
+    NSArray *classNames = [nanoStore objectsOfClassNamed:@"NSFNanoBag" usingSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    STAssertTrue ([classNames count] == 4, @"Expected to find four objects of class NSFNanoBag.");
+    STAssertTrue ([[[classNames objectAtIndex:0]name]isEqualToString:@"London"], @"Expected to find London in the first index.");
+    STAssertTrue ([[[classNames objectAtIndex:1]name]isEqualToString:@"New York"], @"Expected to find New York in the second index.");
+    STAssertTrue ([[[classNames objectAtIndex:2]name]isEqualToString:@"Paris"], @"Expected to find London in the third index.");
+    STAssertTrue ([[[classNames objectAtIndex:3]name]isEqualToString:@"San Francisco"], @"Expected to find London in the fourth index.");
+}
+
 - (void)testRemoveAllObjectsStore
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];    

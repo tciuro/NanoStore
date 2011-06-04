@@ -67,7 +67,7 @@
 
 #import <sqlite3.h>
 
-@class NSFNanoEngine, NSFNanoResult, NSFNanoBag;
+@class NSFNanoEngine, NSFNanoResult, NSFNanoBag, NSFNanoSortDescriptor;
 
 @interface NSFNanoStore : NSObject
 {
@@ -343,12 +343,24 @@
 
 - (NSArray *)allObjectClasses;
 
-/** * Returns a new array containing the objects in the document store which match a specific class name.
+/** * Returns an array containing the objects in the document store which match a specific class name.
+ * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
  * @returns An array of objects of the specified class name.
  * @note The classes can be NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
+ * @throws NSFUnexpectedParameterException is thrown if the class name is nil or empty.
  */
 
 - (NSArray *)objectsOfClassNamed:(NSString *)theClassName;
+
+/** * Returns a sorted array containing the objects in the document store which match a specific class name.
+ * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
+ * @param theSortDescriptors the array of descriptors used to sort the array. May be NULL.
+ * @returns An array of objects of the specified class name sorted if the sort descriptor was specified.
+ * @note The classes can be NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
+ * @throws NSFUnexpectedParameterException is thrown if the class name is nil or empty.
+ */
+
+- (NSArray *)objectsOfClassNamed:(NSString *)theClassName usingSortDescriptors:(NSArray *)theSortDescriptors;
 
 //@}
 

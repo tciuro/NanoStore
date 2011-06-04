@@ -429,6 +429,11 @@
 
 - (NSArray *)objectsOfClassNamed:(NSString *)theClassName
 {
+    return [self objectsOfClassNamed:theClassName usingSortDescriptors:nil];
+}
+
+- (NSArray *)objectsOfClassNamed:(NSString *)theClassName usingSortDescriptors:(NSArray *)theSortDescriptors
+{
     if (nil == theClassName) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
                                  reason:[NSString stringWithFormat:@"*** -[%@ %s]: the class name cannot be nil.", [self class], _cmd]
@@ -436,9 +441,11 @@
     }
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
-    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", theClassName];
+    search.sort = theSortDescriptors;
     
-    return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil]allValues];
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", theClassName];
+        
+    return [search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil];
 }
 
 #pragma mark Database Optimizations and Maintenance

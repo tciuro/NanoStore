@@ -45,6 +45,7 @@
 + (NSString *)_querySegmentForAttributeColumnWithValue:(id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(id)aValue;
 - (NSDictionary *)_dictionaryForKeyPath:(NSString *)keyPath value:(id)value;
 + (NSString *)_quoteStrings:(NSArray *)strings joiningWithDelimiter:(NSString *)delimiter;
+- (id)_sortResultsIfApplicable:(NSDictionary *)results returnType:(NSFReturnType)theReturnType;
 @end
 
 /** \endcond */
