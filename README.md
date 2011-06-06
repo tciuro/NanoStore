@@ -254,9 +254,9 @@ The `NSFNanoBag` API is rich, allowing the developer to add, remove, reload and 
 
 While `NSFNanoStore` provides some convenience methods to obtain standard objects such as bags, the bulk of the search mechanism is handled by `NSFNanoSearch`. The steps involved to perform a search are quite simple:
 
-1. Instantiate a search object
-2. Configure the search via its accessors
-3. Obtain the results specifying whether objects or keys should be returned (*)
+    1) Instantiate a search object
+    2) Configure the search via its accessors
+    3) Obtain the results specifying whether objects or keys should be returned (*)
 
 ### Note
 	(*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to
@@ -306,50 +306,61 @@ Another cool feature is the possibility to invoke aggregated functions (count, a
     
     float averageSalary = [[search aggregateOperation:NSFAverage onAttribute:@"Salary"]floatValue];
 
-# Sorting objects
+# Sorting
 
 Combining search and sort is an extremely easy operation. There are two simple parts:
 
-1. Preparing your classes for sorting
-2. Setup a search operation and set its sort descriptors
+    1) Preparing your classes for sorting
+    2) Setup a search operation and set its sort descriptors
 
 ### Preparing your classes for sorting
 
-Since NanoStore relies on KVC to perform the sorts, a hint of the location where the data lives within the object is required. Since KVC uses a key path to reach the element being sorted, we need a way to "point" to it. Most custom classes will return *self*, as is the case for NSFNanoBag. *Self* in this case represents the top level, the location where the variables *name*, *key* and *hasUnsavedChanges* are located:
-
-    @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
-    {
-        NSFNanoStore            *store;
-        NSString                *name;
-        NSString                *key;
-        BOOL                    hasUnsavedChanges;
-    }
-
-If we wanted to retrieve all the existing bags sorted by name we would do the following:
-
-    // Assume NanoStore has been opened elsewhere
-    NSFNanoStore *nanoStore = ...;
-    
-    // Prepare the search
-    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    search.attribute = @"LastName";
-    search.match = NSFEqualTo;
-    search.value = @"Doe";
-
-    // Prepare and set the sort descriptor
-    NSFNanoSortDescriptor *sortByName = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"name" ascending:YES];
-    search.sort = [NSArray arrayWithObject: sortByName];
-
-    // Perform the search
-    NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    
-    // Cleanup
-    [sortByName release];
+Since NanoStore relies on KVC to perform the sorts, a hint of the location where the data lives within the object is required. Since KVC uses a key path to reach the element being sorted, we need a way to "point" to it. Most custom classes will return *self*, as is the case for NSFNanoBag:
 
     - (id)rootObject
     {
         return self;
     }
+
+*Self* in this case represents the top level, the location where the variables *name*, *key* and *hasUnsavedChanges* are located:
+
+    @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
+    {
+        NSFNanoStore     *store;
+        NSString         *name;
+        NSString         *key;
+        BOOL             hasUnsavedChanges;
+    }
+
+Assume we have an object that represents a person and its root object is set to <i>self</i>, just as demonstrated above:
+
+    @interface Person : NSFNanoObject
+    {
+        NSString        *firstName;
+        NSString        *lastName;
+        NSString        *email;
+    }
+
+If we wanted to retrieve all the existing people with <i>firstName</i> equal to <i>John</i> sorted by <i>lastName</i> we would do the following:
+
+    // Assume NanoStore has been opened elsewhere
+    NSFNanoStore *nanoStore = ...;
+
+    // Prepare the search
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"firstName";
+    search.match = NSFEqualTo;
+    search.value = @"John";
+     
+    // Prepare and set the sort descriptor
+    NSFNanoSortDescriptor *sortByLastName = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"lastName" ascending:YES];
+    search.sort = [NSArray arrayWithObject:sortByLastName];
+    
+    // Perform the search
+    NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    // Cleanup
+    [sortByLastName release];
 
 # Performance Tips
 

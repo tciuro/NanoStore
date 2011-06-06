@@ -356,6 +356,70 @@
  float averageSalary = [[search aggregateOperation:NSFAverage onAttribute:@"Salary"]floatValue];
  @endcode
  
+ @section sorting_sec Sorting
+ 
+ Combining search and sort is an extremely easy operation. There are two simple parts:
+ 
+ - 1) Preparing your classes for sorting
+ - 2) Setup a search operation and set its sort descriptors
+ 
+ @section preparesorting_sec Preparing your classes for sorting
+ 
+ Since NanoStore relies on KVC to perform the sorts, a hint of the location where the data lives within the object is required. Since KVC uses a key path to reach the element being sorted, we need a way to "point" to it. Most custom classes will return <i>self</i>, as is the case for NSFNanoBag:
+ 
+ @code
+ - (id)rootObject
+ {
+     return self;
+ }
+ @endcode
+
+ <i>Self</i> in this case represents the top level, the location where the variables <i>name</i>, <i>key</i> and <i>hasUnsavedChanges</i> are located:
+ 
+ @code
+ @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
+ {
+      NSFNanoStore     *store;
+      NSString         *name;
+      NSString         *key;
+      BOOL             hasUnsavedChanges;
+ }
+ @endcode
+ 
+ Assume we have an object that represents a person and its root object is set to <i>self</i>, just as demonstrated above:
+ 
+ @code
+ @interface Person : NSFNanoObject
+ {
+       NSString        *firstName;
+       NSString        *lastName;
+       NSString        *email;
+ }
+ @endcode
+
+ If we wanted to retrieve all the existing people with <i>firstName</i> equal to <i>John</i> sorted by <i>lastName</i> we would do the following:
+ 
+ @code
+ // Assume NanoStore has been opened elsewhere
+ NSFNanoStore *nanoStore = ...;
+ 
+ // Prepare the search
+ NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+ search.attribute = @"firstName";
+ search.match = NSFEqualTo;
+ search.value = @"John";
+ 
+ // Prepare and set the sort descriptor
+ NSFNanoSortDescriptor *sortByLastName = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"lastName" ascending:YES];
+ search.sort = [NSArray arrayWithObject:sortByLastName];
+ 
+ // Perform the search
+ NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+ 
+ // Cleanup
+ [sortByLastName release];
+ @endcode
+
  @section performancetips_sec Performance Tips
  
  NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's \link NSFNanoStore::saveInterval saveInterval \endlink property.
