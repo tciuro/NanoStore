@@ -444,8 +444,11 @@
     search.sort = theSortDescriptors;
     
     NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", theClassName];
-        
-    return [search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil];
+    
+    if (nil == theSortDescriptors) 
+        return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil] allValues];
+    else
+        return [search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil];
 }
 
 #pragma mark Database Optimizations and Maintenance
