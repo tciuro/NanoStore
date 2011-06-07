@@ -649,7 +649,6 @@
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
     
     NSArray *classNames = [nanoStore objectsOfClassNamed:@"NSFNanoBag"];
-    
     STAssertTrue ([classNames count] == 1, @"Expected to find one object of class NSFNanoBag.");
 }
 
@@ -673,6 +672,42 @@
     STAssertTrue ([[[classNames objectAtIndex:1]name]isEqualToString:@"New York"], @"Expected to find New York in the second index.");
     STAssertTrue ([[[classNames objectAtIndex:2]name]isEqualToString:@"Paris"], @"Expected to find London in the third index.");
     STAssertTrue ([[[classNames objectAtIndex:3]name]isEqualToString:@"San Francisco"], @"Expected to find London in the fourth index.");
+}
+
+- (void)testObjectsOfClassNamedVerifyReturnType
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    
+    NSArray *classNames = [nanoStore objectsOfClassNamed:@"NSFNanoBag"];
+    STAssertTrue (YES == [classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
+}
+
+- (void)testObjectsOfClassNamedSortedVerifyReturnType
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bagA = [NSFNanoBag bagWithName:@"London"];
+    NSFNanoBag *bagB = [NSFNanoBag bagWithName:@"Paris"];
+    NSFNanoBag *bagC = [NSFNanoBag bagWithName:@"New York"];
+    NSFNanoBag *bagD = [NSFNanoBag bagWithName:@"San Francisco"];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bagA, bagB, bagC, bagD, nil] error:nil];
+    
+    NSFNanoSortDescriptor *sortDescriptor = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"name" ascending:YES];
+    NSArray *classNames = [nanoStore objectsOfClassNamed:@"NSFNanoBag" usingSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    STAssertTrue (YES == [classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
 }
 
 - (void)testRemoveAllObjectsStore
