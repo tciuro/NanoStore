@@ -260,10 +260,11 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
-    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
     
     [nanoStore closeWithError:nil];
     
+    STAssertTrue ([searchResults isKindOfClass:[NSArray class]], @"Incorrect class returned. Expected NSArray.");
     STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
@@ -280,6 +281,7 @@
     
     [nanoStore closeWithError:nil];
     
+    STAssertTrue ([searchResults isKindOfClass:[NSDictionary class]], @"Incorrect class returned. Expected NSDictionary.");
     STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
@@ -552,6 +554,38 @@
     BOOL containsErrorInfo = ([result error] != nil);
     
     STAssertTrue (containsErrorInfo == YES, @"Expected to find error information.");
+}
+
+- (void)testSearchExecuteSQLReturningKeys
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    NSArray *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnKeys error:nil];
+    
+    STAssertTrue ([result isKindOfClass:[NSArray class]], @"Incorrect class returned. Expected NSArray.");
+    STAssertTrue ([result count] == 2, @"Expected to find two objects.");
+}
+
+- (void)testSearchExecuteSQLReturningObjects
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnObjects error:nil];
+    
+    STAssertTrue ([result isKindOfClass:[NSDictionary class]], @"Incorrect class returned. Expected NSArray.");
+    STAssertTrue ([result count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchReturningObjectsOfClassNSFNanoObject
