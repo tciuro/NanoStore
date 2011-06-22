@@ -910,6 +910,10 @@
         // Cleanup
         [cocoaSortDescriptors release];
     }
+    else if (NSFReturnKeys == theReturnType)
+    {
+        theResults = [results allKeys];
+    }
     
     return theResults;
 }
