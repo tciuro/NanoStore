@@ -78,7 +78,7 @@
  
  @details <b>Example:</b>
  @code
- import "NanoStore.h"
+ #import "NanoStore.h"
  
  @implementation MyDemoAppDelegate
  

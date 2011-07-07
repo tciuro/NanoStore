@@ -35,7 +35,7 @@ Now you should have a new ***Distribution*** directory within the NanoStore proj
 
 Example:
 
-    import "NanoStore.h"
+    #import "NanoStore.h"
     
     @implementation MyDemoAppDelegate
     
