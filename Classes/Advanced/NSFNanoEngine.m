@@ -74,7 +74,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
-        path = [thePath copy];
+        path = thePath;
     }
     
     return self;
