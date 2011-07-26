@@ -671,59 +671,59 @@
     if (YES == [aValue isKindOfClass:[NSString class]]) {
         switch (match) {
             case NSFEqualTo:
-                value = [[NSString alloc]initWithFormat:@"%@ = '%@'", aColumn, aValue];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ = '%@'", aColumn, aValue];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFBeginsWith:
                 sentinelChar = [aValue characterAtIndex:[aValue length] - 1] + 1;
-                value = [[NSString alloc]initWithFormat:@"(%@ >= '%@' AND %@ < '%@%c')", aColumn, aValue, aColumn, aValue, sentinelChar];
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ >= '%@' AND %@ < '%@%c')", aColumn, aValue, aColumn, aValue, sentinelChar];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFContains:
-                value = [[NSString alloc]initWithFormat:@"%@ GLOB '*%@*'", aColumn, aValue];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ GLOB '*%@*'", aColumn, aValue];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFEndsWith:
-                value = [[NSString alloc]initWithFormat:@"%@ GLOB '*%@'", aColumn, aValue];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ GLOB '*%@'", aColumn, aValue];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFInsensitiveEqualTo:
-                value = [[NSString alloc]initWithFormat:@"upper(%@) = '%@'", aColumn, [aValue uppercaseString]];
+                value = [[NSMutableString alloc]initWithFormat:@"upper(%@) = '%@'", aColumn, [aValue uppercaseString]];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFInsensitiveBeginsWith:
                 mutatedString = [[NSMutableString alloc]initWithString:aValue];
                 mutatedStringLength = [aValue length];
-                value = [[NSString alloc]initWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1];
+                value = [[NSMutableString alloc]initWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1];
                 [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:value];
                 [value release];
-                value = [[NSString alloc]initWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", aColumn, [aValue uppercaseString], aColumn, [mutatedString uppercaseString]];
+                value = [[NSMutableString alloc]initWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", aColumn, [aValue uppercaseString], aColumn, [mutatedString uppercaseString]];
                 [segment appendString:value];
                 [value release];
                 [mutatedString release];
                 break;
             case NSFInsensitiveContains:
-                value = [[NSString alloc]initWithFormat:@"%@ LIKE '%@%@%@'", aColumn, @"%", aValue, @"%"];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ LIKE '%@%@%@'", aColumn, @"%", aValue, @"%"];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFInsensitiveEndsWith:
-                value = [[NSString alloc]initWithFormat:@"%@ LIKE '%@%@'", aColumn, @"%", aValue];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ LIKE '%@%@'", aColumn, @"%", aValue];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFGreaterThan:
-                value = [[NSString alloc]initWithFormat:@"%@ > '%@'", aColumn, aValue];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ > '%@'", aColumn, aValue];
                 [segment appendString:value];
                 [value release];
                 break;
             case NSFLessThan:
-                value = [[NSString alloc]initWithFormat:@"%@ < '%@'", aColumn, aValue];
+                value = [[NSMutableString alloc]initWithFormat:@"%@ < '%@'", aColumn, aValue];
                 [segment appendString:value];
                 [value release];
                 break;
@@ -759,60 +759,60 @@
 
     if ((YES == [aValue isKindOfClass:[NSString class]]) || (nil == aValue)) {
         if (nil == aValue) {
-            value = [[NSString alloc]initWithFormat:@"(%@ = '%@') OR (%@ GLOB '%@.*') OR (%@ GLOB '*.%@.*') OR (%@ GLOB '*.%@')", NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue];
+            value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@') OR (%@ GLOB '%@.*') OR (%@ GLOB '*.%@.*') OR (%@ GLOB '*.%@')", NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue];
             [segment appendString:value];
             [value release];
         } else {
             switch (match) {
                 case NSFEqualTo:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ = '%@') OR (%@ GLOB '%@.*' AND %@ = '%@') OR (%@ GLOB '*.%@.*' AND %@ = '%@') OR (%@ GLOB '*.%@' AND %@ = '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ = '%@') OR (%@ GLOB '%@.*' AND %@ = '%@') OR (%@ GLOB '*.%@.*' AND %@ = '%@') OR (%@ GLOB '*.%@' AND %@ = '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFBeginsWith:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '%@*') OR (%@ GLOB '%@.*' AND %@ GLOB '%@*') OR (%@ GLOB '*.%@.*' AND %@ GLOB '%@*') OR (%@ GLOB '*.%@' AND %@ GLOB '%@*')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '%@*') OR (%@ GLOB '%@.*' AND %@ GLOB '%@*') OR (%@ GLOB '*.%@.*' AND %@ GLOB '%@*') OR (%@ GLOB '*.%@' AND %@ GLOB '%@*')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFContains:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '%@') OR (%@ GLOB '%@.*' AND %@ GLOB '%@') OR (%@ GLOB '*.%@.*' AND %@ GLOB '%@') OR (%@ GLOB '*.%@' AND %@ GLOB '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '%@') OR (%@ GLOB '%@.*' AND %@ GLOB '%@') OR (%@ GLOB '*.%@.*' AND %@ GLOB '%@') OR (%@ GLOB '*.%@' AND %@ GLOB '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFEndsWith:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '*%@') OR (%@ GLOB '%@.*' AND %@ GLOB '*%@') OR (%@ GLOB '*.%@.*' AND %@ GLOB '*%@') OR (%@ GLOB '*.%@' AND %@ GLOB '*%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '*%@') OR (%@ GLOB '%@.*' AND %@ GLOB '*%@') OR (%@ GLOB '*.%@.*' AND %@ GLOB '*%@') OR (%@ GLOB '*.%@' AND %@ GLOB '*%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFInsensitiveEqualTo:
                     aValue = [aValue uppercaseString];
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) = '%@') OR (%@ GLOB '%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@' AND upper(%@) = '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) = '%@') OR (%@ GLOB '%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@' AND upper(%@) = '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFInsensitiveBeginsWith:
                     aValue = [aValue uppercaseString];
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) GLOB '%@*') OR (%@ GLOB '%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@' AND upper(%@) GLOB '%@*')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) GLOB '%@*') OR (%@ GLOB '%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@' AND upper(%@) GLOB '%@*')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFInsensitiveContains:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ LIKE '%@') OR (%@ GLOB '%@.*' AND %@ LIKE '%@') OR (%@ GLOB '*.%@.*' AND %@ LIKE '%@') OR (%@ GLOB '*.%@' AND %@ LIKE '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ LIKE '%@') OR (%@ GLOB '%@.*' AND %@ LIKE '%@') OR (%@ GLOB '*.%@.*' AND %@ LIKE '%@') OR (%@ GLOB '*.%@' AND %@ LIKE '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFInsensitiveEndsWith:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ LIKE '%%%@') OR (%@ GLOB '%@.*' AND %@ LIKE '%%%@') OR (%@ GLOB '*.%@.*' AND %@ LIKE '%%%@') OR (%@ GLOB '*.%@' AND %@ LIKE '%%%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ LIKE '%%%@') OR (%@ GLOB '%@.*' AND %@ LIKE '%%%@') OR (%@ GLOB '*.%@.*' AND %@ LIKE '%%%@') OR (%@ GLOB '*.%@' AND %@ LIKE '%%%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFGreaterThan:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ > '%@') OR (%@ GLOB '%@.*' AND %@ > '%@') OR (%@ GLOB '*.%@.*' AND %@ > '%@') OR (%@ GLOB '*.%@' AND %@ > '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ > '%@') OR (%@ GLOB '%@.*' AND %@ > '%@') OR (%@ GLOB '*.%@.*' AND %@ > '%@') OR (%@ GLOB '*.%@' AND %@ > '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
                 case NSFLessThan:
-                    value = [[NSString alloc]initWithFormat:@"(%@ = '%@' AND %@ < '%@') OR (%@ GLOB '%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@' AND %@ < '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ < '%@') OR (%@ GLOB '%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@' AND %@ < '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
                     [value release];
                     break;
