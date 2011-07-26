@@ -6,8 +6,8 @@
 //  Copyright 2010 Webbo, L.L.C. All rights reserved.
 //
 
-#import "NanoStore.h"
 #import "NanoStoreTests.h"
+#import "NanoStore.h"
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoGlobals_Private.h"
 
@@ -78,6 +78,29 @@
     [nanoStore closeWithError:nil];
     
     STAssertTrue ([filePath isEqualToString:NSFMemoryDatabase] == YES, [NSString stringWithFormat:@"Expected store file path to be '%@'.", NSFMemoryDatabase]);
+}
+
+- (void)testStoreDescriptionOutsideAutoreleasePool
+{
+    NSFNanoStore *nanoStore = nil;
+    BOOL success = YES;
+    
+    @try {
+        NSAutoreleasePool *ap = [NSAutoreleasePool new];
+        nanoStore = [[NSFNanoStore createStoreWithType:NSFPersistentStoreType path:@"foo"]retain];
+        [ap drain];
+        
+        // We should be able to obtain the description here without causing a crash...
+        [nanoStore description];
+    }
+    @catch (NSException *exception) {
+        success = NO;
+    }
+    @finally {
+        [nanoStore closeWithError:nil];
+    }
+    
+    STAssertTrue (YES == success, @"Expected the store description to be available outside the autoreleasepool.");
 }
 
 - (void)testNanoEngineProcessingModeAccessor
