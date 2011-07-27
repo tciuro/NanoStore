@@ -1184,7 +1184,7 @@
                 className = NSStringFromClass([object class]);
             }
             
-            if (NO == [self _storeDictionary:[object dictionaryRepresentation] forKey:[(id)object nanoObjectKey] forClassNamed:className usingSQLite3Statement:_storeValuesStatement error:outError]) {
+            if (NO == [self _storeDictionary:[object nanoObjectDictionaryRepresentation] forKey:[(id)object nanoObjectKey] forClassNamed:className usingSQLite3Statement:_storeValuesStatement error:outError]) {
                 [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
                                          reason:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, [*outError localizedDescription]]
                                        userInfo:nil]raise];
