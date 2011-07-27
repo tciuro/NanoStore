@@ -234,7 +234,7 @@
  * @return YES upon success, NO otherwise.
  * @note Check property hasUnsavedChanges to find out whether the bag has unsaved contents.
  * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(out NSError **)outError \endlink
- * @see link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink
+ * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink
  */
 
 - (BOOL)saveAndReturnError:(out NSError **)outError;
