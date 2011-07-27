@@ -451,6 +451,22 @@
         return [search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil];
 }
 
+- (long long)countOfObjectsOfClassNamed:(NSString *)theClassName
+{
+    if (nil == theClassName) {
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the class name cannot be nil.", [self class], _cmd]
+                               userInfo:nil]raise];
+    }
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
+    
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT count(*) FROM NSFKeys WHERE NSFObjectClass = \"%@\"", theClassName];
+    NSFNanoResult *results = [search executeSQL:theSQLStatement];
+    
+    return [[results firstValue]longLongValue];
+}
+
 #pragma mark Database Optimizations and Maintenance
 
 - (BOOL)beginTransactionAndReturnError:(out NSError **)outError

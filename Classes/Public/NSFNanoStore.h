@@ -362,6 +362,15 @@
 
 - (NSArray *)objectsOfClassNamed:(NSString *)theClassName usingSortDescriptors:(NSArray *)theSortDescriptors;
 
+/** * Returns the number of objects in the document store which match a specific class name.
+ * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
+ * @returns The count of objects of the specified class name.
+ * @note The classes can be NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
+ * @throws NSFUnexpectedParameterException is thrown if the class name is nil or empty.
+ */
+
+- (long long)countOfObjectsOfClassNamed:(NSString *)theClassName;
+
 //@}
 
 /** @name Saving and Maintenance

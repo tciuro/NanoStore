@@ -733,6 +733,50 @@
     STAssertTrue (YES == [classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
 }
 
+- (void)testCountOfObjectsOfClassNamed
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bagA = [NSFNanoBag bagWithName:@"London"];
+    NSFNanoBag *bagB = [NSFNanoBag bagWithName:@"Paris"];
+    NSFNanoBag *bagC = [NSFNanoBag bagWithName:@"New York"];
+    NSFNanoBag *bagD = [NSFNanoBag bagWithName:@"San Francisco"];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bagA, bagB, bagC, bagD, nil] error:nil];
+    
+    long long count = [nanoStore countOfObjectsOfClassNamed:@"NSFNanoBag"];
+    
+    STAssertTrue (count == 4, @"Expected to find four objects of class NSFNanoBag.");
+}
+
+- (void)testCountOfbjectsOfClassNamedEmptyStore
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    long long count = [nanoStore countOfObjectsOfClassNamed:@"NSFNanoBag"];
+    
+    STAssertTrue (count == 0, @"Expected to find zero objects in the store.");
+}
+
+- (void)testCountOfbjectsOfClassNamedWithWrongName
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bagA = [NSFNanoBag bagWithName:@"London"];
+    NSFNanoBag *bagB = [NSFNanoBag bagWithName:@"Paris"];
+    NSFNanoBag *bagC = [NSFNanoBag bagWithName:@"New York"];
+    NSFNanoBag *bagD = [NSFNanoBag bagWithName:@"San Francisco"];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bagA, bagB, bagC, bagD, nil] error:nil];
+    
+    long long count = [nanoStore countOfObjectsOfClassNamed:@"NSFNanoBagFoo"];
+    
+    STAssertTrue (count == 0, @"Expected to find zero objects of class NSFNanoBagFoo.");
+}
+
 - (void)testRemoveAllObjectsStore
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];    
