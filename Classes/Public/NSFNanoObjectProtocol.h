@@ -48,7 +48,7 @@
  * @return An initialized object upon success, nil otherwise.
  * @details <b>Example:</b>
  @code
- - (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
+ - (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
  {
     if (self = [self init]) {
       info = [aDictionary retain];

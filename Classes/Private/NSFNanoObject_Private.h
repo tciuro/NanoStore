@@ -29,7 +29,6 @@
 /** \cond */
 
 @interface NSFNanoObject (Private)
-- (id)initFromDictionaryRepresentation:(NSDictionary *)otherDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore;
 - (void)dealloc;
 - (void)_setOriginalClassString:(NSString *)theClassString;
 @end

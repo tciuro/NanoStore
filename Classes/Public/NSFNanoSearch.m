@@ -372,7 +372,7 @@
                         saveOriginalClassReference = YES;
                     }
                     
-                    id nanoObject = [[storedObjectClass alloc]initFromDictionaryRepresentation:info forKey:keyValue store:nanoStore];
+                    id nanoObject = [[storedObjectClass alloc]initNanoObjectFromDictionaryRepresentation:info forKey:keyValue store:nanoStore];
                     
                     // If this process does not have knowledge of the original class as was saved in the store, keep a reference
                     // so that we can later on restore the object properly (otherwise it would be stored as a NanoObject.)
@@ -458,7 +458,7 @@
                         saveOriginalClassReference = YES;
                     }
                     
-                    id nanoObject = [[storedObjectClass alloc]initFromDictionaryRepresentation:info forKey:keyValue store:nanoStore];
+                    id nanoObject = [[storedObjectClass alloc]initNanoObjectFromDictionaryRepresentation:info forKey:keyValue store:nanoStore];
                     
                     // If this process does not have knowledge of the original class as was saved in the store, keep a reference
                     // so that we can later on restore the object properly (otherwise it would be stored as a NanoObject.)

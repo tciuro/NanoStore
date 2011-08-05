@@ -37,19 +37,19 @@
 + (NSFNanoObject*)nanoObject
 {
     NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [[[self alloc]initFromDictionaryRepresentation:nil forKey:theKey store:nil]autorelease];
+    return [[[self alloc]initNanoObjectFromDictionaryRepresentation:nil forKey:theKey store:nil]autorelease];
 }
 
 + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)aDictionary
 {
     NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [[[self alloc]initFromDictionaryRepresentation:aDictionary forKey:theKey store:nil]autorelease];
+    return [[[self alloc]initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil]autorelease];
 }
 
 - (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary
 {
     NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [self initFromDictionaryRepresentation:aDictionary forKey:theKey store:nil];
+    return [self initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil];
 }
 
 - (NSString*)description
@@ -129,7 +129,7 @@
     return self;
 }
 
-- (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
+- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
 {
     // We allow a nil dictionary because: 1) it's interpreted as empty and 2) reduces memory consumption on the caller if no data is being passed.
     
@@ -146,14 +146,9 @@
     return self;
 }
 
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)dictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
-{
-    return [self initFromDictionaryRepresentation:dictionary forKey:aKey store:aStore];
-}
-
 - (id)copyWithZone:(NSZone *)zone
 {
-    NSFNanoObject *copy = [[[self class]allocWithZone:zone]initFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:nil];
+    NSFNanoObject *copy = [[[self class]allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:nil];
     return copy;
 }
 

@@ -86,29 +86,9 @@
     return self;
 }
 
-- (id)initFromDictionaryRepresentation:(NSDictionary *)dictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
-{
-    if ((self = [self init])) {
-        name = [[dictionary objectForKey:NSF_Private_NSFNanoBag_Name]copy];
-        store = aStore;
-        key = [aKey retain];
-        savedObjects = [NSMutableDictionary new];
-        unsavedObjects = [NSMutableDictionary new];
-        removedObjects = [NSMutableDictionary new];
-        
-        NSArray *objectKeys = [dictionary objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
-        
-        [self _inflateObjectsWithKeys:objectKeys];
-        
-        hasUnsavedChanges = NO;
-    }
-    
-    return self;
-}
-
 - (id)copyWithZone:(NSZone *)zone
 {
-    NSFNanoBag *copy = [[[self class]allocWithZone:zone]initFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:store];
+    NSFNanoBag *copy = [[[self class]allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:store];
     return copy;
 }
 
@@ -434,7 +414,22 @@
 
 - (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)dictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
 {
-    return [self initFromDictionaryRepresentation:dictionary forKey:aKey store:aStore];
+    if ((self = [self init])) {
+        name = [[dictionary objectForKey:NSF_Private_NSFNanoBag_Name]copy];
+        store = aStore;
+        key = [aKey retain];
+        savedObjects = [NSMutableDictionary new];
+        unsavedObjects = [NSMutableDictionary new];
+        removedObjects = [NSMutableDictionary new];
+        
+        NSArray *objectKeys = [dictionary objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+        
+        [self _inflateObjectsWithKeys:objectKeys];
+        
+        hasUnsavedChanges = NO;
+    }
+    
+    return self;
 }
 
 - (NSDictionary *)nanoObjectDictionaryRepresentation
