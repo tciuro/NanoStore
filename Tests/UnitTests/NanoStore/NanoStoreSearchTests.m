@@ -549,7 +549,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSFNanoResult *result = [nanoStore executeSQL:@"SELECT COUNT FROM NSFKEYS"];
+    NSFNanoResult *result = [nanoStore _executeSQL:@"SELECT COUNT FROM NSFKEYS"];
     
     BOOL containsErrorInfo = ([result error] != nil);
     
@@ -660,7 +660,7 @@
     NSString *bogusClassName = @"foobar";
     NSString *obj1Key = obj1.key;
     NSString *theSQLStatement = [NSString stringWithFormat:@"UPDATE NSFKeys SET NSFObjectClass ='%@' WHERE NSFKey='%@'", bogusClassName, obj1Key];
-    [nanoStore executeSQL:theSQLStatement];
+    [nanoStore _executeSQL:theSQLStatement];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -686,7 +686,7 @@
     NSString *bogusClassName1 = @"foobar";
     NSString *obj1Key = obj1.key;
     NSString *theSQLStatement = [NSString stringWithFormat:@"UPDATE NSFKeys SET NSFObjectClass ='%@' WHERE NSFKey='%@'", bogusClassName1, obj1Key];
-    [nanoStore executeSQL:theSQLStatement];
+    [nanoStore _executeSQL:theSQLStatement];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     

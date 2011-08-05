@@ -29,7 +29,6 @@
 /** \cond */
 
 @interface NSFNanoSearch (Private)
-- (id)initWithStore:(NSFNanoStore *)store;
 - (void)_setObjectTypeReturned:(NSFReturnType)theReturnedType;
 - (NSFReturnType)_objectTypeReturned;
 - (NSDictionary *)_retrieveDataWithError:(out NSError **)outError;

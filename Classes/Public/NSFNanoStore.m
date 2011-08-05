@@ -96,6 +96,16 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [self closeWithError:nil];
+    
+    [nanoStoreEngine release];
+    [addedObjects release];
+    
+    [super dealloc];
+}
+
 - (NSString *)filePath
 {
     return [nanoStoreEngine path];
@@ -359,7 +369,9 @@
     return [self removeObjectsWithKeysInArray:someKeys error:outError];
 }
 
+#pragma mark -
 #pragma mark Searching
+#pragma mark -
 
 - (NSArray *)bags
 {
@@ -422,7 +434,7 @@
 
 - (NSArray *)allObjectClasses
 {
-    NSFNanoResult *results = [self executeSQL:@"SELECT DISTINCT(NSFObjectClass) FROM NSFKeys"];
+    NSFNanoResult *results = [self _executeSQL:@"SELECT DISTINCT(NSFObjectClass) FROM NSFKeys"];
     
     return [results valuesForColumn:@"NSFKeys.NSFObjectClass"];
 }
@@ -467,7 +479,9 @@
     return [[results firstValue]longLongValue];
 }
 
+#pragma mark -
 #pragma mark Database Optimizations and Maintenance
+#pragma mark -
 
 - (BOOL)beginTransactionAndReturnError:(out NSError **)outError
 {
@@ -541,8 +555,8 @@
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
     
-    NSError *resultKeys = [[self executeSQL:[NSString stringWithFormat:@"DROP TABLE %@", NSFKeys]]error];
-    NSError *resultValues = [[self executeSQL:[NSString stringWithFormat:@"DROP TABLE %@", NSFValues]]error];
+    NSError *resultKeys = [[self _executeSQL:[NSString stringWithFormat:@"DROP TABLE %@", NSFKeys]]error];
+    NSError *resultValues = [[self _executeSQL:[NSString stringWithFormat:@"DROP TABLE %@", NSFValues]]error];
     
     [self _setupCachingSchema];
     
@@ -649,25 +663,16 @@
 }
 
 #pragma mark - Private Methods
+#pragma mark -
 
 /** \cond */
 
-+ (NSFNanoStore *)debug
++ (NSFNanoStore *)_debug
 {
     return [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/NanoStoreDebug.db" stringByExpandingTildeInPath]];
 }
 
-- (void)dealloc
-{
-    [self closeWithError:nil];
-    
-    [nanoStoreEngine release];
-    [addedObjects release];
-    
-    [super dealloc];
-}
-
-- (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement
+- (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement
 {
     if (nil == theSQLStatement)
         return nil;
@@ -1364,20 +1369,20 @@
     
     // Attach the file-based database to the memory-based one
     NSString *theSQLStatement = [NSString stringWithFormat:@"ATTACH DATABASE '%@' AS fileDB", [fileDB filePath]];
-    [self executeSQL:theSQLStatement];
+    [self _executeSQL:theSQLStatement];
     
     // Transfer the NSFKeys table
     NSString *columns = [[[self nanoStoreEngine]columnsForTable:NSFKeys]componentsJoinedByString:@", "];
     theSQLStatement = [NSString stringWithFormat:@"INSERT INTO fileDB.%@ (%@) SELECT * FROM main.%@", NSFKeys, columns, NSFKeys];
-    [self executeSQL:theSQLStatement];
+    [self _executeSQL:theSQLStatement];
     
     // Transfer the NSFValues table
     columns = [[[self nanoStoreEngine]columnsForTable:NSFValues]componentsJoinedByString:@", "];
     theSQLStatement = [NSString stringWithFormat:@"INSERT INTO fileDB.%@ (%@) SELECT * FROM main.%@", NSFValues, columns, NSFValues];
-    [self executeSQL:theSQLStatement];
+    [self _executeSQL:theSQLStatement];
     
     // Safely detach the file-based database
-    [self executeSQL:@"DETACH DATABASE fileDB"];
+    [self _executeSQL:@"DETACH DATABASE fileDB"];
     
     // We can now close the database
     [fileDB closeWithError:outError];

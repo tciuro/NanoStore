@@ -33,60 +33,11 @@
 @synthesize error;
 
 /** \cond */
-+ (NSFNanoResult *)resultWithDictionary:(NSDictionary *)theResults
-{
-    return [[[self alloc]initWithDictionary:theResults]autorelease];
-}
-
-+ (NSFNanoResult *)resultWithError:(NSError *)theError
-{
-    return [[[self alloc]initWithError:theError]autorelease];
-}
-
-- (id)initWithDictionary:(NSDictionary *)theResults
-{
-    if (nil == theResults)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theResults is nil.", [self class], _cmd]
-                               userInfo:nil]raise];
-    
-    if ([theResults respondsToSelector:@selector(objectForKey:)] == NO)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theResults is not of type NSDictionary.", [self class], _cmd]
-                               userInfo:nil]raise];
-    
-    if ((self = [self init])) {
-        results = [theResults retain];
-        [self calculateNumberOfRows];
-    }
-    
-    return self;
-}
-
-- (id)initWithError:(NSError *)theError
-{
-    if (nil == theError)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theError is nil.", [self class], _cmd]
-                               userInfo:nil]raise];
-    
-    if ([theError respondsToSelector:@selector(localizedDescription)] == NO)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theError is not of type NSError.", [self class], _cmd]
-                               userInfo:nil]raise];
-    
-    if ((self = [self init])) {
-        error = [theError retain];
-        [self calculateNumberOfRows];
-    }
-    
-    return self;
-}
 
 - (id)init
 {
     if ((self = [super init])) {
-        [self reset];
+        [self _reset];
     }
     
     return self;
@@ -94,12 +45,12 @@
 
 - (void)dealloc
 {
-    [self reset];
+    [self _reset];
     [super dealloc];
 }
 /** \endcond */
 
-- (NSString*)description
+- (NSString *)description
 {
     NSUInteger numberOfColumns = [[results allKeys]count];
     
@@ -225,8 +176,61 @@
     [results writeToFile:[path stringByExpandingTildeInPath] atomically:YES];
 }
 
+#pragma mark - Private Methods
+#pragma mark -
+
 /** \cond */
-- (void)setError:(NSError *)theError
++ (NSFNanoResult *)_resultWithDictionary:(NSDictionary *)theResults
+{
+    return [[[self alloc]_initWithDictionary:theResults]autorelease];
+}
+
++ (NSFNanoResult *)_resultWithError:(NSError *)theError
+{
+    return [[[self alloc]_initWithError:theError]autorelease];
+}
+
+- (id)_initWithDictionary:(NSDictionary *)theResults
+{
+    if (nil == theResults)
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theResults is nil.", [self class], _cmd]
+                               userInfo:nil]raise];
+    
+    if ([theResults respondsToSelector:@selector(objectForKey:)] == NO)
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theResults is not of type NSDictionary.", [self class], _cmd]
+                               userInfo:nil]raise];
+    
+    if ((self = [self init])) {
+        results = [theResults retain];
+        [self _calculateNumberOfRows];
+    }
+    
+    return self;
+}
+
+- (id)_initWithError:(NSError *)theError
+{
+    if (nil == theError)
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theError is nil.", [self class], _cmd]
+                               userInfo:nil]raise];
+    
+    if ([theError respondsToSelector:@selector(localizedDescription)] == NO)
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theError is not of type NSError.", [self class], _cmd]
+                               userInfo:nil]raise];
+    
+    if ((self = [self init])) {
+        error = [theError retain];
+        [self _calculateNumberOfRows];
+    }
+    
+    return self;
+}
+
+- (void)_setError:(NSError *)theError
 {
     if (error != theError) {
         [error release];
@@ -234,7 +238,7 @@
     }
 }
 
-- (void)reset
+- (void)_reset
 {
     numberOfRows = -1;
     [results release];
@@ -243,7 +247,7 @@
     error = nil;
 }
 
-- (void)calculateNumberOfRows
+- (void)_calculateNumberOfRows
 {
     // We cache the value once, for performance reasons
     if (-1 == numberOfRows) {

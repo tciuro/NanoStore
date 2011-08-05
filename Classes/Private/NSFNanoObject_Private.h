@@ -29,7 +29,6 @@
 /** \cond */
 
 @interface NSFNanoObject (Private)
-- (void)dealloc;
 - (void)_setOriginalClassString:(NSString *)theClassString;
 @end
 

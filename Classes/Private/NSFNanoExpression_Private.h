@@ -29,7 +29,7 @@
 /** \cond */
 
 @interface NSFNanoExpression (Private)
-- (void)dealloc;
+// Just a placeholder.
 @end
 
 /** \endcond */

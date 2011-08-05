@@ -129,6 +129,8 @@
     return self;
 }
 
+#pragma mark -
+
 - (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
 {
     // We allow a nil dictionary because: 1) it's interpreted as empty and 2) reduces memory consumption on the caller if no data is being passed.
@@ -175,6 +177,8 @@
     return info;
 }
 
+#pragma mark -
+#pragma mark Private Methods
 #pragma mark -
 
 - (void)_setOriginalClassString:(NSString *)theClassString

@@ -29,11 +29,7 @@
 /** \cond */
 
 @interface NSFNanoBag (Private)
-- (id)initWithNanoObjects:(NSArray *)someObjects store:(NSFNanoStore *)aStore;
 - (void)_setStore:(NSFNanoStore *)aStore;
-- (void)dealloc;
-- (NSDictionary *)nanoObjectDictionaryRepresentation;
-- (NSString *)nanoObjectKey;
 - (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(out NSError **)outError;
 - (void)_inflateObjectsWithKeys:(NSArray *)someKeys;
 @end

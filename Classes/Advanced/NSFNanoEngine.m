@@ -644,12 +644,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     if (SQLITE_OK != status) {
         NSString *msg = (NULL != errorMessage) ? [NSString stringWithUTF8String:errorMessage] : [NSString stringWithFormat:@"SQLite error ID: %ld", status];
-        result = [NSFNanoResult resultWithError:[NSError errorWithDomain:NSFDomainKey
+        result = [NSFNanoResult _resultWithError:[NSError errorWithDomain:NSFDomainKey
                                                                     code:NSFNanoStoreErrorKey
                                                                 userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, msg]
                                                                                                      forKey:NSLocalizedFailureReasonErrorKey]]];
     } else {
-        result = [NSFNanoResult resultWithDictionary:info];
+        result = [NSFNanoResult _resultWithDictionary:info];
     }
     
     // Cleanup

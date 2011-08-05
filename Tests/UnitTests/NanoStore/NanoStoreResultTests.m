@@ -41,7 +41,7 @@
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]]] error:nil];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]]] error:nil];
     
-    NSFNanoResult *result = [nanoStore executeSQL:@"SELECT NSFValue from NSFValues WHERE NSFAttribute = 'SomeNumber'"];
+    NSFNanoResult *result = [nanoStore _executeSQL:@"SELECT NSFValue from NSFValues WHERE NSFAttribute = 'SomeNumber'"];
     BOOL success = (nil == [result error]);
     
     STAssertTrue (success == YES, @"Expected to find values without an error.");

@@ -786,12 +786,12 @@
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
     NSString  *theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFKeys];
-    NSFNanoResult *result = [nanoStore executeSQL:theSQLStatement];
+    NSFNanoResult *result = [nanoStore _executeSQL:theSQLStatement];
     [theSQLStatement release];
     long long numObjects = [[result firstValue]longLongValue];
     
     theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFValues];
-    result = [nanoStore executeSQL:theSQLStatement];
+    result = [nanoStore _executeSQL:theSQLStatement];
     [theSQLStatement release];
     long long numValues = [[result firstValue]longLongValue];
     
@@ -800,12 +800,12 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFKeys];
-    result = [nanoStore executeSQL:theSQLStatement];
+    result = [nanoStore _executeSQL:theSQLStatement];
     [theSQLStatement release];
     numObjects = [[result firstValue]longLongValue];
     
     theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFValues];
-    result = [nanoStore executeSQL:theSQLStatement];
+    result = [nanoStore _executeSQL:theSQLStatement];
     [theSQLStatement release];
     numValues = [[result firstValue]longLongValue];
     

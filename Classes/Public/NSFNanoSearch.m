@@ -65,6 +65,16 @@
     return self;
 }
 
+/** \cond */
+
+- (void)dealloc
+{
+    [self reset];
+    [super dealloc];
+}
+
+/** \endcond */
+
 #pragma mark -
 
 - (NSString *)sql
@@ -119,7 +129,7 @@
     
     sql = [theSQLStatement retain];
     
-    return [nanoStore executeSQL:theSQLStatement];
+    return [nanoStore _executeSQL:theSQLStatement];
 }
 
 - (NSFNanoResult *)explainSQL:(NSString *)theSQLStatement
@@ -136,7 +146,7 @@
                                userInfo:nil]raise];
     }
     
-    return [nanoStore executeSQL:[NSString stringWithFormat:@"EXPLAIN %@", theSQLStatement]];
+    return [nanoStore _executeSQL:[NSString stringWithFormat:@"EXPLAIN %@", theSQLStatement]];
 }
 
 - (void)reset
@@ -220,7 +230,7 @@
             break;
     }
     
-    NSFNanoResult *result = [nanoStore executeSQL:theAggregatedSQLStatement];
+    NSFNanoResult *result = [nanoStore _executeSQL:theAggregatedSQLStatement];
 
     // Cleanup and restore...
     [theAggregatedSQLStatement release];
@@ -231,16 +241,10 @@
 }
 
 #pragma mark -
-#pragma mark PRIVATE METHODS
+#pragma mark Private Methods
 #pragma mark -
 
 /** \cond */
-
-- (void)dealloc
-{
-    [self reset];
-    [super dealloc];
-}
 
 - (void)_setObjectTypeReturned:(NSFReturnType)theReturnedType
 {
@@ -427,7 +431,7 @@
             break;
     }
     
-    NSFNanoResult *result = [nanoStore executeSQL:theSQLStatement];
+    NSFNanoResult *result = [nanoStore _executeSQL:theSQLStatement];
     [theSQLStatement release];
     
     NSMutableDictionary *searchResults = [NSMutableDictionary dictionaryWithCapacity:result.numberOfRows];

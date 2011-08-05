@@ -29,10 +29,8 @@
 /** \cond */
 
 @interface NSFNanoStore (Private)
-- (id)initWithPath:(NSString *)aPath rebuildIndexes:(BOOL)doRebuild readDatafile:(BOOL)read;
-+ (NSFNanoStore *)debug;
-- (void)dealloc;
-- (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement;
++ (NSFNanoStore *)_debug;
+- (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement;
 - (NSString*)_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
 - (BOOL)_initializePreparedStatementsWithError:(out NSError **)outError;
 - (void)_releasePreparedStatements;
