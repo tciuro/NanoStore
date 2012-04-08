@@ -21,6 +21,18 @@
     
     _defaultTestInfo = [[NSFNanoStore _defaultTestData]retain];
     
+#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
+    // code only compiled when targeting Mac OS X and not iOS
+    // Obtain the system version
+    SInt32 major, minor;
+    Gestalt(gestaltSystemVersionMajor, &major);
+    Gestalt(gestaltSystemVersionMinor, &minor);
+    _systemVersion = major + (minor/10.0);
+#else
+    // Round to the nearest since it's not always exact
+    _systemVersion = floorf([[[UIDevice currentDevice]systemVersion]floatValue] * 10 + 0.5) / 10;
+#endif
+    
     NSFSetIsDebugOn (NO);
 }
 
@@ -817,7 +829,11 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSFNanoResult *results = [search executeSQL:@"CREATE VIRTUAL TABLE simple USING fts3(tokenize=simple);"];
     
-    STAssertTrue ([results error] != nil, @"Expected an error.");
+    if ((_systemVersion >= 10.7f) || (_systemVersion >= 5.1f)) {
+        STAssertTrue ([results error] == nil, @"Wasn't expecting an error.");
+    } else {
+        STAssertTrue ([results error] != nil, @"Was expecting an error.");
+    }
 }
 
 @end

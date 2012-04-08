@@ -10,7 +10,8 @@
 
 @interface NanoStoreSearchTests : SenTestCase
 {
-    NSDictionary *_defaultTestInfo;
+    NSDictionary    *_defaultTestInfo;
+    double          _systemVersion;
 }
 
 @end
