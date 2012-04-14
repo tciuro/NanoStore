@@ -154,16 +154,7 @@
 
 @interface NSFNanoSearch : NSObject
 {
-    NSFNanoStore        *nanoStore;
-    NSArray             *attributesToBeReturned;
-    
-    NSString            *key;
-    NSString            *attribute;
-    id                  value;
-    NSFMatchType        match;
-    NSArray             *expressions;
-    BOOL                groupValues;
-    NSArray             *sort;
+    NSFNanoStore        *__weak nanoStore;
     
     /** \cond */
     @protected
@@ -173,9 +164,9 @@
 }
 
 /** * The document store used for searching. */
-@property (assign, readonly) NSFNanoStore *nanoStore;
+@property (weak, readonly) NSFNanoStore *nanoStore;
 /** * The set of attributes to be returned on matching objects. */
-@property (retain, readwrite) NSArray *attributesToBeReturned;
+@property (strong, readwrite) NSArray *attributesToBeReturned;
 /** * The key used for searching. */
 @property (copy, readwrite) NSString *key;
 /** * The attribute used for searching. */
@@ -185,13 +176,13 @@
 /** * The comparison operator used for searching. */
 @property (assign, readwrite) NSFMatchType match;
 /** * The list of NSFNanoExpression objects used for searching. */
-@property (retain, readwrite) NSArray *expressions;
+@property (strong, readwrite) NSArray *expressions;
 /** * If set to YES, specifying NSFReturnKeys applies the DISTINCT function and groups the values. */
 @property (assign, readwrite) BOOL groupValues;
 /** * The SQL statement used for searching. Set when executeSQL: is invoked. */
 @property (copy, readonly) NSString *sql;
 /** * The sort holds an array of one or more sort descriptors of type \link NSFNanoSortDescriptor NSFNanoSortDescriptor \endlink. */
-@property (retain, readwrite) NSArray *sort;
+@property (strong, readwrite) NSArray *sort;
 
 /** @name Creating and Initializing a Search
  */

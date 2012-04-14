@@ -19,7 +19,7 @@
 {
     [super setUp];
     
-    _defaultTestInfo = [[NSFNanoStore _defaultTestData]retain];
+    _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
 #ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
     // code only compiled when targeting Mac OS X and not iOS
@@ -38,7 +38,6 @@
 
 - (void)tearDown
 {
-    [_defaultTestInfo release];
     
     NSFSetIsDebugOn (NO);
     

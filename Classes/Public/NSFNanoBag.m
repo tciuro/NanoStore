@@ -37,22 +37,22 @@
 
 + (NSFNanoBag*)bag
 {
-    return [[[self alloc]initBagWithName:nil andObjects:[NSArray array]]autorelease];
+    return [[self alloc]initBagWithName:nil andObjects:[NSArray array]];
 }
 
 + (NSFNanoBag*)bagWithObjects:(NSArray *)someObjects
 {
-    return [[[self alloc]initBagWithName:nil andObjects:someObjects]autorelease];
+    return [[self alloc]initBagWithName:nil andObjects:someObjects];
 }
 
 + bagWithName:(NSString *)theName
 {
-    return [[[self alloc]initBagWithName:theName andObjects:[NSArray array]]autorelease];
+    return [[self alloc]initBagWithName:theName andObjects:[NSArray array]];
 }
 
 + bagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
 {
-    return [[[self alloc]initBagWithName:theName andObjects:someObjects]autorelease];
+    return [[self alloc]initBagWithName:theName andObjects:someObjects];
 }
 
 - (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
@@ -75,7 +75,7 @@
 - (id)init
 {
     if ((self = [super init])) {
-        key = [[NSFNanoEngine stringWithUUID]retain];
+        key = [NSFNanoEngine stringWithUUID];
         savedObjects = [NSMutableDictionary new];
         unsavedObjects = [NSMutableDictionary new];
         removedObjects = [NSMutableDictionary new];
@@ -92,15 +92,6 @@
     return copy;
 }
 
-- (void)dealloc
-{
-    [name release];
-    [key release];
-    [savedObjects release];
-    [unsavedObjects release];
-    [removedObjects release];
-    [super dealloc];
-}
 
 - (id)rootObject
 {
@@ -112,7 +103,6 @@
 - (void)setName:(NSString *)aName
 {
     if (aName != name) {
-        [name release];
         name = [aName copy];
         hasUnsavedChanges = YES;
     }
@@ -122,7 +112,7 @@
 
 - (NSString *)name
 {
-    return [[name retain]autorelease];
+    return name;
 }
 
 - (NSUInteger)count
@@ -193,9 +183,6 @@
     }
     [info setObject:self.key forKey:NSF_Private_NSFNanoBag_NSFKey];
     [info setObject:objectKeys forKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
-    
-    // Cleanup
-    [objectKeys release];
     
     return info;
 }
@@ -282,7 +269,6 @@
     [removedObjects setDictionary:objects];
     hasUnsavedChanges = YES;
     
-    [objects release];
 }
 
 - (void)removeObjectsInArray:(NSArray *)someObjects
@@ -301,12 +287,12 @@
     }
     
     // Is the object an existing one?
-    id object = [[savedObjects objectForKey:objectKey]retain];
+    id object = [savedObjects objectForKey:objectKey];
     if (nil != object) {
         [savedObjects removeObjectForKey:objectKey];
     } else {
         // Is the object still unsaved?
-        object = [[unsavedObjects objectForKey:objectKey]retain];
+        object = [unsavedObjects objectForKey:objectKey];
         if (nil != object) {
             [unsavedObjects removeObjectForKey:objectKey];
         }
@@ -316,7 +302,6 @@
         // The object doesn't exist, so there is no need to mark the bag as dirty
     } else {
         [removedObjects setObject:object forKey:objectKey];
-        [object release];
         hasUnsavedChanges = YES;
     }
 }
@@ -357,7 +342,6 @@
         [savedObjects setObject:[NSNull null] forKey:saveObjectKey];
     }
     
-    [savedObjectsCopy release];
 }
 
 - (void)inflateBag
@@ -417,7 +401,7 @@
     if ((self = [self init])) {
         name = [[dictionary objectForKey:NSF_Private_NSFNanoBag_Name]copy];
         store = aStore;
-        key = [aKey retain];
+        key = aKey;
         savedObjects = [NSMutableDictionary new];
         unsavedObjects = [NSMutableDictionary new];
         removedObjects = [NSMutableDictionary new];

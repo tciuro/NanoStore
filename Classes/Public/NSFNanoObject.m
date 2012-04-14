@@ -37,13 +37,13 @@
 + (NSFNanoObject*)nanoObject
 {
     NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [[[self alloc]initNanoObjectFromDictionaryRepresentation:nil forKey:theKey store:nil]autorelease];
+    return [[self alloc]initNanoObjectFromDictionaryRepresentation:nil forKey:theKey store:nil];
 }
 
 + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)aDictionary
 {
     NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [[[self alloc]initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil]autorelease];
+    return [[self alloc]initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil];
 }
 
 - (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary
@@ -154,13 +154,6 @@
     return copy;
 }
 
-- (void)dealloc
-{
-    [info release];
-    [key release];
-    [originalClassString release];
-    [super dealloc];
-}
 
 - (NSDictionary *)nanoObjectDictionaryRepresentation
 {
@@ -184,8 +177,6 @@
 - (void)_setOriginalClassString:(NSString *)theClassString
 {
     if (originalClassString != theClassString) {
-        [theClassString retain];
-        [originalClassString release];
         originalClassString = theClassString;
     }
 }

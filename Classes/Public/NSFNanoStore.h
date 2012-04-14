@@ -85,7 +85,7 @@
 }
 
 /** * A reference to the engine used by the document store, which contains a reference to the SQLite database. */
-@property (retain, readonly) NSFNanoEngine *nanoStoreEngine;
+@property ( readonly) NSFNanoEngine *nanoStoreEngine;
 /** * The type of engine mode used by NanoStore to process data in the document store.
  The mode can be one of two options: <i>NSFEngineProcessingDefaultMode</i> and <i>NSFEngineProcessingFastMode</i>. See <i>NSFEngineProcessingMode</i>
  to learn more about how these options affect the engine behavior.

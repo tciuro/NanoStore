@@ -95,9 +95,6 @@ void _NSFLog (NSString  *format, ...)
         NSString *string = [[NSString alloc]initWithFormat:format arguments:args];
         NSLog(@"%@", string);
         va_end(args);
-        
-        // Cleanup
-        [string release];
     }
 }
 

@@ -78,7 +78,6 @@
     STAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
-    [sortCities release];
     
     // Close the document store
     [nanoStore closeWithError:nil];
@@ -109,7 +108,6 @@
     STAssertTrue (YES == [[[searchResults objectAtIndex:0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
-    [sortBagNameDescriptor release];
     
     // Close the document store
     [nanoStore closeWithError:nil];

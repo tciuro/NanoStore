@@ -46,7 +46,6 @@
 - (void)dealloc
 {
     [self _reset];
-    [super dealloc];
 }
 /** \endcond */
 
@@ -168,7 +167,7 @@
 
 - (NSError *)error
 {
-    return [[error copy]autorelease];
+    return [error copy];
 }
 
 - (void)writeToFile:(NSString *)path;
@@ -182,12 +181,12 @@
 /** \cond */
 + (NSFNanoResult *)_resultWithDictionary:(NSDictionary *)theResults
 {
-    return [[[self alloc]_initWithDictionary:theResults]autorelease];
+    return [[self alloc]_initWithDictionary:theResults];
 }
 
 + (NSFNanoResult *)_resultWithError:(NSError *)theError
 {
-    return [[[self alloc]_initWithError:theError]autorelease];
+    return [[self alloc]_initWithError:theError];
 }
 
 - (id)_initWithDictionary:(NSDictionary *)theResults
@@ -203,7 +202,7 @@
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
-        results = [theResults retain];
+        results = theResults;
         [self _calculateNumberOfRows];
     }
     
@@ -223,7 +222,7 @@
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
-        error = [theError retain];
+        error = theError;
         [self _calculateNumberOfRows];
     }
     
@@ -233,17 +232,14 @@
 - (void)_setError:(NSError *)theError
 {
     if (error != theError) {
-        [error release];
-        error = [theError retain];
+        error = theError;
     }
 }
 
 - (void)_reset
 {
     numberOfRows = -1;
-    [results release];
     results = nil;
-    [error release];
     error = nil;
 }
 

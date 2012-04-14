@@ -17,14 +17,13 @@
 {
     [super setUp];
     
-    _defaultTestInfo = [[NSFNanoStore _defaultTestData]retain];
+    _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
 - (void)tearDown
 {
-    [_defaultTestInfo release];
     
     NSFSetIsDebugOn (NO);
     
@@ -86,9 +85,9 @@
     BOOL success = YES;
     
     @try {
-        NSAutoreleasePool *ap = [NSAutoreleasePool new];
-        nanoStore = [[NSFNanoStore createStoreWithType:NSFPersistentStoreType path:@"foo"]retain];
-        [ap drain];
+        @autoreleasepool {
+            nanoStore = [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:@"foo"];
+        }
         
         // We should be able to obtain the description here without causing a crash...
         [nanoStore description];
@@ -787,12 +786,10 @@
     
     NSString  *theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFKeys];
     NSFNanoResult *result = [nanoStore _executeSQL:theSQLStatement];
-    [theSQLStatement release];
     long long numObjects = [[result firstValue]longLongValue];
     
     theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFValues];
     result = [nanoStore _executeSQL:theSQLStatement];
-    [theSQLStatement release];
     long long numValues = [[result firstValue]longLongValue];
     
     STAssertTrue (numObjects + numValues > 0, @"Expected to find objects.");
@@ -801,12 +798,10 @@
     
     theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFKeys];
     result = [nanoStore _executeSQL:theSQLStatement];
-    [theSQLStatement release];
     numObjects = [[result firstValue]longLongValue];
     
     theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT COUNT(*) FROM %@;", NSFValues];
     result = [nanoStore _executeSQL:theSQLStatement];
-    [theSQLStatement release];
     numValues = [[result firstValue]longLongValue];
     
     [nanoStore closeWithError:nil];

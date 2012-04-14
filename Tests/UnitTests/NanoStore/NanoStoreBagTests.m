@@ -18,14 +18,13 @@
 {
     [super setUp];
     
-    _defaultTestInfo = [[NSFNanoStore _defaultTestData]retain];
+    _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
 - (void)tearDown
 {
-    [_defaultTestInfo release];
     
     NSFSetIsDebugOn (NO);
 
@@ -50,7 +49,7 @@
     NSString *objectKey = [bag nanoObjectKey];
     STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the bag to return a valid UUID.");
     
-    bag = [[[NSFNanoBag alloc]init]autorelease];
+    bag = [[NSFNanoBag alloc]init];
     objectKey = [bag nanoObjectKey];
     STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the bag to return a valid UUID.");
 }
@@ -780,7 +779,7 @@
     [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
     [nanoStore addObject:bag error:nil];
     
-    NSFNanoBag *copiedBag = [[bag copy]autorelease];
+    NSFNanoBag *copiedBag = [bag copy];
     
     STAssertTrue ((YES == [bag isEqualToNanoBag:copiedBag]), @"Equality test should have succeeded.");
 }

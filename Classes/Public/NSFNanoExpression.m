@@ -38,7 +38,7 @@
                                  reason:[NSString stringWithFormat:@"*** -[%@ %s]: the predicate is nil.", [self class], _cmd]
                                userInfo:nil]raise];
     
-    return [[[self alloc]initWithPredicate:aPredicate]autorelease];
+    return [[self alloc]initWithPredicate:aPredicate];
 }
 
 - (id)initWithPredicate:(NSFNanoPredicate *)aPredicate
@@ -60,12 +60,6 @@
 
 /** \cond */
 
-- (void)dealloc
-{
-    [predicates release];
-    [operators release];
-    [super dealloc];
-}
 
 /** \endcond */
 
@@ -93,13 +87,9 @@
     for (i = 1; i < count; i++) {
         NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[predicates objectAtIndex:i]description]];
         [values addObject:compound];
-        [compound release];
     }
     
     NSString *value = [values componentsJoinedByString:@""];
-    
-    // Cleanup
-    [values release];
     
     return value;
 }

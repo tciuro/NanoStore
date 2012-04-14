@@ -44,7 +44,7 @@
                                  reason:[NSString stringWithFormat:@"*** -[%@ %s]: value is nil.", [self class], _cmd]
                                userInfo:nil]raise];
     
-    return [[[self alloc]initWithColumn:type matching:matching value:aValue]autorelease];
+    return [[self alloc]initWithColumn:type matching:matching value:aValue];
 }
 
 - (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(NSString *)aValue
@@ -126,11 +126,6 @@
 
 /** \cond */
 
-- (void)dealloc
-{
-    [value release];
-    [super dealloc];
-}
 
 /** \endcond */
 

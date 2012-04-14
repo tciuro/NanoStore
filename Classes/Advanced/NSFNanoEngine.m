@@ -63,7 +63,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                               reason:[NSString stringWithFormat:@"*** -[%@ %s]: thePath is nil.", [self class], _cmd]
                             userInfo:nil]raise];
     
-    return [[[self alloc]initWithPath:thePath]autorelease];
+    return [[self alloc]initWithPath:thePath];
 }
 
 - (id)initWithPath:(NSString *)thePath
@@ -100,10 +100,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 {
     [self close];
     
-    [schema release];
-    path = nil;
     
-    [super dealloc];
 }
 
 /** \endcond */
@@ -293,13 +290,10 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 + (NSString *)stringWithUUID
 { 
-    CFUUIDRef uuid;
-    NSString *uidString;
-    uuid      = CFMakeCollectable(CFUUIDCreate(NULL));
-    uidString = NSMakeCollectable(CFUUIDCreateString(NULL,uuid));
-    [(id)uuid release];
-    return [uidString autorelease];
-    
+    CFUUIDRef uuidCF = CFUUIDCreate(NULL);
+    NSString *uuid = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuidCF);
+    CFRelease(uuidCF);
+    return uuid;
 } 
 
 - (BOOL)compact
@@ -382,12 +376,10 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     NSString *theSQLStatement = [[NSString alloc]initWithFormat:@"DROP TABLE %@;", table];
     BOOL everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);
-    [theSQLStatement release];
     
     if (everythingIsFine) {
         theSQLStatement = [[NSString alloc]initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@';", NSFP_SchemaTable, NSFP_TableIdentifier, table];
         everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);
-        [theSQLStatement release];
     }
     
     if (transactionSetHere) {
@@ -423,9 +415,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     BOOL indexWasCreated = (nil == [[self executeSQL:theSQLStatement]error]);
     
-    // Cleanup
-    [theSQLStatement release];
-    
     return indexWasCreated;
 }
 
@@ -439,9 +428,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     NSString  *theSQLStatement = [[NSString alloc]initWithFormat:@"DROP INDEX %@;", indexName];
     
     [self executeSQL:theSQLStatement];
-    
-    // Cleanup
-    [theSQLStatement release];
 }
 
 - (NSArray *)tables
@@ -609,11 +595,11 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     if (NULL != valueUTF8) {
                         value = [[NSString alloc]initWithUTF8String:valueUTF8];
                     } else {
-                        value = [[[NSNull null]description]retain];
+                        value = [[NSNull null]description];
                     }
                     
                     // Obtain the array to collect the values. If the array doesn't exist, create it.
-                    NSMutableArray *values = [[info objectForKey:column]retain];
+                    NSMutableArray *values = [info objectForKey:column];
                     if (nil == values) {
                         values = [NSMutableArray new];
                     }
@@ -621,9 +607,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     [info setObject:values forKey:column];
                     
                     // Let's cleanup. This will keep the memory footprint low...
-                    [column release];
-                    [value release];
-                    [values release];
                 }
                 
             }
@@ -672,7 +655,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     NSFNanoResult *result = [self executeSQL:sql];
     
-    [sql release];
     
     return [[result firstValue]longLongValue];
 }
@@ -856,7 +838,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     NSFNanoResult *result = [self executeSQL:@"PRAGMA journal_mode; "];
     if (nil != [result error]) {
         if (nil != outError) {
-            *outError = [[[result error]copy]autorelease];
+            *outError = [[result error]copy];
             return JournalModeDelete;
         }
     }
@@ -1192,12 +1174,11 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         if (nil != tempSchema)
             tempSchema = [[NSMutableDictionary alloc]init];
         else
-            [tempSchema retain];
+            ;
         
         [tempSchema setObject:datatype forKey:column];
         [schema setObject:tempSchema forKey:table];
         
-        [tempSchema release];
         tempSchema = nil;
     }
 
@@ -1232,7 +1213,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     NSArray *immutableValues = [flattenedTables allObjects];
     
-    [flattenedTables release];
     flattenedTables = nil;
     
     return immutableValues;
@@ -1363,7 +1343,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         [revisedDatatypes insertObject:ROWIDDatatype atIndex:0];
     }
     
-    [ROWIDDatatype release];
     
     BOOL transactionSetHere = NO;
     if (NO == [self isTransactionActive])
@@ -1386,7 +1365,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         
         if (everythingIsFine) {
             // Now add the entries to NSFP_SchemaTable
-            NSMutableArray *tableAndColumns = [[NSMutableArray alloc]init];
             NSInteger i, count = [revisedDatatypes count];
             
             for (i = 0; i < count; i++) {
@@ -1395,9 +1373,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     break;
                 }
             }
-            
-            // Cleanup
-            [tableAndColumns release];
         }
     } else {
         everythingIsFine = NO;
@@ -1412,11 +1387,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     if (everythingIsFine)
         [self NSFP_rebuildDatatypeCache];
-    
-    // Cleanup
-    [revisedColumns release];
-    [revisedDatatypes release];
-    [theSQLStatement release];
     
     return everythingIsFine;
 }
@@ -1493,11 +1463,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     } else {
         numberOfIssues++;
     }
-    
-    // Cleanup
-    [tableColumns release];
-    [tableDatatypes release];
-    
+        
     if (transactionSetHere) {
         if (0 == numberOfIssues) {
             [self commitTransaction];
@@ -1515,7 +1481,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 - (void)NSFP_rebuildDatatypeCache
 {
     // Cleanup
-    [schema release];
     schema = nil;
     schema = [[NSMutableDictionary alloc]init];
     
@@ -1539,9 +1504,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         }
         
         [schema setObject:tableDictionary forKey:table];
-        
-        // Cleanup...
-        [tableDictionary release];
     }
 }
 
@@ -1578,8 +1540,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         else
             escapedValue = [[NSString alloc]initWithFormat:@"%@", value];
         [escapedValues addObject:escapedValue];
-        // Cleanup
-        [escapedValue release];
     }
     
     NSMutableString* theSQLStatement = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"INSERT INTO %@(", table]];
@@ -1589,10 +1549,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     [self NSFP_sqlString:theSQLStatement appendingTags:escapedValues];
     [theSQLStatement appendString:@");"];
     BOOL insertWasOK = (nil == [[self executeSQL:theSQLStatement]error]);
-    
-    // Cleanup
-    [escapedValues release];
-    [theSQLStatement release];
     
     return insertWasOK;
 }
@@ -1617,9 +1573,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
             NSString  *escapedValue = [[NSString alloc]initWithFormat:@"'%@'", tagName];
             
             [theSQLStatement appendString:escapedValue];
-            
-            // Cleanup
-            [escapedValue release];
             
             if (i != count - 1)
                 [theSQLStatement appendString:@","];
@@ -1684,9 +1637,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                 columnAndDatatype = [[NSString alloc]initWithFormat:@"%@ %@", column, datatype];
             
             [theSQLStatement appendString:columnAndDatatype];
-            
-            // Cleanup
-            [columnAndDatatype release];
             
             if (i != count - 1)
                 [theSQLStatement appendString:@","];
@@ -1801,7 +1751,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 - (void)NSFP_installCommitCallback
 {
-    sqlite3_commit_hook( self.sqlite, NSFP_commitCallback, self);
+    sqlite3_commit_hook( self.sqlite, NSFP_commitCallback, (__bridge void *)(self));
 }
 
 - (void)NSFP_uninstallCommitCallback

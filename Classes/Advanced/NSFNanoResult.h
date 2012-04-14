@@ -69,9 +69,6 @@
 
 @interface NSFNanoResult : NSObject
 {
-    NSUInteger       numberOfRows;
-    NSError         *error;
-
     @protected
     /** \cond */
     NSDictionary    *results;
@@ -81,7 +78,7 @@
 /** * Number of rows contained in the result set. */
 @property (assign, readonly) NSUInteger numberOfRows;
 /** * A reference to the error encountered while processing the request, otherwise nil if the request was successful. */
-@property (retain, readonly) NSError *error;
+@property (strong, readonly) NSError *error;
 
 /** @name Accessors
  */

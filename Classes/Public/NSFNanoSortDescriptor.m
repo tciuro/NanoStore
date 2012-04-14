@@ -33,7 +33,7 @@
 
 + (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
 {
-    return [[[self alloc]initWithAttribute:theAttribute ascending:ascending]autorelease];
+    return [[self alloc]initWithAttribute:theAttribute ascending:ascending];
 }
 
 - (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
@@ -53,11 +53,6 @@
 
 /** \cond */
 
-- (void)dealloc
-{
-    [attribute release];
-    [super dealloc];
-}
 
 /** \endcond */
 

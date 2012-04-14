@@ -16,14 +16,13 @@
 {
     [super setUp];
     
-    _defaultTestInfo = [[NSFNanoStore _defaultTestData]retain];
+    _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
 - (void)tearDown
 {
-    [_defaultTestInfo release];
     
     NSFSetIsDebugOn (NO);
     
@@ -48,7 +47,7 @@
     objectKey = [nanoObject key];
     STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the NanoObject to return a valid UUID.");
     
-    nanoObject = [[[NSFNanoObject alloc]initFromDictionaryRepresentation:_defaultTestInfo]autorelease];
+    nanoObject = [[NSFNanoObject alloc]initFromDictionaryRepresentation:_defaultTestInfo];
     objectKey = [nanoObject nanoObjectKey];
     STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the NanoObject to return a valid UUID.");
     
@@ -130,7 +129,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    NSFNanoObject *copiedObject = [[object copy]autorelease];
+    NSFNanoObject *copiedObject = [object copy];
     
     STAssertTrue ((YES == [object isEqualToNanoObject:copiedObject]), @"Equality test should have succeeded.");
 }

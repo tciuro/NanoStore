@@ -16,14 +16,13 @@
 {
     [super setUp];
     
-    _defaultTestInfo = [[NSFNanoStore _defaultTestData]retain];
+    _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
 - (void)tearDown
 {
-    [_defaultTestInfo release];
     
     NSFSetIsDebugOn (NO);
     

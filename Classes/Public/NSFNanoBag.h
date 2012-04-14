@@ -68,7 +68,7 @@
 
 @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
 {
-    NSFNanoStore            *store;
+    NSFNanoStore            *__unsafe_unretained store;
     NSString                *name;
     NSString                *key;
     BOOL                    hasUnsavedChanges;
@@ -82,17 +82,17 @@
 }
 
 /** * The store where the bag is located.  */
-@property (assign, readonly) NSFNanoStore *store;
+@property (unsafe_unretained, readonly) NSFNanoStore *store;
 /** * The name of the bag.  */
 @property (copy, readwrite) NSString *name;
 /** * The UUID of the bag.  */
 @property (copy, readonly) NSString *key;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
-@property (retain, readonly) NSDictionary *savedObjects;
+@property ( readonly) NSDictionary *savedObjects;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
-@property (retain, readonly) NSDictionary *unsavedObjects;
+@property ( readonly) NSDictionary *unsavedObjects;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
-@property (retain, readonly) NSDictionary *removedObjects;
+@property ( readonly) NSDictionary *removedObjects;
 /** * To determine whether the bag has uncommited changes.  */
 @property (assign, readonly) BOOL hasUnsavedChanges;
 
