@@ -22,55 +22,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		5949B30A1531F12400546B14 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5949B3091531F12400546B14 /* SenTestingKit.framework */; };
-		5949B30C1531F12400546B14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5949B30B1531F12400546B14 /* Cocoa.framework */; };
-		5949B3161531F12400546B14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5949B3141531F12400546B14 /* InfoPlist.strings */; };
-		5949B3201531F13A00546B14 /* NSFNanoBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */; };
-		5949B3221531F13A00546B14 /* NSFNanoExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE4129F25C400B3B2A7 /* NSFNanoExpression.m */; };
-		5949B3241531F13A00546B14 /* NSFNanoGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE6129F25C400B3B2A7 /* NSFNanoGlobals.m */; };
-		5949B3261531F13A00546B14 /* NSFNanoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE8129F25C400B3B2A7 /* NSFNanoObject.m */; };
-		5949B3291531F13A00546B14 /* NSFNanoPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEB129F25C400B3B2A7 /* NSFNanoPredicate.m */; };
-		5949B32B1531F13A00546B14 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
-		5949B32D1531F13A00546B14 /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
-		5949B32F1531F13A00546B14 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
-		5949B3311531F13A00546B14 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
-		5949B3331531F13A00546B14 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
-		5949B33F1531F14600546B14 /* NanoEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 744510DB128A2EA8008A39B5 /* NanoEngineTests.m */; };
-		5949B3411531F14600546B14 /* NanoStoreBagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */; };
-		5949B3431531F14600546B14 /* NanoStoreExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */; };
-		5949B3451531F14600546B14 /* NanoStoreObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7404174C126783FF001E0CB4 /* NanoStoreObjectTests.m */; };
-		5949B3471531F14600546B14 /* NanoStoreResultTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D1E93128B9DCA00D4653D /* NanoStoreResultTests.m */; };
-		5949B3491531F14600546B14 /* NanoStoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */; };
-		5949B34B1531F14600546B14 /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
-		5949B34D1531F14600546B14 /* NanoStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098D122B280C0079E2FF /* NanoStoreTests.m */; };
-		5949B34E1531F15400546B14 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7400C1C812244E820066D2B5 /* libsqlite3.dylib */; };
-		5949B3551531F7D500546B14 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5949B3091531F12400546B14 /* SenTestingKit.framework */; };
-		5949B3571531F7D500546B14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5949B3561531F7D500546B14 /* UIKit.framework */; };
-		5949B3581531F7D500546B14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748D3453139772B600FD5565 /* Foundation.framework */; };
-		5949B35E1531F7D500546B14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5949B35C1531F7D500546B14 /* InfoPlist.strings */; };
-		5949B3661531F7F800546B14 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7400C1C812244E820066D2B5 /* libsqlite3.dylib */; };
-		5949B3671531F83900546B14 /* NSFNanoBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */; };
-		5949B3681531F83900546B14 /* NSFNanoExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE4129F25C400B3B2A7 /* NSFNanoExpression.m */; };
-		5949B3691531F83900546B14 /* NSFNanoGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE6129F25C400B3B2A7 /* NSFNanoGlobals.m */; };
-		5949B36A1531F83900546B14 /* NSFNanoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE8129F25C400B3B2A7 /* NSFNanoObject.m */; };
-		5949B36B1531F83900546B14 /* NSFNanoPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEB129F25C400B3B2A7 /* NSFNanoPredicate.m */; };
-		5949B36C1531F83900546B14 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
-		5949B36D1531F83900546B14 /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
-		5949B36E1531F83900546B14 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
-		5949B36F1531F83900546B14 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
-		5949B3701531F83900546B14 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
-		5949B3711531F83900546B14 /* NanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20983122B280C0079E2FF /* NanoStore.m */; };
-		5949B3721531F83900546B14 /* NanoStoreTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20985122B280C0079E2FF /* NanoStoreTester.m */; };
-		5949B3741531F83900546B14 /* NanoEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 744510DB128A2EA8008A39B5 /* NanoEngineTests.m */; };
-		5949B3751531F83900546B14 /* NanoStoreBagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */; };
-		5949B3761531F83900546B14 /* NanoStoreExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */; };
-		5949B3771531F83900546B14 /* NanoStoreObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7404174C126783FF001E0CB4 /* NanoStoreObjectTests.m */; };
-		5949B3781531F83900546B14 /* NanoStoreResultTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D1E93128B9DCA00D4653D /* NanoStoreResultTests.m */; };
-		5949B3791531F83900546B14 /* NanoStoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */; };
-		5949B37A1531F83900546B14 /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
-		5949B37B1531F83900546B14 /* NanoStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098D122B280C0079E2FF /* NanoStoreTests.m */; };
 		7400C1C912244E820066D2B5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7400C1C812244E820066D2B5 /* libsqlite3.dylib */; };
 		7400C28B122450C60066D2B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D69BFE84028FC02AAC07 /* Foundation.framework */; };
+		74116B0D1538E9C600AEAD62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74116B091538E9C600AEAD62 /* InfoPlist.strings */; };
+		74116B141538E9CE00AEAD62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74116B101538E9CE00AEAD62 /* InfoPlist.strings */; };
 		748D3454139772B600FD5565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748D3453139772B600FD5565 /* Foundation.framework */; };
 		748D34701397730900FD5565 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
 		748D34721397730900FD5565 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
@@ -126,6 +81,50 @@
 		74B63E0B129F25C400B3B2A7 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
 		74B63E0C129F25C400B3B2A7 /* NSFNanoStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */; };
 		74B63E0D129F25C400B3B2A7 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
+		74C1FA8E1538DDD60077DAD1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */; };
+		74C1FA901538DDD60077DAD1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FA8F1538DDD60077DAD1 /* Cocoa.framework */; };
+		74C1FAA21538DDDE0077DAD1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7400C1C812244E820066D2B5 /* libsqlite3.dylib */; };
+		74C1FAA31538DDF20077DAD1 /* NSFNanoBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */; };
+		74C1FAA41538DDF20077DAD1 /* NSFNanoExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE4129F25C400B3B2A7 /* NSFNanoExpression.m */; };
+		74C1FAA51538DDF20077DAD1 /* NSFNanoGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE6129F25C400B3B2A7 /* NSFNanoGlobals.m */; };
+		74C1FAA61538DDF20077DAD1 /* NSFNanoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE8129F25C400B3B2A7 /* NSFNanoObject.m */; };
+		74C1FAA71538DDF20077DAD1 /* NSFNanoPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEB129F25C400B3B2A7 /* NSFNanoPredicate.m */; };
+		74C1FAA81538DDF20077DAD1 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
+		74C1FAA91538DDF20077DAD1 /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
+		74C1FAAA1538DDF20077DAD1 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
+		74C1FAAB1538DDF20077DAD1 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
+		74C1FAAC1538DDF20077DAD1 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
+		74C1FAAD1538DDF20077DAD1 /* OCUnitExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */; };
+		74C1FAAE1538DDF20077DAD1 /* NanoEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 744510DB128A2EA8008A39B5 /* NanoEngineTests.m */; };
+		74C1FAAF1538DDF20077DAD1 /* NanoStoreBagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */; };
+		74C1FAB01538DDF20077DAD1 /* NanoStoreExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */; };
+		74C1FAB11538DDF20077DAD1 /* NanoStoreObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7404174C126783FF001E0CB4 /* NanoStoreObjectTests.m */; };
+		74C1FAB21538DDF20077DAD1 /* NanoStoreResultTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D1E93128B9DCA00D4653D /* NanoStoreResultTests.m */; };
+		74C1FAB31538DDF20077DAD1 /* NanoStoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */; };
+		74C1FAB41538DDF20077DAD1 /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
+		74C1FAB51538DDF20077DAD1 /* NanoStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098D122B280C0079E2FF /* NanoStoreTests.m */; };
+		74C1FABF1538E14B0077DAD1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */; };
+		74C1FAC11538E14B0077DAD1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FAC01538E14B0077DAD1 /* UIKit.framework */; };
+		74C1FAC21538E14B0077DAD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748D3453139772B600FD5565 /* Foundation.framework */; };
+		74C1FAD01538E1740077DAD1 /* NSFNanoBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */; };
+		74C1FAD11538E1740077DAD1 /* NSFNanoExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE4129F25C400B3B2A7 /* NSFNanoExpression.m */; };
+		74C1FAD21538E1740077DAD1 /* NSFNanoGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE6129F25C400B3B2A7 /* NSFNanoGlobals.m */; };
+		74C1FAD31538E1740077DAD1 /* NSFNanoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE8129F25C400B3B2A7 /* NSFNanoObject.m */; };
+		74C1FAD41538E1740077DAD1 /* NSFNanoPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEB129F25C400B3B2A7 /* NSFNanoPredicate.m */; };
+		74C1FAD51538E1740077DAD1 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
+		74C1FAD61538E1740077DAD1 /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
+		74C1FAD71538E1740077DAD1 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
+		74C1FAD81538E1740077DAD1 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
+		74C1FAD91538E1740077DAD1 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
+		74C1FADB1538E1740077DAD1 /* NanoEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 744510DB128A2EA8008A39B5 /* NanoEngineTests.m */; };
+		74C1FADC1538E1740077DAD1 /* NanoStoreBagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */; };
+		74C1FADD1538E1740077DAD1 /* NanoStoreExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */; };
+		74C1FADE1538E1740077DAD1 /* NanoStoreObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7404174C126783FF001E0CB4 /* NanoStoreObjectTests.m */; };
+		74C1FADF1538E1740077DAD1 /* NanoStoreResultTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D1E93128B9DCA00D4653D /* NanoStoreResultTests.m */; };
+		74C1FAE01538E1740077DAD1 /* NanoStoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */; };
+		74C1FAE11538E1740077DAD1 /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
+		74C1FAE21538E1740077DAD1 /* NanoStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098D122B280C0079E2FF /* NanoStoreTests.m */; };
+		74C1FAE41538E2570077DAD1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FAE31538E2570077DAD1 /* libsqlite3.dylib */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -157,26 +156,15 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		32DBCF5E0370ADEE00C91783 /* NanoStore_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStore_Prefix.pch; sourceTree = "<group>"; };
-		5949B3081531F12400546B14 /* UnitTestsMac.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestsMac.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5949B3091531F12400546B14 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		5949B30B1531F12400546B14 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		5949B30E1531F12400546B14 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		5949B30F1531F12400546B14 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		5949B3101531F12400546B14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5949B3131531F12400546B14 /* UnitTestsMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTestsMac-Info.plist"; sourceTree = "<group>"; };
-		5949B3151531F12400546B14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5949B31A1531F12400546B14 /* UnitTestsMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTestsMac-Prefix.pch"; sourceTree = "<group>"; };
-		5949B3541531F7D500546B14 /* UnitTestsiOS.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestsiOS.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5949B3561531F7D500546B14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		5949B35B1531F7D500546B14 /* UnitTestsiOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTestsiOS-Info.plist"; sourceTree = "<group>"; };
-		5949B35D1531F7D500546B14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5949B3621531F7D500546B14 /* UnitTestsiOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTestsiOS-Prefix.pch"; sourceTree = "<group>"; };
 		7400C1C812244E820066D2B5 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
-		7400C1D612244EEA0066D2B5 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		7404174B126783FF001E0CB4 /* NanoStoreObjectTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreObjectTests.h; sourceTree = "<group>"; };
 		7404174C126783FF001E0CB4 /* NanoStoreObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreObjectTests.m; sourceTree = "<group>"; };
-		7404174E1267856F001E0CB4 /* BEHAVIOR.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BEHAVIOR.txt; sourceTree = "<group>"; };
-		7422E34A1398AB2C0005029A /* libnanostore2_i386-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libnanostore2_i386-Prefix.pch"; sourceTree = "<group>"; };
+		74116B0A1538E9C600AEAD62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		74116B0B1538E9C600AEAD62 /* UnitTestiOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnitTestiOS-Info.plist"; sourceTree = "<group>"; };
+		74116B0C1538E9C600AEAD62 /* UnitTestiOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnitTestiOS-Prefix.pch"; sourceTree = "<group>"; };
+		74116B111538E9CE00AEAD62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		74116B121538E9CE00AEAD62 /* UnitTestMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnitTestMac-Info.plist"; sourceTree = "<group>"; };
+		74116B131538E9CE00AEAD62 /* UnitTestMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnitTestMac-Prefix.pch"; sourceTree = "<group>"; };
 		744510DA128A2EA8008A39B5 /* NanoEngineTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoEngineTests.h; sourceTree = "<group>"; };
 		744510DB128A2EA8008A39B5 /* NanoEngineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoEngineTests.m; sourceTree = "<group>"; };
 		745D1E92128B9DCA00D4653D /* NanoStoreResultTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreResultTests.h; sourceTree = "<group>"; };
@@ -231,6 +219,15 @@
 		74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoSearch.m; sourceTree = "<group>"; };
 		74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoStore.h; sourceTree = "<group>"; };
 		74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoStore.m; sourceTree = "<group>"; };
+		74C1FA8C1538DDD60077DAD1 /* UnitTestMac.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestMac.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		74C1FA8F1538DDD60077DAD1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		74C1FA921538DDD60077DAD1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		74C1FA931538DDD60077DAD1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		74C1FA941538DDD60077DAD1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		74C1FABE1538E14B0077DAD1 /* UnitTestiOS.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestiOS.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74C1FAC01538E14B0077DAD1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		74C1FAE31538E2570077DAD1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		74FA09A21268665F00FB5BDC /* NanoStoreBagTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreBagTests.h; sourceTree = "<group>"; };
 		74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreBagTests.m; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -238,32 +235,32 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5949B3041531F12400546B14 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5949B30A1531F12400546B14 /* SenTestingKit.framework in Frameworks */,
-				5949B30C1531F12400546B14 /* Cocoa.framework in Frameworks */,
-				5949B34E1531F15400546B14 /* libsqlite3.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5949B3501531F7D500546B14 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5949B3551531F7D500546B14 /* SenTestingKit.framework in Frameworks */,
-				5949B3571531F7D500546B14 /* UIKit.framework in Frameworks */,
-				5949B3581531F7D500546B14 /* Foundation.framework in Frameworks */,
-				5949B3661531F7F800546B14 /* libsqlite3.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		748D344E139772B600FD5565 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				748D3454139772B600FD5565 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74C1FA881538DDD60077DAD1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74C1FA8E1538DDD60077DAD1 /* SenTestingKit.framework in Frameworks */,
+				74C1FA901538DDD60077DAD1 /* Cocoa.framework in Frameworks */,
+				74C1FAA21538DDDE0077DAD1 /* libsqlite3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74C1FABA1538E14B0077DAD1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74C1FAE41538E2570077DAD1 /* libsqlite3.dylib in Frameworks */,
+				74C1FABF1538E14B0077DAD1 /* SenTestingKit.framework in Frameworks */,
+				74C1FAC11538E14B0077DAD1 /* UIKit.framework in Frameworks */,
+				74C1FAC21538E14B0077DAD1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,8 +281,8 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* NanoStore.framework */,
 				748D3451139772B600FD5565 /* libnanostore2.a */,
-				5949B3081531F12400546B14 /* UnitTestsMac.octest */,
-				5949B3541531F7D500546B14 /* UnitTestsiOS.octest */,
+				74C1FA8C1538DDD60077DAD1 /* UnitTestMac.octest */,
+				74C1FABE1538E14B0077DAD1 /* UnitTestiOS.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -298,11 +295,8 @@
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
-				748D3455139772B600FD5565 /* libnanostore2 */,
-				7422E3481398AB2C0005029A /* libnanostore2_i386 */,
 				748D3452139772B600FD5565 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				7400C1D612244EEA0066D2B5 /* UnitTests-Info.plist */,
 			);
 			name = NanoStore;
 			sourceTree = "<group>";
@@ -318,7 +312,6 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7404174E1267856F001E0CB4 /* BEHAVIOR.txt */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
 			);
@@ -337,83 +330,41 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				748D3455139772B600FD5565 /* libnanostore2 */,
 				32DBCF5E0370ADEE00C91783 /* NanoStore_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		5949B30D1531F12400546B14 /* Other Frameworks */ = {
+		74116B081538E9C600AEAD62 /* UnitTestiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5949B30E1531F12400546B14 /* AppKit.framework */,
-				5949B30F1531F12400546B14 /* CoreData.framework */,
-				5949B3101531F12400546B14 /* Foundation.framework */,
+				74116B091538E9C600AEAD62 /* InfoPlist.strings */,
+				74116B0B1538E9C600AEAD62 /* UnitTestiOS-Info.plist */,
+				74116B0C1538E9C600AEAD62 /* UnitTestiOS-Prefix.pch */,
 			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
+			path = UnitTestiOS;
+			sourceTree = SOURCE_ROOT;
 		};
-		5949B3111531F12400546B14 /* UnitTestsMac */ = {
+		74116B0F1538E9CE00AEAD62 /* UnitTestMac */ = {
 			isa = PBXGroup;
 			children = (
-				5949B3121531F12400546B14 /* Supporting Files */,
+				74116B101538E9CE00AEAD62 /* InfoPlist.strings */,
+				74116B121538E9CE00AEAD62 /* UnitTestMac-Info.plist */,
+				74116B131538E9CE00AEAD62 /* UnitTestMac-Prefix.pch */,
 			);
-			name = UnitTestsMac;
-			path = ../../UnitTestsMac;
-			sourceTree = "<group>";
-		};
-		5949B3121531F12400546B14 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5949B3131531F12400546B14 /* UnitTestsMac-Info.plist */,
-				5949B3141531F12400546B14 /* InfoPlist.strings */,
-				5949B31A1531F12400546B14 /* UnitTestsMac-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5949B3591531F7D500546B14 /* UnitTestsiOS */ = {
-			isa = PBXGroup;
-			children = (
-				5949B35A1531F7D500546B14 /* Supporting Files */,
-			);
-			name = UnitTestsiOS;
-			path = ../../UnitTestsiOS;
-			sourceTree = "<group>";
-		};
-		5949B35A1531F7D500546B14 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5949B35B1531F7D500546B14 /* UnitTestsiOS-Info.plist */,
-				5949B35C1531F7D500546B14 /* InfoPlist.strings */,
-				5949B3621531F7D500546B14 /* UnitTestsiOS-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7422E3481398AB2C0005029A /* libnanostore2_i386 */ = {
-			isa = PBXGroup;
-			children = (
-				7422E3491398AB2C0005029A /* Supporting Files */,
-			);
-			path = libnanostore2_i386;
-			sourceTree = "<group>";
-		};
-		7422E3491398AB2C0005029A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7422E34A1398AB2C0005029A /* libnanostore2_i386-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
+			path = UnitTestMac;
+			sourceTree = SOURCE_ROOT;
 		};
 		748D3452139772B600FD5565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				748D3453139772B600FD5565 /* Foundation.framework */,
-				5949B3091531F12400546B14 /* SenTestingKit.framework */,
-				5949B30B1531F12400546B14 /* Cocoa.framework */,
-				5949B3561531F7D500546B14 /* UIKit.framework */,
-				5949B30D1531F12400546B14 /* Other Frameworks */,
+				74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */,
+				74C1FA8F1538DDD60077DAD1 /* Cocoa.framework */,
+				74C1FAC01538E14B0077DAD1 /* UIKit.framework */,
+				74C1FAE31538E2570077DAD1 /* libsqlite3.dylib */,
+				74C1FA911538DDD60077DAD1 /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -476,8 +427,8 @@
 		74B20986122B280C0079E2FF /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				5949B3591531F7D500546B14 /* UnitTestsiOS */,
-				5949B3111531F12400546B14 /* UnitTestsMac */,
+				74116B0F1538E9CE00AEAD62 /* UnitTestMac */,
+				74116B081538E9C600AEAD62 /* UnitTestiOS */,
 				74B20987122B280C0079E2FF /* NanoStore */,
 			);
 			path = UnitTests;
@@ -569,6 +520,16 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
+		74C1FA911538DDD60077DAD1 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				74C1FA921538DDD60077DAD1 /* AppKit.framework */,
+				74C1FA931538DDD60077DAD1 /* CoreData.framework */,
+				74C1FA941538DDD60077DAD1 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -604,42 +565,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5949B3071531F12400546B14 /* UnitTestsMac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5949B31B1531F12400546B14 /* Build configuration list for PBXNativeTarget "UnitTestsMac" */;
-			buildPhases = (
-				5949B3031531F12400546B14 /* Sources */,
-				5949B3041531F12400546B14 /* Frameworks */,
-				5949B3051531F12400546B14 /* Resources */,
-				5949B3061531F12400546B14 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = UnitTestsMac;
-			productName = UnitTestsMac;
-			productReference = 5949B3081531F12400546B14 /* UnitTestsMac.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
-		5949B3531531F7D500546B14 /* UnitTestsiOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5949B3631531F7D500546B14 /* Build configuration list for PBXNativeTarget "UnitTestsiOS" */;
-			buildPhases = (
-				5949B34F1531F7D500546B14 /* Sources */,
-				5949B3501531F7D500546B14 /* Frameworks */,
-				5949B3511531F7D500546B14 /* Resources */,
-				5949B3521531F7D500546B14 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = UnitTestsiOS;
-			productName = UnitTestsiOS;
-			productReference = 5949B3541531F7D500546B14 /* UnitTestsiOS.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 		748D3450139772B600FD5565 /* libnanostore2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 748D345A139772B600FD5565 /* Build configuration list for PBXNativeTarget "libnanostore2" */;
@@ -655,6 +580,42 @@
 			productName = libnanostore2;
 			productReference = 748D3451139772B600FD5565 /* libnanostore2.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		74C1FA8B1538DDD60077DAD1 /* UnitTestMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74C1FA9F1538DDD60077DAD1 /* Build configuration list for PBXNativeTarget "UnitTestMac" */;
+			buildPhases = (
+				74C1FA871538DDD60077DAD1 /* Sources */,
+				74C1FA881538DDD60077DAD1 /* Frameworks */,
+				74C1FA891538DDD60077DAD1 /* Resources */,
+				74C1FA8A1538DDD60077DAD1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnitTestMac;
+			productName = UnitTestMac;
+			productReference = 74C1FA8C1538DDD60077DAD1 /* UnitTestMac.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		74C1FABD1538E14B0077DAD1 /* UnitTestiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74C1FACF1538E14B0077DAD1 /* Build configuration list for PBXNativeTarget "UnitTestiOS" */;
+			buildPhases = (
+				74C1FAB91538E14B0077DAD1 /* Sources */,
+				74C1FABA1538E14B0077DAD1 /* Frameworks */,
+				74C1FABB1538E14B0077DAD1 /* Resources */,
+				74C1FABC1538E14B0077DAD1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnitTestiOS;
+			productName = UnitTestiOS;
+			productReference = 74C1FABE1538E14B0077DAD1 /* UnitTestiOS.octest */;
+			productType = "com.apple.product-type.bundle";
 		};
 		8DC2EF4F0486A6940098B216 /* NanoStore */ = {
 			isa = PBXNativeTarget;
@@ -702,26 +663,26 @@
 				8DC2EF4F0486A6940098B216 /* NanoStore */,
 				748D3450139772B600FD5565 /* libnanostore2 */,
 				74A7DA3313999F82008F46F1 /* Universal */,
-				5949B3071531F12400546B14 /* UnitTestsMac */,
-				5949B3531531F7D500546B14 /* UnitTestsiOS */,
+				74C1FA8B1538DDD60077DAD1 /* UnitTestMac */,
+				74C1FABD1538E14B0077DAD1 /* UnitTestiOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5949B3051531F12400546B14 /* Resources */ = {
+		74C1FA891538DDD60077DAD1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5949B3161531F12400546B14 /* InfoPlist.strings in Resources */,
+				74116B141538E9CE00AEAD62 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5949B3511531F7D500546B14 /* Resources */ = {
+		74C1FABB1538E14B0077DAD1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5949B35E1531F7D500546B14 /* InfoPlist.strings in Resources */,
+				74116B0D1538E9C600AEAD62 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,32 +697,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5949B3061531F12400546B14 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-		5949B3521531F7D500546B14 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
 		74A7DA3713999F94008F46F1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -773,63 +708,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# #################################################\n# Distribution build script\n# \n# Builds simulator and device builds into a single binary, \n# for both debug and release.\n# #################################################\n\n# GLOBAL SETTINGS\n\nMY_SDK_VERSION=\"5.1\"\nMY_BUILD_RELEASE=\"Release\"\n\nMY_LIBRARY_TARGET=\"libnanostore2\"\nMY_BUILD_DIRECTORY=${BUILD_ROOT}\nMY_BINARY_NAME=\"libnanostore2.a\"\nsetenv BUILD_STYLE=$MY_BUILD_RELEASE\n\n#### BUILD ######\n\n# Build for Device\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphoneos${MY_SDK_VERSION} TARGET_BUILD_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos\"\n\n# Build for Simulator\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphonesimulator${MY_SDK_VERSION} TARGET_BUILD_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator\"\n\nNANOSTORE_OUTPUT_PATH=\"${PROJECT_DIR}/Distribution/NanoStore2/${MY_BUILD_RELEASE}\"\n\necho \"*************************************************\"\necho $NANOSTORE_OUTPUT_PATH\necho \"*************************************************\"\n\nif [[ ! -d ${NANOSTORE_OUTPUT_PATH} ]]; then\nmkdir -p \"$NANOSTORE_OUTPUT_PATH/Library\"\nfi\n\n# Combine lib files for various platforms into one\nlipo -create \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos/${MY_BINARY_NAME}\" \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator/${MY_BINARY_NAME}\" -output \"${NANOSTORE_OUTPUT_PATH}/Library/${MY_BINARY_NAME}\"\n";
+			shellScript = "# #################################################\n# Distribution build script\n# \n# Builds simulator and device builds into a single binary, \n# for both debug and release.\n# #################################################\n\n# GLOBAL SETTINGS\n\nMY_BUILD_RELEASE=\"Release\"\n\nMY_LIBRARY_TARGET=\"libnanostore2\"\nMY_BUILD_DIRECTORY=${BUILD_ROOT}\nMY_BINARY_NAME=\"libnanostore2.a\"\nMY_TEMP_LIBRARY_IPHONEOS_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos\"\nMY_TEMP_LIBRARY_IPHONESIMULATOR_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator\"\nsetenv BUILD_STYLE=$MY_BUILD_RELEASE\n\n#### BUILD ######\n\n# Build for Device\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphoneos TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONEOS_DIR}\n\n# Build for Simulator\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphonesimulator TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\n\nNANOSTORE_OUTPUT_PATH=\"${PROJECT_DIR}/Distribution/NanoStore2/${MY_BUILD_RELEASE}\"\n\necho \"*************************************************\"\necho \"Distribution directory located at: \" $NANOSTORE_OUTPUT_PATH\necho \"*************************************************\"\n\n# Build the NanoStore distro directory if needed\nif [[ ! -d ${NANOSTORE_OUTPUT_PATH} ]]; then\nmkdir -p \"$NANOSTORE_OUTPUT_PATH/Library\"\nfi\n\n# Combine lib files for various platforms into one\nlipo -create \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos/${MY_BINARY_NAME}\" \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator/${MY_BINARY_NAME}\" -output \"${NANOSTORE_OUTPUT_PATH}/Library/${MY_BINARY_NAME}\"\n\n#Delete 'Release-iphoneos' and 'Release-iphonesimulator' directories\nrm -rf ${MY_TEMP_LIBRARY_IPHONEOS_DIR}\nrm -rf ${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\nrm -rf ${PROJECT_DIR}/build\n";
+		};
+		74C1FA8A1538DDD60077DAD1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		74C1FABC1538E14B0077DAD1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5949B3031531F12400546B14 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5949B33F1531F14600546B14 /* NanoEngineTests.m in Sources */,
-				5949B3411531F14600546B14 /* NanoStoreBagTests.m in Sources */,
-				5949B3431531F14600546B14 /* NanoStoreExpressionTests.m in Sources */,
-				5949B3451531F14600546B14 /* NanoStoreObjectTests.m in Sources */,
-				5949B3471531F14600546B14 /* NanoStoreResultTests.m in Sources */,
-				5949B3491531F14600546B14 /* NanoStoreSearchTests.m in Sources */,
-				5949B34B1531F14600546B14 /* NanoStoreSortTests.m in Sources */,
-				5949B34D1531F14600546B14 /* NanoStoreTests.m in Sources */,
-				5949B3201531F13A00546B14 /* NSFNanoBag.m in Sources */,
-				5949B3221531F13A00546B14 /* NSFNanoExpression.m in Sources */,
-				5949B3241531F13A00546B14 /* NSFNanoGlobals.m in Sources */,
-				5949B3261531F13A00546B14 /* NSFNanoObject.m in Sources */,
-				5949B3291531F13A00546B14 /* NSFNanoPredicate.m in Sources */,
-				5949B32B1531F13A00546B14 /* NSFNanoSearch.m in Sources */,
-				5949B32D1531F13A00546B14 /* NSFNanoSortDescriptor.m in Sources */,
-				5949B32F1531F13A00546B14 /* NSFNanoStore.m in Sources */,
-				5949B3311531F13A00546B14 /* NSFNanoEngine.m in Sources */,
-				5949B3331531F13A00546B14 /* NSFNanoResult.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5949B34F1531F7D500546B14 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5949B3671531F83900546B14 /* NSFNanoBag.m in Sources */,
-				5949B3681531F83900546B14 /* NSFNanoExpression.m in Sources */,
-				5949B3691531F83900546B14 /* NSFNanoGlobals.m in Sources */,
-				5949B36A1531F83900546B14 /* NSFNanoObject.m in Sources */,
-				5949B36B1531F83900546B14 /* NSFNanoPredicate.m in Sources */,
-				5949B36C1531F83900546B14 /* NSFNanoSearch.m in Sources */,
-				5949B36D1531F83900546B14 /* NSFNanoSortDescriptor.m in Sources */,
-				5949B36E1531F83900546B14 /* NSFNanoStore.m in Sources */,
-				5949B36F1531F83900546B14 /* NSFNanoEngine.m in Sources */,
-				5949B3701531F83900546B14 /* NSFNanoResult.m in Sources */,
-				5949B3711531F83900546B14 /* NanoStore.m in Sources */,
-				5949B3721531F83900546B14 /* NanoStoreTester.m in Sources */,
-				5949B3741531F83900546B14 /* NanoEngineTests.m in Sources */,
-				5949B3751531F83900546B14 /* NanoStoreBagTests.m in Sources */,
-				5949B3761531F83900546B14 /* NanoStoreExpressionTests.m in Sources */,
-				5949B3771531F83900546B14 /* NanoStoreObjectTests.m in Sources */,
-				5949B3781531F83900546B14 /* NanoStoreResultTests.m in Sources */,
-				5949B3791531F83900546B14 /* NanoStoreSearchTests.m in Sources */,
-				5949B37A1531F83900546B14 /* NanoStoreSortTests.m in Sources */,
-				5949B37B1531F83900546B14 /* NanoStoreTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		748D344D139772B600FD5565 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -844,6 +753,57 @@
 				748D34841397731100FD5565 /* NSFNanoStore.m in Sources */,
 				748D34701397730900FD5565 /* NSFNanoEngine.m in Sources */,
 				748D34721397730900FD5565 /* NSFNanoResult.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74C1FA871538DDD60077DAD1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74C1FAA31538DDF20077DAD1 /* NSFNanoBag.m in Sources */,
+				74C1FAA41538DDF20077DAD1 /* NSFNanoExpression.m in Sources */,
+				74C1FAA51538DDF20077DAD1 /* NSFNanoGlobals.m in Sources */,
+				74C1FAA61538DDF20077DAD1 /* NSFNanoObject.m in Sources */,
+				74C1FAA71538DDF20077DAD1 /* NSFNanoPredicate.m in Sources */,
+				74C1FAA81538DDF20077DAD1 /* NSFNanoSearch.m in Sources */,
+				74C1FAA91538DDF20077DAD1 /* NSFNanoSortDescriptor.m in Sources */,
+				74C1FAAA1538DDF20077DAD1 /* NSFNanoStore.m in Sources */,
+				74C1FAAB1538DDF20077DAD1 /* NSFNanoEngine.m in Sources */,
+				74C1FAAC1538DDF20077DAD1 /* NSFNanoResult.m in Sources */,
+				74C1FAAD1538DDF20077DAD1 /* OCUnitExtensions.m in Sources */,
+				74C1FAAE1538DDF20077DAD1 /* NanoEngineTests.m in Sources */,
+				74C1FAAF1538DDF20077DAD1 /* NanoStoreBagTests.m in Sources */,
+				74C1FAB01538DDF20077DAD1 /* NanoStoreExpressionTests.m in Sources */,
+				74C1FAB11538DDF20077DAD1 /* NanoStoreObjectTests.m in Sources */,
+				74C1FAB21538DDF20077DAD1 /* NanoStoreResultTests.m in Sources */,
+				74C1FAB31538DDF20077DAD1 /* NanoStoreSearchTests.m in Sources */,
+				74C1FAB41538DDF20077DAD1 /* NanoStoreSortTests.m in Sources */,
+				74C1FAB51538DDF20077DAD1 /* NanoStoreTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74C1FAB91538E14B0077DAD1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74C1FAD01538E1740077DAD1 /* NSFNanoBag.m in Sources */,
+				74C1FAD11538E1740077DAD1 /* NSFNanoExpression.m in Sources */,
+				74C1FAD21538E1740077DAD1 /* NSFNanoGlobals.m in Sources */,
+				74C1FAD31538E1740077DAD1 /* NSFNanoObject.m in Sources */,
+				74C1FAD41538E1740077DAD1 /* NSFNanoPredicate.m in Sources */,
+				74C1FAD51538E1740077DAD1 /* NSFNanoSearch.m in Sources */,
+				74C1FAD61538E1740077DAD1 /* NSFNanoSortDescriptor.m in Sources */,
+				74C1FAD71538E1740077DAD1 /* NSFNanoStore.m in Sources */,
+				74C1FAD81538E1740077DAD1 /* NSFNanoEngine.m in Sources */,
+				74C1FAD91538E1740077DAD1 /* NSFNanoResult.m in Sources */,
+				74C1FADB1538E1740077DAD1 /* NanoEngineTests.m in Sources */,
+				74C1FADC1538E1740077DAD1 /* NanoStoreBagTests.m in Sources */,
+				74C1FADD1538E1740077DAD1 /* NanoStoreExpressionTests.m in Sources */,
+				74C1FADE1538E1740077DAD1 /* NanoStoreObjectTests.m in Sources */,
+				74C1FADF1538E1740077DAD1 /* NanoStoreResultTests.m in Sources */,
+				74C1FAE01538E1740077DAD1 /* NanoStoreSearchTests.m in Sources */,
+				74C1FAE11538E1740077DAD1 /* NanoStoreSortTests.m in Sources */,
+				74C1FAE21538E1740077DAD1 /* NanoStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,18 +835,18 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5949B3141531F12400546B14 /* InfoPlist.strings */ = {
+		74116B091538E9C600AEAD62 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5949B3151531F12400546B14 /* en */,
+				74116B0A1538E9C600AEAD62 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5949B35C1531F7D500546B14 /* InfoPlist.strings */ = {
+		74116B101538E9CE00AEAD62 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5949B35D1531F7D500546B14 /* en */,
+				74116B111538E9CE00AEAD62 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -898,6 +858,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -920,6 +881,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -945,11 +907,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = macosx;
-				SYMROOT = "";
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -961,101 +921,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
-				SYMROOT = "";
-			};
-			name = Release;
-		};
-		5949B31C1531F12400546B14 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTestsMac/UnitTestsMac-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				INFOPLIST_FILE = "UnitTestsMac/UnitTestsMac-Info.plist";
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		5949B31D1531F12400546B14 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTestsMac/UnitTestsMac-Prefix.pch";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				INFOPLIST_FILE = "UnitTestsMac/UnitTestsMac-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
-		5949B3641531F7D500546B14 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTestsiOS/UnitTestsiOS-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				INFOPLIST_FILE = "UnitTestsiOS/UnitTestsiOS-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		5949B3651531F7D500546B14 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTestsiOS/UnitTestsiOS-Prefix.pch";
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				INFOPLIST_FILE = "UnitTestsiOS/UnitTestsiOS-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = octest;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -1110,6 +977,103 @@
 			};
 			name = Release;
 		};
+		74C1FAA01538DDD60077DAD1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTestMac/UnitTestMac-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "UnitTestMac/UnitTestMac-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		74C1FAA11538DDD60077DAD1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTestMac/UnitTestMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "UnitTestMac/UnitTestMac-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		74C1FACD1538E14B0077DAD1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTestiOS/UnitTestiOS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "UnitTestiOS/UnitTestiOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		74C1FACE1538E14B0077DAD1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTestiOS/UnitTestiOS-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "UnitTestiOS/UnitTestiOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1131,24 +1095,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5949B31B1531F12400546B14 /* Build configuration list for PBXNativeTarget "UnitTestsMac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5949B31C1531F12400546B14 /* Debug */,
-				5949B31D1531F12400546B14 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5949B3631531F7D500546B14 /* Build configuration list for PBXNativeTarget "UnitTestsiOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5949B3641531F7D500546B14 /* Debug */,
-				5949B3651531F7D500546B14 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		748D345A139772B600FD5565 /* Build configuration list for PBXNativeTarget "libnanostore2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1163,6 +1109,24 @@
 			buildConfigurations = (
 				74A7DA3413999F82008F46F1 /* Debug */,
 				74A7DA3513999F82008F46F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74C1FA9F1538DDD60077DAD1 /* Build configuration list for PBXNativeTarget "UnitTestMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74C1FAA01538DDD60077DAD1 /* Debug */,
+				74C1FAA11538DDD60077DAD1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74C1FACF1538E14B0077DAD1 /* Build configuration list for PBXNativeTarget "UnitTestiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74C1FACD1538E14B0077DAD1 /* Debug */,
+				74C1FACE1538E14B0077DAD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
