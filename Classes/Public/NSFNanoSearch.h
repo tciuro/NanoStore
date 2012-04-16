@@ -153,15 +153,6 @@
 @class NSFNanoStore, NSFNanoResult;
 
 @interface NSFNanoSearch : NSObject
-{
-    NSFNanoStore        *__weak nanoStore;
-    
-    /** \cond */
-    @protected
-    NSFReturnType       returnedObjectType;
-    NSString            *sql;
-    /** \endcond */
-}
 
 /** * The document store used for searching. */
 @property (weak, readonly) NSFNanoStore *nanoStore;

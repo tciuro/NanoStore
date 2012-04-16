@@ -73,12 +73,6 @@
  */
 
 @interface NSFNanoSortDescriptor : NSObject
-{
-    /** \cond */
-    NSString    *attribute;
-    BOOL        isAscending;
-    /** \endcond */
-}
 
 /** * The property key to use when performing a comparison */
 @property (readonly) NSString *attribute;

@@ -180,11 +180,6 @@
 #import "NanoStore.h"
 
 @interface NSFNanoObject : NSObject <NSFNanoObjectProtocol, NSCopying>
-{
-    NSString            *key;
-    NSMutableDictionary *info;
-    NSString            *originalClassString;
-}
 
 /** * The UUID of the NanoObject.  */
 @property (copy, readonly) NSString *key;

@@ -40,18 +40,6 @@
 @class NSFNanoResult;
 
 @interface NSFNanoEngine : NSObject
-{
-    @protected
-    sqlite3                 *sqlite;
-    NSString                *path;
-    NSFCacheMethod           cacheMethod;
-    
-    /** \cond */
-    NSMutableDictionary     *schema;
-    BOOL                    willCommitChangeSchema;
-    unsigned int            busyTimeout;
-    /** \endcond */
-}
 
 /** * A reference to the SQLite database.  */
 @property (assign, readonly) sqlite3 *sqlite;

@@ -60,12 +60,6 @@
  */
 
 @interface NSFNanoExpression : NSObject
-{
-    /** \cond */
-    NSMutableArray      *predicates;
-    NSMutableArray      *operators;
-    /** \endcond */
-}
 
 /** * Array of NSFNanoPredicate */
 @property (readonly) NSArray      *predicates;

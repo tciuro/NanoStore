@@ -67,19 +67,6 @@
 #import "NSFNanoObjectProtocol.h"
 
 @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
-{
-    NSFNanoStore            *__unsafe_unretained store;
-    NSString                *name;
-    NSString                *key;
-    BOOL                    hasUnsavedChanges;
-    
-    @protected
-    /** \cond */
-    NSMutableDictionary     *savedObjects;
-    NSMutableDictionary     *unsavedObjects;
-    NSMutableDictionary     *removedObjects;
-    /** \endcond */
-}
 
 /** * The store where the bag is located.  */
 @property (unsafe_unretained, readonly) NSFNanoStore *store;

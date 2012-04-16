@@ -32,6 +32,19 @@
 #include <stdlib.h>
 
 @implementation NSFNanoStore
+{
+@protected
+    NSFNanoEngine               *nanoStoreEngine;
+    NSFEngineProcessingMode     nanoEngineProcessingMode;
+    NSUInteger                  saveInterval;
+    
+    /** \cond */
+    NSMutableArray              *addedObjects;
+    BOOL                        _isOurTransaction;
+    sqlite3_stmt                *_storeValuesStatement;
+    sqlite3_stmt                *_storeKeysStatement;
+    /** \endcond */
+}
 
 @synthesize nanoStoreEngine;
 @synthesize nanoEngineProcessingMode;

@@ -32,6 +32,19 @@
 #import "NSFNanoSearch_Private.h"
 
 @implementation NSFNanoBag
+{
+    NSFNanoStore            *__unsafe_unretained store;
+    NSString                *name;
+    NSString                *key;
+    BOOL                    hasUnsavedChanges;
+    
+@protected
+    /** \cond */
+    NSMutableDictionary     *savedObjects;
+    NSMutableDictionary     *unsavedObjects;
+    NSMutableDictionary     *removedObjects;
+    /** \endcond */
+}
 
 @synthesize store, name, key, savedObjects, unsavedObjects, removedObjects, hasUnsavedChanges;
 

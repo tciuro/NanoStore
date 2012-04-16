@@ -68,12 +68,6 @@
 @class NSFNanoStore;
 
 @interface NSFNanoResult : NSObject
-{
-    @protected
-    /** \cond */
-    NSDictionary    *results;
-    /** \endcond */
-}
 
 /** * Number of rows contained in the result set. */
 @property (assign, readonly) NSUInteger numberOfRows;

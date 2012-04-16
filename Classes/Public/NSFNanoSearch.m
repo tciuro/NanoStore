@@ -28,6 +28,15 @@
 #import "NanoStore_Private.h"
 
 @implementation NSFNanoSearch
+{
+    NSFNanoStore        *__weak nanoStore;
+    
+    /** \cond */
+@protected
+    NSFReturnType       returnedObjectType;
+    NSString            *sql;
+    /** \endcond */
+}
 
 @synthesize nanoStore;
 @synthesize attributesToBeReturned;

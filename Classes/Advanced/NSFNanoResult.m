@@ -28,6 +28,12 @@
 #import "NanoStore_Private.h"
 
 @implementation NSFNanoResult
+{
+@protected
+    /** \cond */
+    NSDictionary    *results;
+    /** \endcond */
+}
 
 @synthesize numberOfRows;
 @synthesize error;

@@ -28,6 +28,12 @@
 #import "NSFNanoGlobals.h"
 
 @implementation NSFNanoSortDescriptor
+{
+    /** \cond */
+    NSString    *attribute;
+    BOOL        isAscending;
+    /** \endcond */
+}
 
 @synthesize attribute, isAscending;
 

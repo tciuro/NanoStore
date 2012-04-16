@@ -71,11 +71,6 @@
 #import "NSFNanoGlobals.h"
 
 @interface NSFNanoPredicate : NSObject
-{
-    NSFTableColumnType      column;
-    NSFMatchType            match;
-    NSString                *value;
-}
 
 /** * The type of column being referenced. */
 @property (assign, readonly) NSFTableColumnType column;

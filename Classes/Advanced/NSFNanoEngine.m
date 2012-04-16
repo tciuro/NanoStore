@@ -45,6 +45,18 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 #pragma mark -
 
 @implementation NSFNanoEngine
+{
+@protected
+    sqlite3                 *sqlite;
+    NSString                *path;
+    NSFCacheMethod           cacheMethod;
+    
+    /** \cond */
+    NSMutableDictionary     *schema;
+    BOOL                    willCommitChangeSchema;
+    unsigned int            busyTimeout;
+    /** \endcond */
+}
 
 @synthesize sqlite;
 @synthesize path;

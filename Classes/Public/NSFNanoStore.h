@@ -70,19 +70,6 @@
 @class NSFNanoEngine, NSFNanoResult, NSFNanoBag, NSFNanoSortDescriptor;
 
 @interface NSFNanoStore : NSObject
-{
-    @protected
-    NSFNanoEngine               *nanoStoreEngine;
-    NSFEngineProcessingMode     nanoEngineProcessingMode;
-    NSUInteger                  saveInterval;
-
-    /** \cond */
-    NSMutableArray              *addedObjects;
-    BOOL                        _isOurTransaction;
-    sqlite3_stmt                *_storeValuesStatement;
-    sqlite3_stmt                *_storeKeysStatement;
-    /** \endcond */
-}
 
 /** * A reference to the engine used by the document store, which contains a reference to the SQLite database. */
 @property ( readonly) NSFNanoEngine *nanoStoreEngine;

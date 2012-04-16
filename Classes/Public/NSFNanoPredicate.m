@@ -28,6 +28,11 @@
 #import "NanoStore_Private.h"
 
 @implementation NSFNanoPredicate
+{
+    NSFTableColumnType      column;
+    NSFMatchType            match;
+    NSString                *value;
+}
 
 @synthesize column;
 @synthesize match;

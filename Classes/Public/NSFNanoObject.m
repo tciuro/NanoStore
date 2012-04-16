@@ -29,6 +29,11 @@
 #import "NSFNanoGlobals_Private.h"
 
 @implementation NSFNanoObject
+{
+    NSString            *key;
+    NSMutableDictionary *info;
+    NSString            *originalClassString;
+}
 
 @synthesize info;
 @synthesize key;

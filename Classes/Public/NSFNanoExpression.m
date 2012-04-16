@@ -28,6 +28,12 @@
 #import "NanoStore_Private.h"
 
 @implementation NSFNanoExpression
+{
+    /** \cond */
+    NSMutableArray      *predicates;
+    NSMutableArray      *operators;
+    /** \endcond */
+}
 
 @synthesize predicates, operators;
 
