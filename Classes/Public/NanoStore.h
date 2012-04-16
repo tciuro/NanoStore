@@ -60,6 +60,9 @@
  - Full index support, inner-objects, embedded arrays and dictionaries
  - Convenience methods to access, manipulate and maintain SQLite databases
  - Full SQLite access available
+ - Mac OS X Lion 10.7 and iOS 5 ready
+ - iOS library runs on the device and simulator
+ - ARC compliant
  
  @section installation_sec Installation
  
