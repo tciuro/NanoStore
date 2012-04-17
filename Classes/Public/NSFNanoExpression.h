@@ -62,9 +62,9 @@
 @interface NSFNanoExpression : NSObject
 
 /** * Array of NSFNanoPredicate */
-@property (readonly) NSArray      *predicates;
+@property (nonatomic, readonly) NSArray      *predicates;
 /** * Array of NSNumber wrapping \link NSFGlobals::NSFOperator NSFOperator \endlink */
-@property (readonly) NSArray      *operators;
+@property (nonatomic, readonly) NSArray      *operators;
 
 /** @name Creating and Initializing Expressions
  */

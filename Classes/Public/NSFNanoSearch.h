@@ -155,25 +155,25 @@
 @interface NSFNanoSearch : NSObject
 
 /** * The document store used for searching. */
-@property (weak, readonly) NSFNanoStore *nanoStore;
+@property (nonatomic, weak, readonly) NSFNanoStore *nanoStore;
 /** * The set of attributes to be returned on matching objects. */
-@property (strong, readwrite) NSArray *attributesToBeReturned;
+@property (nonatomic, strong, readwrite) NSArray *attributesToBeReturned;
 /** * The key used for searching. */
-@property (copy, readwrite) NSString *key;
+@property (nonatomic, copy, readwrite) NSString *key;
 /** * The attribute used for searching. */
-@property (copy, readwrite) NSString *attribute;
+@property (nonatomic, copy, readwrite) NSString *attribute;
 /** * The value used for searching. */
-@property (copy, readwrite) id value;
+@property (nonatomic, copy, readwrite) id value;
 /** * The comparison operator used for searching. */
-@property (assign, readwrite) NSFMatchType match;
+@property (nonatomic, assign, readwrite) NSFMatchType match;
 /** * The list of NSFNanoExpression objects used for searching. */
-@property (strong, readwrite) NSArray *expressions;
+@property (nonatomic, strong, readwrite) NSArray *expressions;
 /** * If set to YES, specifying NSFReturnKeys applies the DISTINCT function and groups the values. */
-@property (assign, readwrite) BOOL groupValues;
+@property (nonatomic, assign, readwrite) BOOL groupValues;
 /** * The SQL statement used for searching. Set when executeSQL: is invoked. */
-@property (copy, readonly) NSString *sql;
+@property (nonatomic, copy, readonly) NSString *sql;
 /** * The sort holds an array of one or more sort descriptors of type \link NSFNanoSortDescriptor NSFNanoSortDescriptor \endlink. */
-@property (strong, readwrite) NSArray *sort;
+@property (nonatomic, strong, readwrite) NSArray *sort;
 
 /** @name Creating and Initializing a Search
  */

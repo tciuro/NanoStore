@@ -26,28 +26,18 @@
 
 #import "NanoStore.h"
 #import "NanoStore_Private.h"
+#import "NSFNanoSearch_Private.h"
 
 @implementation NSFNanoSearch
 {
-    NSFNanoStore        *__weak nanoStore;
-    
     /** \cond */
 @protected
-    NSFReturnType       returnedObjectType;
-    NSString            *sql;
+    NSFReturnType returnedObjectType;
     /** \endcond */
 }
 
-@synthesize nanoStore;
-@synthesize attributesToBeReturned;
-@synthesize key;
-@synthesize attribute;
-@synthesize value;
-@synthesize match;
-@synthesize expressions;
-@synthesize groupValues;
-@synthesize sql;
-@synthesize sort;
+
+@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort;
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -121,7 +111,7 @@
     [self reset];
     self.sort = savedSort;
     
-    [self _setObjectTypeReturned:theReturnType];
+    returnedObjectType = theReturnType;
     sql = [theSQLStatement copy];
     
     NSDictionary *results = [self _retrieveDataWithError:outError];
@@ -167,14 +157,14 @@
      sql = nil;
      sort = nil;
 
-    [self _setObjectTypeReturned:NSFReturnObjects];
+     returnedObjectType = NSFReturnObjects;
 }
 
 #pragma mark -
 
 - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
-    [self _setObjectTypeReturned:theReturnType];
+    returnedObjectType = theReturnType;
     
     // Make sure we don't have a SQL statement around...
     sql = nil;
@@ -186,7 +176,7 @@
 
 - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
-    [self _setObjectTypeReturned:theReturnType];
+    returnedObjectType = theReturnType;
     
     // Make sure we don't have a SQL statement around...
     sql = nil;
@@ -202,8 +192,8 @@
 
 - (NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute
 {    
-    NSFReturnType savedObjectTypeReturned = [self _objectTypeReturned];
-    [self _setObjectTypeReturned:NSFReturnKeys];
+    NSFReturnType savedObjectTypeReturned = returnedObjectType;
+    returnedObjectType = NSFReturnKeys;
     
     NSString *savedSQL = sql;
     sql = nil;
@@ -237,7 +227,7 @@
     
     NSFNanoResult *result = [nanoStore _executeSQL:theAggregatedSQLStatement];
 
-    [self _setObjectTypeReturned:savedObjectTypeReturned];
+    returnedObjectType = savedObjectTypeReturned;
     sql = savedSQL;
     
     return [NSNumber numberWithFloat:[[result firstValue]floatValue]];
@@ -248,18 +238,6 @@
 #pragma mark -
 
 /** \cond */
-
-- (void)_setObjectTypeReturned:(NSFReturnType)theReturnedType
-{
-    if (returnedObjectType != theReturnedType) {
-        returnedObjectType = theReturnedType;
-    }
-}
-
-- (NSFReturnType)_objectTypeReturned
-{
-    return returnedObjectType;
-}
 
 - (NSDictionary *)_retrieveDataWithError:(out NSError **)outError
 {
@@ -278,7 +256,7 @@
         // We basically honor the specified query but replace the columns with the expected ones per returned type.
         
         NSString *subStatement = [aSQLQuery substringFromIndex:[aSQLQuery rangeOfString:@"FROM" options:NSCaseInsensitiveSearch].location];
-        NSFReturnType returnType = [self _objectTypeReturned];
+        NSFReturnType returnType = returnedObjectType;
         switch (returnType) {
             case NSFReturnKeys:
                 aSQLQuery = [NSString stringWithFormat:@"SELECT NSFKey %@", subStatement];
@@ -504,7 +482,7 @@
         attributes = [quotedObjects componentsJoinedByString:@","];
     }
     
-    NSFReturnType returnType = [self _objectTypeReturned];
+    NSFReturnType returnType = returnedObjectType;
     
     if ((nil == aKey) && (nil == anAttribute) && (nil == aValue)) {
         switch (returnType) {
@@ -588,7 +566,7 @@
     NSUInteger i, count = [someExpressions count];
     NSMutableArray *sqlComponents = [NSMutableArray new];
     NSMutableString *parentheses = [NSMutableString new];
-    NSFReturnType returnType = [self _objectTypeReturned];
+    NSFReturnType returnType = returnedObjectType;
 
     for (i = 0; i < count; i++) {
         NSFNanoExpression *expression = [someExpressions objectAtIndex:i];

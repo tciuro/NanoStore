@@ -182,11 +182,11 @@
 @interface NSFNanoObject : NSObject <NSFNanoObjectProtocol, NSCopying>
 
 /** * The UUID of the NanoObject.  */
-@property (copy, readonly) NSString *key;
+@property (nonatomic, copy, readonly) NSString *key;
 /** * The user-supplied information of the NanoObject.  */
-@property (copy, readonly) NSDictionary *info;
+@property (nonatomic, copy, readonly) NSDictionary *info;
 /** * The class name used to store the NanoObject.  */
-@property (copy, readonly) NSString *originalClassString;
+@property (nonatomic, copy, readonly) NSString *originalClassString;
 
 /** @name Creating and Initializing a NanoObject
  */

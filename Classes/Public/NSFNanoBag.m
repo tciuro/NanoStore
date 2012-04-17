@@ -33,11 +33,6 @@
 
 @implementation NSFNanoBag
 {
-    NSFNanoStore            *__unsafe_unretained store;
-    NSString                *name;
-    NSString                *key;
-    BOOL                    hasUnsavedChanges;
-    
 @protected
     /** \cond */
     NSMutableDictionary     *savedObjects;
@@ -115,10 +110,8 @@
 
 - (void)setName:(NSString *)aName
 {
-    if (aName != name) {
-        name = [aName copy];
-        hasUnsavedChanges = YES;
-    }
+    name = [aName copy];
+    hasUnsavedChanges = YES;
 }
 
 /** \endcond */

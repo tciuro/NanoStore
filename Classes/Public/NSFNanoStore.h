@@ -72,7 +72,7 @@
 @interface NSFNanoStore : NSObject
 
 /** * A reference to the engine used by the document store, which contains a reference to the SQLite database. */
-@property ( readonly) NSFNanoEngine *nanoStoreEngine;
+@property (nonatomic, strong, readonly) NSFNanoEngine *nanoStoreEngine;
 /** * The type of engine mode used by NanoStore to process data in the document store.
  The mode can be one of two options: <i>NSFEngineProcessingDefaultMode</i> and <i>NSFEngineProcessingFastMode</i>. See <i>NSFEngineProcessingMode</i>
  to learn more about how these options affect the engine behavior.
@@ -94,11 +94,11 @@
  @note Set this property before you open the document store.
  @see - (BOOL)openWithError:(out NSError **)outError;
  */
-@property (assign, readwrite) NSFEngineProcessingMode nanoEngineProcessingMode;
+@property (nonatomic, assign, readwrite) NSFEngineProcessingMode nanoEngineProcessingMode;
 /** * Number of iterations that will trigger an automatic save. */
-@property (assign, readwrite) NSUInteger saveInterval;
+@property (nonatomic, assign, readwrite) NSUInteger saveInterval;
 /** * Whether there are objects that haven't been saved to the store. */
-@property (readonly) BOOL hasUnsavedChanges;
+@property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
 /** @name Creating and Initializing NanoStore
  */

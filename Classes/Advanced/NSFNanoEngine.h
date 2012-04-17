@@ -42,11 +42,11 @@
 @interface NSFNanoEngine : NSObject
 
 /** * A reference to the SQLite database.  */
-@property (assign, readonly) sqlite3 *sqlite;
+@property (nonatomic, assign, readonly) sqlite3 *sqlite;
 /** * The file path where the database is located. */
-@property (copy, readonly) NSString *path;
+@property (nonatomic, copy, readonly) NSString *path;
 /** * The cache mechanism being used. */
-@property (assign, readwrite) NSFCacheMethod cacheMethod;
+@property (nonatomic, assign, readwrite) NSFCacheMethod cacheMethod;
 
 /** @name Creating and Initializing NanoEngine
  */

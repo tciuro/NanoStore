@@ -30,14 +30,10 @@
 
 @implementation NSFNanoObject
 {
-    NSString            *key;
     NSMutableDictionary *info;
-    NSString            *originalClassString;
 }
 
-@synthesize info;
-@synthesize key;
-@synthesize originalClassString;
+@synthesize info, key, originalClassString;
 
 + (NSFNanoObject*)nanoObject
 {

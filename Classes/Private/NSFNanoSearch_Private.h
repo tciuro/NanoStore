@@ -29,8 +29,6 @@
 /** \cond */
 
 @interface NSFNanoSearch (Private)
-- (void)_setObjectTypeReturned:(NSFReturnType)theReturnedType;
-- (NSFReturnType)_objectTypeReturned;
 - (NSDictionary *)_retrieveDataWithError:(out NSError **)outError;
 - (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match;
 - (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match returning:(NSFReturnType)returnedObjectType;

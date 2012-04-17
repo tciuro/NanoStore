@@ -73,11 +73,11 @@
 @interface NSFNanoPredicate : NSObject
 
 /** * The type of column being referenced. */
-@property (assign, readonly) NSFTableColumnType column;
+@property (nonatomic, assign, readonly) NSFTableColumnType column;
 /** * The comparison operator to be used. */
-@property (assign, readonly) NSFMatchType match;
+@property (nonatomic, assign, readonly) NSFMatchType match;
 /** * The value to be used for comparison.  */
-@property (copy, readonly) NSString *value;
+@property (nonatomic, copy, readonly) NSString *value;
 
 /** @name Creating and Initializing a Predicate
  */

@@ -70,9 +70,9 @@
 @interface NSFNanoResult : NSObject
 
 /** * Number of rows contained in the result set. */
-@property (assign, readonly) NSUInteger numberOfRows;
+@property (nonatomic, assign, readonly) NSUInteger numberOfRows;
 /** * A reference to the error encountered while processing the request, otherwise nil if the request was successful. */
-@property (strong, readonly) NSError *error;
+@property (nonatomic, strong, readonly) NSError *error;
 
 /** @name Accessors
  */

@@ -75,9 +75,9 @@
 @interface NSFNanoSortDescriptor : NSObject
 
 /** * The property key to use when performing a comparison */
-@property (readonly) NSString *attribute;
+@property (nonatomic, readonly) NSString *attribute;
 /** * The property to indicate whether the comparison should be performed in ascending mode */
-@property (readonly) BOOL isAscending;
+@property (nonatomic, readonly) BOOL isAscending;
 
 /** @name Creating and Initializing Expressions
  */
