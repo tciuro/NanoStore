@@ -1155,17 +1155,17 @@
         _NSFLog(@"     Done. Removing the objects took %.3f seconds", secondsRemoving);
         
         // Store the objects...
-        @autoreleasepool {
-            BOOL transactionStartedHere = [self beginTransactionAndReturnError:nil];
-            
-            _NSFLog(@"     Storing %ld objects...", unsavedObjectsCount);
-            
-            // Reset the default save interval if needed...
-            if (0 == saveInterval) {
-                self.saveInterval = 1;
-            }
-            
-            for (id object in addedObjects) {
+        BOOL transactionStartedHere = [self beginTransactionAndReturnError:nil];
+        
+        _NSFLog(@"     Storing %ld objects...", unsavedObjectsCount);
+        
+        // Reset the default save interval if needed...
+        if (0 == saveInterval) {
+            self.saveInterval = 1;
+        }
+        
+        for (id object in addedObjects) {
+            @autoreleasepool {
                 // If the object was originally created by storing a class not recognized by this process, honor it and store it with the right class string.
                 NSString *className = nil;
                 if (YES == [object respondsToSelector:@selector(originalClassString)]) {
@@ -1203,14 +1203,14 @@
                     }
                 }
             }
-            
-            // Commit the changes
-            if (transactionStartedHere) {
-                if (NO == [self commitTransactionAndReturnError:outError]) {
-                    [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
-                                             reason:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, [*outError localizedDescription]]
-                                           userInfo:nil]raise];
-                }
+        }
+        
+        // Commit the changes
+        if (transactionStartedHere) {
+            if (NO == [self commitTransactionAndReturnError:outError]) {
+                [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
+                                         reason:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, [*outError localizedDescription]]
+                                       userInfo:nil]raise];
             }
         }
         

@@ -415,13 +415,13 @@
                 [searchResults setObject:[NSNull null] forKey:resultKey];
             return searchResults;
         } else {
-            @autoreleasepool {
                 NSArray *resultsObjectClass = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFObjectClass]];
                 NSArray *resultsObjects = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFPlist]];
                 NSArray *resultsKeys = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFKey]];
                 NSUInteger i, count = [resultsKeys count];
                 
-                for (i = 0; i < count; i++) {
+            for (i = 0; i < count; i++) {
+                @autoreleasepool {
                     NSDictionary *info = [NSFNanoEngine _plistToDictionary:[resultsObjects objectAtIndex:i]];
                     if (nil != info) {
                         NSString *keyValue = [resultsKeys objectAtIndex:i];
