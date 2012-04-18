@@ -37,6 +37,8 @@
 		748D34801397731100FD5565 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
 		748D34821397731100FD5565 /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
 		748D34841397731100FD5565 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
+		748EB00A153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 748EB009153F09A600F5C7F2 /* NanoStoreGlobalsTests.m */; };
+		748EB00B153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 748EB009153F09A600F5C7F2 /* NanoStoreGlobalsTests.m */; };
 		74A4EF12138E3EBD00FBC46C /* NSFNanoSortDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 74A4EF10138E3EBD00FBC46C /* NSFNanoSortDescriptor.h */; };
 		74A4EF13138E3EBD00FBC46C /* NSFNanoSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */; };
 		74A7DA461399B0E7008F46F1 /* NanoStore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74B63DE0129F25C400B3B2A7 /* NanoStore.h */; };
@@ -94,7 +96,6 @@
 		74C1FAAA1538DDF20077DAD1 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
 		74C1FAAB1538DDF20077DAD1 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
 		74C1FAAC1538DDF20077DAD1 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
-		74C1FAAD1538DDF20077DAD1 /* OCUnitExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */; };
 		74C1FAAE1538DDF20077DAD1 /* NanoEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 744510DB128A2EA8008A39B5 /* NanoEngineTests.m */; };
 		74C1FAAF1538DDF20077DAD1 /* NanoStoreBagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */; };
 		74C1FAB01538DDF20077DAD1 /* NanoStoreExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */; };
@@ -172,6 +173,8 @@
 		748D3451139772B600FD5565 /* libnanostore2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnanostore2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		748D3453139772B600FD5565 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		748D3457139772B600FD5565 /* libnanostore2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libnanostore2-Prefix.pch"; sourceTree = "<group>"; };
+		748EB008153F09A600F5C7F2 /* NanoStoreGlobalsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreGlobalsTests.h; sourceTree = "<group>"; };
+		748EB009153F09A600F5C7F2 /* NanoStoreGlobalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreGlobalsTests.m; sourceTree = "<group>"; };
 		74987EE812DB1B1A00E5D7CB /* OCUnitExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCUnitExtensions.h; sourceTree = "<group>"; };
 		74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCUnitExtensions.m; sourceTree = "<group>"; };
 		74987F1B12DB1B9D00E5D7CB /* Icon-Fail.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Fail.tiff"; sourceTree = "<group>"; };
@@ -437,6 +440,8 @@
 		74B20987122B280C0079E2FF /* NanoStore */ = {
 			isa = PBXGroup;
 			children = (
+				748EB008153F09A600F5C7F2 /* NanoStoreGlobalsTests.h */,
+				748EB009153F09A600F5C7F2 /* NanoStoreGlobalsTests.m */,
 				744510DA128A2EA8008A39B5 /* NanoEngineTests.h */,
 				744510DB128A2EA8008A39B5 /* NanoEngineTests.m */,
 				74FA09A21268665F00FB5BDC /* NanoStoreBagTests.h */,
@@ -770,7 +775,6 @@
 				74C1FAAA1538DDF20077DAD1 /* NSFNanoStore.m in Sources */,
 				74C1FAAB1538DDF20077DAD1 /* NSFNanoEngine.m in Sources */,
 				74C1FAAC1538DDF20077DAD1 /* NSFNanoResult.m in Sources */,
-				74C1FAAD1538DDF20077DAD1 /* OCUnitExtensions.m in Sources */,
 				74C1FAAE1538DDF20077DAD1 /* NanoEngineTests.m in Sources */,
 				74C1FAAF1538DDF20077DAD1 /* NanoStoreBagTests.m in Sources */,
 				74C1FAB01538DDF20077DAD1 /* NanoStoreExpressionTests.m in Sources */,
@@ -779,6 +783,7 @@
 				74C1FAB31538DDF20077DAD1 /* NanoStoreSearchTests.m in Sources */,
 				74C1FAB41538DDF20077DAD1 /* NanoStoreSortTests.m in Sources */,
 				74C1FAB51538DDF20077DAD1 /* NanoStoreTests.m in Sources */,
+				748EB00A153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,6 +809,7 @@
 				74C1FAE01538E1740077DAD1 /* NanoStoreSearchTests.m in Sources */,
 				74C1FAE11538E1740077DAD1 /* NanoStoreSortTests.m in Sources */,
 				74C1FAE21538E1740077DAD1 /* NanoStoreTests.m in Sources */,
+				748EB00B153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
