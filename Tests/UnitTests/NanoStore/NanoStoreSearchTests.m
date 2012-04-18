@@ -828,11 +828,9 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSFNanoResult *results = [search executeSQL:@"CREATE VIRTUAL TABLE simple USING fts3(tokenize=simple);"];
     
-    if ((_systemVersion >= 10.7f) || (_systemVersion >= 5.1f)) {
-        STAssertTrue ([results error] == nil, @"Wasn't expecting an error.");
-    } else {
-        STAssertTrue ([results error] != nil, @"Was expecting an error.");
-    }
+    BOOL isLioniOS5OrLater = ((_systemVersion >= 10.7f) || (_systemVersion >= 5.1f));
+    
+    STAssertTrue (isLioniOS5OrLater && ([results error] == nil), @"Wasn't expecting an error.");
 }
 
 @end

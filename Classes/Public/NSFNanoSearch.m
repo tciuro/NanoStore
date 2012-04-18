@@ -106,6 +106,18 @@
 
 - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
+    if (nil == theSQLStatement) {
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                               userInfo:nil]raise];
+    }
+    
+    if (0 == [theSQLStatement length]) {
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                               userInfo:nil]raise];
+    }
+    
     // Make sure we don't have any lingering parameters that could mess with the results, but keep the sort descriptor(s)
     NSArray *savedSort = [self sort];
     [self reset];
@@ -121,6 +133,18 @@
 
 - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement
 {
+    if (nil == theSQLStatement) {
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                               userInfo:nil]raise];
+    }
+    
+    if (0 == [theSQLStatement length]) {
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                               userInfo:nil]raise];
+    }
+    
     // Make sure we don't have any lingering parameters that could mess with the results...
     [self reset];
     
