@@ -126,6 +126,9 @@
 		74C1FAE11538E1740077DAD1 /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
 		74C1FAE21538E1740077DAD1 /* NanoStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098D122B280C0079E2FF /* NanoStoreTests.m */; };
 		74C1FAE41538E2570077DAD1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FAE31538E2570077DAD1 /* libsqlite3.dylib */; };
+		74FA5DE4155795CC00217E09 /* fopenCompatibilityFix.c in Sources */ = {isa = PBXBuildFile; fileRef = 74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */; };
+		74FA5DE5155795CC00217E09 /* fopenCompatibilityFix.c in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */; };
+		74FA5DE6155795CC00217E09 /* fopenCompatibilityFix.c in Sources */ = {isa = PBXBuildFile; fileRef = 74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +151,7 @@
 				74A7DA561399B0E7008F46F1 /* NSFNanoStore.h in CopyFiles */,
 				74A7DA581399B0E7008F46F1 /* NSFNanoEngine.h in CopyFiles */,
 				74A7DA5A1399B0E7008F46F1 /* NSFNanoResult.h in CopyFiles */,
+				74FA5DE5155795CC00217E09 /* fopenCompatibilityFix.c in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +237,7 @@
 		74C1FAE31538E2570077DAD1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		74FA09A21268665F00FB5BDC /* NanoStoreBagTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreBagTests.h; sourceTree = "<group>"; };
 		74FA09A31268665F00FB5BDC /* NanoStoreBagTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreBagTests.m; sourceTree = "<group>"; };
+		74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fopenCompatibilityFix.c; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* NanoStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NanoStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -335,6 +340,7 @@
 			children = (
 				748D3455139772B600FD5565 /* libnanostore2 */,
 				32DBCF5E0370ADEE00C91783 /* NanoStore_Prefix.pch */,
+				74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -758,6 +764,7 @@
 				748D34841397731100FD5565 /* NSFNanoStore.m in Sources */,
 				748D34701397730900FD5565 /* NSFNanoEngine.m in Sources */,
 				748D34721397730900FD5565 /* NSFNanoResult.m in Sources */,
+				74FA5DE4155795CC00217E09 /* fopenCompatibilityFix.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,6 +817,7 @@
 				74C1FAE11538E1740077DAD1 /* NanoStoreSortTests.m in Sources */,
 				74C1FAE21538E1740077DAD1 /* NanoStoreTests.m in Sources */,
 				748EB00B153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */,
+				74FA5DE6155795CC00217E09 /* fopenCompatibilityFix.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
