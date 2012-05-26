@@ -641,7 +641,7 @@
 
 - (void)testSearchFilteringResultsByClass
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/test.db" stringByExpandingTildeInPath] error:nil];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NanoCarTestClass *car = [NanoCarTestClass new];
