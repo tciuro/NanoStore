@@ -174,6 +174,8 @@
 @property (nonatomic, copy, readonly) NSString *sql;
 /** * The sort holds an array of one or more sort descriptors of type \link NSFNanoSortDescriptor NSFNanoSortDescriptor \endlink. */
 @property (nonatomic, strong, readwrite) NSArray *sort;
+/** * The filterClass allows to filter the results based on a specific object class. */
+@property (nonatomic, strong, readwrite) NSString *filterClass;
 
 /** @name Creating and Initializing a Search
  */

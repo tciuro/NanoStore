@@ -26,6 +26,10 @@
 		7400C28B122450C60066D2B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D69BFE84028FC02AAC07 /* Foundation.framework */; };
 		74116B0D1538E9C600AEAD62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74116B091538E9C600AEAD62 /* InfoPlist.strings */; };
 		74116B141538E9CE00AEAD62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74116B101538E9CE00AEAD62 /* InfoPlist.strings */; };
+		7412893A15718D90002D5138 /* NanoCarTestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7412893915718D90002D5138 /* NanoCarTestClass.m */; };
+		7412893B15718D90002D5138 /* NanoCarTestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7412893915718D90002D5138 /* NanoCarTestClass.m */; };
+		7412893E15718F2C002D5138 /* NanoPersonTestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7412893D15718F2C002D5138 /* NanoPersonTestClass.m */; };
+		7412893F15718F2C002D5138 /* NanoPersonTestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7412893D15718F2C002D5138 /* NanoPersonTestClass.m */; };
 		748D3454139772B600FD5565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748D3453139772B600FD5565 /* Foundation.framework */; };
 		748D34701397730900FD5565 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
 		748D34721397730900FD5565 /* NSFNanoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */; };
@@ -170,6 +174,10 @@
 		74116B111538E9CE00AEAD62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		74116B121538E9CE00AEAD62 /* UnitTestMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnitTestMac-Info.plist"; sourceTree = "<group>"; };
 		74116B131538E9CE00AEAD62 /* UnitTestMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnitTestMac-Prefix.pch"; sourceTree = "<group>"; };
+		7412893815718D90002D5138 /* NanoCarTestClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoCarTestClass.h; sourceTree = "<group>"; };
+		7412893915718D90002D5138 /* NanoCarTestClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoCarTestClass.m; sourceTree = "<group>"; };
+		7412893C15718F2C002D5138 /* NanoPersonTestClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoPersonTestClass.h; sourceTree = "<group>"; };
+		7412893D15718F2C002D5138 /* NanoPersonTestClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoPersonTestClass.m; sourceTree = "<group>"; };
 		744510DA128A2EA8008A39B5 /* NanoEngineTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoEngineTests.h; sourceTree = "<group>"; };
 		744510DB128A2EA8008A39B5 /* NanoEngineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoEngineTests.m; sourceTree = "<group>"; };
 		745D1E92128B9DCA00D4653D /* NanoStoreResultTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreResultTests.h; sourceTree = "<group>"; };
@@ -365,6 +373,17 @@
 			path = UnitTestMac;
 			sourceTree = SOURCE_ROOT;
 		};
+		7412893615718D60002D5138 /* TestClasses */ = {
+			isa = PBXGroup;
+			children = (
+				7412893815718D90002D5138 /* NanoCarTestClass.h */,
+				7412893915718D90002D5138 /* NanoCarTestClass.m */,
+				7412893C15718F2C002D5138 /* NanoPersonTestClass.h */,
+				7412893D15718F2C002D5138 /* NanoPersonTestClass.m */,
+			);
+			path = TestClasses;
+			sourceTree = "<group>";
+		};
 		748D3452139772B600FD5565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +483,7 @@
 				74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */,
 				74B2098C122B280C0079E2FF /* NanoStoreTests.h */,
 				74B2098D122B280C0079E2FF /* NanoStoreTests.m */,
+				7412893615718D60002D5138 /* TestClasses */,
 			);
 			path = NanoStore;
 			sourceTree = "<group>";
@@ -791,6 +811,8 @@
 				74C1FAB41538DDF20077DAD1 /* NanoStoreSortTests.m in Sources */,
 				74C1FAB51538DDF20077DAD1 /* NanoStoreTests.m in Sources */,
 				748EB00A153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */,
+				7412893A15718D90002D5138 /* NanoCarTestClass.m in Sources */,
+				7412893E15718F2C002D5138 /* NanoPersonTestClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,6 +840,8 @@
 				74C1FAE21538E1740077DAD1 /* NanoStoreTests.m in Sources */,
 				748EB00B153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */,
 				74FA5DE6155795CC00217E09 /* fopenCompatibilityFix.c in Sources */,
+				7412893B15718D90002D5138 /* NanoCarTestClass.m in Sources */,
+				7412893F15718F2C002D5138 /* NanoPersonTestClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

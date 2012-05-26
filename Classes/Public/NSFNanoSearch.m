@@ -37,7 +37,7 @@
 }
 
 
-@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort;
+@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort, filterClass;
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -83,7 +83,7 @@
     return sql;
 }
 
-- (NSString*)description
+- (NSString *)description
 {
     NSMutableString *description = [NSMutableString string];
     
@@ -96,9 +96,10 @@
     [description appendString:[NSString stringWithFormat:@"Value                     : %@\n", value]];
     [description appendString:[NSString stringWithFormat:@"Match                     : %@\n", NSFStringFromMatchType(match)]];
     [description appendString:[NSString stringWithFormat:@"Expressions               : %@\n", expressions]];
-    [description appendString:[NSString stringWithFormat:@"Group Values?             : %@\n", (groupValues ? @"YES" : @"NO")]];
+    [description appendString:[NSString stringWithFormat:@"Group values?             : %@\n", (groupValues ? @"YES" : @"NO")]];
     [description appendString:[NSString stringWithFormat:@"Sort                      : %@\n", sort]];
-    
+    [description appendString:[NSString stringWithFormat:@"Filter class              : %@\n", filterClass]];
+
     return description;
 }
 
@@ -576,10 +577,11 @@
     }
     
     if (NSFReturnObjects == returnType) {
-        if (nil != attributes)
+        if (self.filterClass.length > 0) {
+            theSQLStatement = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theSQLStatement];
+        } else {
             theSQLStatement = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theSQLStatement];
-        else
-            theSQLStatement = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theSQLStatement];
+        }
     }
     
     return theSQLStatement;
