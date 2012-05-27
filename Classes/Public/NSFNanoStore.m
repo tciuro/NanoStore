@@ -665,9 +665,18 @@
 
 /** \cond */
 
-+ (NSFNanoStore *)_debug
++ (NSFNanoStore *)_createAndOpenDebugDatabase
 {
-    return [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/NanoStoreDebug.db" stringByExpandingTildeInPath]];
+    NSFNanoStore *db =  [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/NanoStoreDebug.db" stringByExpandingTildeInPath]];
+    NSError *outError = nil;
+    
+    if (NO == [db openWithError:&outError]) {
+        [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: could not open the database. Reason: %@", [self class], _cmd, [outError localizedDescription]]
+                               userInfo:nil]raise];
+    }
+    
+    return db;
 }
 
 - (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement
@@ -1144,9 +1153,10 @@
         unsavedObjectsCount = [addedObjects count];
         
         if (unsavedObjectsCount > 0) {
-            if (NO == [self removeObjectsWithKeysInArray:[keys allObjects] error:outError]) {
+            NSError *localOutError = nil;
+            if (NO == [self removeObjectsWithKeysInArray:[keys allObjects] error:&localOutError]) {
                 [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
-                                         reason:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, [*outError localizedDescription]]
+                                         reason:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, [localOutError localizedDescription]]
                                        userInfo:nil]raise];
             }
         }

@@ -29,7 +29,7 @@
 /** \cond */
 
 @interface NSFNanoStore (Private)
-+ (NSFNanoStore *)_debug;
++ (NSFNanoStore *)_createAndOpenDebugDatabase;
 - (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement;
 - (NSString*)_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
 - (BOOL)_initializePreparedStatementsWithError:(out NSError **)outError;

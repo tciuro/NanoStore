@@ -39,20 +39,16 @@
 
 + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)aPredicate
 {
-    if (nil == aPredicate)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the predicate is nil.", [self class], _cmd]
-                               userInfo:nil]raise];
-    
     return [[self alloc]initWithPredicate:aPredicate];
 }
 
 - (id)initWithPredicate:(NSFNanoPredicate *)aPredicate
 {
-    if (nil == aPredicate)
+    if (nil == aPredicate) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
                                  reason:[NSString stringWithFormat:@"*** -[%@ %s]: the predicate is nil.", [self class], _cmd]
                                userInfo:nil]raise];
+    }
     
     if ((self = [super init])) {
         predicates = [NSMutableArray new];

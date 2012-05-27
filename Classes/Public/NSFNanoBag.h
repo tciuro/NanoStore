@@ -97,6 +97,8 @@
 /** * Creates and returns a bag adding to it the objects contained in the given array.
  * @param theObjects an array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
+ * @throws NSFUnexpectedParameterException is thrown if theObjects is nil.
+ * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown. Use + bag; instead.
  * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
  */
 
@@ -111,8 +113,10 @@
 
 /** * Creates and returns a bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
- * @param theObjects an array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
+ * @param theObjects is a required array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
+ * @throws NSFUnexpectedParameterException is thrown if theObjects is nil.
+ * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown.
  * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
  */
 
@@ -120,8 +124,10 @@
 
 /** * Initializes a newly allocated bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
- * @param theObjects an array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
+ * @param theObjects is a required array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
+ * @throws NSFUnexpectedParameterException is thrown if theObjects is nil.
+ * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown.
  * @see \link bagWithObjects: + (NSFNanoBag*)bagWithObjects:(NSArray *)theObjects \endlink
  */
 

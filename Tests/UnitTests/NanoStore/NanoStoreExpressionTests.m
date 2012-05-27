@@ -31,6 +31,38 @@
 
 #pragma mark -
 
+- (void)testPredicateOnePredicateProperty
+{
+    NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
+    NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
+    STAssertTrue (1 == expression.predicates.count, @"Expected to obtain one predicate.");
+}
+
+- (void)testPredicateTwoPredicatesProperty
+{
+    NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
+    NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
+    NSFNanoPredicate *predicateTwo = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
+    [expression addPredicate:predicateTwo withOperator:NSFOr];
+    STAssertTrue (2 == expression.predicates.count, @"Expected to obtain two predicates.");
+}
+
+- (void)testPredicateOneOperatorProperty
+{
+    NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
+    NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
+    STAssertTrue (1 == expression.operators.count, @"Expected to obtain one operator.");
+}
+
+- (void)testPredicateTwoOperatorsProperty
+{
+    NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
+    NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
+    NSFNanoPredicate *predicateTwo = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
+    [expression addPredicate:predicateTwo withOperator:NSFOr];
+    STAssertTrue (2 == expression.operators.count, @"Expected to obtain two operators.");
+}
+
 - (void)testPredicateWithNilValue
 {
     NSFNanoPredicate *predicate = nil;
@@ -224,29 +256,6 @@
     [nanoStore closeWithError:nil];
     
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
-}
-
-#pragma mark -
-
-- (NSDictionary *)defaultTestData
-{
-    NSArray *dishesInfo = [NSArray arrayWithObject:@"Cassoulet"];
-    NSDictionary *citiesInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"Bouillabaisse", @"Marseille",
-                                dishesInfo, @"Nice",
-                                nil, nil];
-    NSDictionary *countriesInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"Barcelona", @"Spain",
-                                   @"San Francisco", @"USA",
-                                   citiesInfo, @"France",
-                                   nil, nil];
-    NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
-                          @"Tito", @"FirstName",
-                          @"Ciuro", @"LastName",
-                          countriesInfo, @"Countries",
-                          nil, nil];
-    
-    return info;
 }
 
 @end

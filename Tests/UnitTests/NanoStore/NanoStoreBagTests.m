@@ -43,6 +43,19 @@
     STAssertTrue ((YES == hasUnsavedChanges) && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
 
+- (void)testBagDescription
+{
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    NSString *description = [bag description];
+    STAssertTrue ((description.length > 0), @"Expected to obtain the bag description.");
+}
+
+- (void)testBagEqualToSelf
+{
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    STAssertTrue (([bag isEqualToNanoBag:bag] == YES), @"Expected to test to be true.");
+}
+
 - (void)testBagForUUID
 {
     NSFNanoBag *bag = [NSFNanoBag bag];
@@ -56,17 +69,18 @@
 
 - (void)testBagInitNilObjects
 {
-    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:nil];
-    BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
-    NSString *key = bag.key;
-    NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSFNanoBag *bag = nil;
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
+    @try {
+        bag = [NSFNanoBag bagWithObjects:nil];
+    } @catch (NSException *e) {
+        STAssertTrue (e != nil, @"We should have caught the exception.");
+    }
 }
 
 - (void)testBagSettingNameManually
 {
-    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:nil];
+    NSFNanoBag *bag = [NSFNanoBag bag];
     STAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
     bag.name = @"FooBar";
     STAssertTrue (YES == [bag hasUnsavedChanges], @"Expected the bag to have unsaved changes.");
@@ -80,8 +94,8 @@
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
-    NSFNanoBag *bag = [NSFNanoBag bagWithName:@"FooBar" andObjects:nil];
-    STAssertTrue (nil != [bag name], @"Expected the name of the bag to be nil.");
+    NSFNanoBag *bag = [NSFNanoBag bagWithName:@"FooBar"];
+    STAssertTrue (nil != [bag name], @"Expected the name of the bag to not be nil.");
     
     NSError *error = nil;
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:&error];
@@ -190,7 +204,7 @@
 
 - (void)testBagEmptyDictionaryRepresentation
 {
-    NSFNanoBag *bag = [NSFNanoBag bagWithObjects:nil];
+    NSFNanoBag *bag = [NSFNanoBag bag];
     NSDictionary *info = [bag dictionaryRepresentation];
     NSString *key = [info objectForKey:NSF_Private_NSFNanoBag_NSFKey];
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];

@@ -65,11 +65,14 @@
 
 - (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
 {
+    if (nil == someObjects) {
+        [[NSException exceptionWithName:NSFUnexpectedParameterException
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: 'someObjects' cannot be nil.", [self class], _cmd]
+                               userInfo:nil]raise];
+    }
+    
     if ((self = [self init])) {
-        NSError *outError = nil;
-        if (NO == [self addObjectsFromArray:someObjects error:&outError]) {
-            NSLog(@"%@", [NSString stringWithFormat:@"*** -[%@ %s]: a problem occurred while initializing the NanoBag, leaving it in an inconsistent state. Reason: %@.", [self class], _cmd, [outError localizedDescription]]);
-        }
+        [self addObjectsFromArray:someObjects error:nil];
         
         name = [theName copy];
         hasUnsavedChanges = YES;
