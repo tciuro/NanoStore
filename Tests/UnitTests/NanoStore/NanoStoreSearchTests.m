@@ -409,7 +409,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:5];
+    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
@@ -420,16 +420,48 @@
     STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
 }
 
+- (void)testSearchObjectsAddedBeforeCalendarDateFilterByClass
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoCarTestClass *car = [NanoCarTestClass new];
+    car.name = @"Mercedes";
+    car.key = [NSFNanoEngine stringWithUUID];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"kName";
+    search.match = NSFEqualTo;
+    search.value = @"Mercedes";
+    search.filterClass = NSStringFromClass([NanoCarTestClass class]);
+    
+    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+    
+    NSDictionary *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
+}
+
 - (void)testSearchObjectsAddedAfterCalendarDate
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:-5];
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
+    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnObjects error:nil];
@@ -437,6 +469,37 @@
     [nanoStore closeWithError:nil];
     
     STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
+}
+
+- (void)testSearchObjectsAddedAfterCalendarDateFilterByClass
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoCarTestClass *car = [NanoCarTestClass new];
+    car.name = @"Mercedes";
+    car.key = [NSFNanoEngine stringWithUUID];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"kName";
+    search.match = NSFEqualTo;
+    search.value = @"Mercedes";
+    search.filterClass = NSStringFromClass([NanoCarTestClass class]);
+    
+    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+
+    NSDictionary *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
 }
 
 - (void)testSearchKeysAddedBeforeCalendarDate
@@ -448,7 +511,8 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:5];
+    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
     NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
@@ -460,16 +524,50 @@
     STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
 }
 
+- (void)testSearchKeysAddedBeforeCalendarDateFilterByClass
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoCarTestClass *car = [NanoCarTestClass new];
+    car.name = @"Mercedes";
+    car.key = [NSFNanoEngine stringWithUUID];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"kName";
+    search.match = NSFEqualTo;
+    search.value = @"Mercedes";
+    search.filterClass = NSStringFromClass([NanoCarTestClass class]);
+    
+    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+    
+    NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
+    
+    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
+}
+
 - (void)testSearchKeysAddedAfterCalendarDate
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:-5];
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
+    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
     NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
@@ -479,6 +577,39 @@
     [nanoStore closeWithError:nil];
     
     STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
+}
+
+- (void)testSearchKeysAddedAfterCalendarDateFilterByClass
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoCarTestClass *car = [NanoCarTestClass new];
+    car.name = @"Mercedes";
+    car.key = [NSFNanoEngine stringWithUUID];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"kName";
+    search.match = NSFEqualTo;
+    search.value = @"Mercedes";
+    search.filterClass = NSStringFromClass([NanoCarTestClass class]);
+    
+    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+    
+    NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
+    
+    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
 #pragma mark -
