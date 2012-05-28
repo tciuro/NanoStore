@@ -639,7 +639,7 @@
     STAssertTrue (([searchResults count] == 2) && (YES == isClassCorrect), @"Expected to find two objects of type NSFNanoObject.");
 }
 
-- (void)testSearchFilteringResultsByClass
+- (void)testSearchFilteringResultsByClassReturnObjects
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
@@ -663,6 +663,35 @@
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     BOOL isClassCorrect = [[searchResults objectForKey:car.key]isKindOfClass:[NanoCarTestClass class]];
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([searchResults count] == 1) && (YES == isClassCorrect), @"Expected to find one object of type NanoCarTestClass.");
+}
+
+- (void)testSearchFilteringResultsByClassReturnKeys
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];//createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoCarTestClass *car = [NanoCarTestClass new];
+    car.name = @"Mercedes";
+    car.key = [NSFNanoEngine stringWithUUID];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"kName";
+    search.match = NSFEqualTo;
+    search.value = @"Mercedes";
+    search.filterClass = NSStringFromClass([NanoCarTestClass class]);
+    
+    NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
+    BOOL isClassCorrect = [[searchResults lastObject]isEqualToString:car.key];
     [nanoStore closeWithError:nil];
     
     STAssertTrue (([searchResults count] == 1) && (YES == isClassCorrect), @"Expected to find one object of type NanoCarTestClass.");

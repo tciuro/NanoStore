@@ -419,13 +419,25 @@
     
     switch (aDateMatch) {
         case NSFBeforeDate:
-            theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ < '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
+            if (self.filterClass.length > 0) {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ < '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, self.filterClass, NSFCalendarDate, normalizedDateString];
+            } else {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ < '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
+            }
             break;
         case NSFOnDate:
-            theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ = '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
+            if (self.filterClass.length > 0) {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ = '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, self.filterClass, NSFCalendarDate, normalizedDateString];
+            } else {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ = '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
+            }
             break;
         case NSFAfterDate:
-            theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ > '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
+            if (self.filterClass.length > 0) {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ > '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, self.filterClass, NSFCalendarDate, normalizedDateString];
+            } else {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ > '%@'", NSFKey, NSFPlist, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
+            }
             break;
     }
     
@@ -582,6 +594,10 @@
         } else {
             theSQLStatement = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theSQLStatement];
         }
+    } else {
+        if (self.filterClass.length > 0) {
+            theSQLStatement = [NSString stringWithFormat:@"SELECT (NSFKEY) FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKEY IN (%@)", self.filterClass, theSQLStatement];
+        }
     }
     
     return theSQLStatement;
@@ -616,8 +632,13 @@
     
     NSString *theValue = [sqlComponents componentsJoinedByString:@""];
     
-    if (NSFReturnObjects == returnType)
-        theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theValue];
+    if (NSFReturnObjects == returnType) {
+        if (self.filterClass.length > 0) {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theValue];
+        } else {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theValue];   
+        }
+    }
     
     return theValue;
 }
@@ -634,6 +655,7 @@
     NSMutableString *theSQLStatement = [NSMutableString stringWithString:@"SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE NSFKey IN ("];
     [theSQLStatement appendString:[preparedKeys componentsJoinedByString:@","]];
     [theSQLStatement appendString:@")"];
+    
     theSQLStatement = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theSQLStatement];
     
     return theSQLStatement;
