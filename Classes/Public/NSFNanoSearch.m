@@ -615,9 +615,13 @@
         [sqlComponents addObject:parentheses];
     
     NSString *theValue = [sqlComponents componentsJoinedByString:@""];
-    
-    if (NSFReturnObjects == returnType)
-        theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theValue];
+    if (NSFReturnObjects == returnType) {
+        if (self.filterClass) {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theValue];                
+        } else {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theValue];                
+        }
+    }
     
     return theValue;
 }
