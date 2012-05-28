@@ -614,10 +614,11 @@
         NSFNanoExpression *expression = [someExpressions objectAtIndex:i];
         NSMutableString *theSQL = nil;;
         
-        if (NSFReturnObjects == returnType)
+        if (NSFReturnObjects == returnType) {
             theSQL = [[NSMutableString alloc]initWithFormat:@"SELECT NSFKEY FROM NSFValues WHERE %@", [expression description]];
-        else
+        } else {
             theSQL = [[NSMutableString alloc]initWithFormat:@"SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE %@", [expression description]];
+        }
         
         if ((count > 1) && (i < count-1)) {
             [theSQL appendString:@" AND NSFKEY IN ("];
@@ -637,6 +638,10 @@
             theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theValue];
         } else {
             theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFPlist,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theValue];   
+        }
+    } else {
+        if (self.filterClass.length > 0) {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey) FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theValue];
         }
     }
     

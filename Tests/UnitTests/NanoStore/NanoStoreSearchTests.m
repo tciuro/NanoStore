@@ -828,7 +828,7 @@
     STAssertTrue (([searchResults count] == 1) && (YES == isClassCorrect), @"Expected to find one object of type NanoCarTestClass.");
 }
 
-- (void)testSearchWithExpressionAndFilteringResultsByClass
+- (void)testSearchWithExpressionAndFilteringObjectResultsByClass
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     
@@ -857,6 +857,39 @@
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object");
     
     BOOL isClassCorrect = [[searchResults objectForKey:car.key] isKindOfClass:[NanoCarTestClass class]];
+    [nanoStore closeWithError:nil];
+    STAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
+}
+
+- (void)testSearchWithExpressionAndFilteringKeyResultsByClass
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    NanoCarTestClass *car = [NanoCarTestClass new];
+    car.name = @"Mercedes";
+    car.key = [NSFNanoEngine stringWithUUID];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    
+    NSFNanoPredicate *predicateAttr = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"kName"];
+    NSFNanoPredicate *predicateVal  = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:@"Mercedes"];
+    NSFNanoExpression *expression   = [NSFNanoExpression expressionWithPredicate:predicateAttr];
+    [expression addPredicate:predicateVal withOperator:NSFAnd];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.filterClass = NSStringFromClass([NanoCarTestClass class]);
+    
+    NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object");
+    
+    BOOL isClassCorrect = [[searchResults lastObject]isEqualToString:car.key];
     [nanoStore closeWithError:nil];
     STAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
 }
