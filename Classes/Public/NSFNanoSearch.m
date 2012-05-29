@@ -610,22 +610,30 @@
     NSMutableString *parentheses = [NSMutableString new];
     NSFReturnType returnType = returnedObjectType;
 
-    for (i = 0; i < count; i++) {
-        NSFNanoExpression *expression = [someExpressions objectAtIndex:i];
-        NSMutableString *theSQL = nil;;
-        
+    if (count == 0) {
         if (NSFReturnObjects == returnType) {
-            theSQL = [[NSMutableString alloc]initWithFormat:@"SELECT NSFKEY FROM NSFValues WHERE %@", [expression description]];
+            [sqlComponents addObject:@"SELECT NSFKEY FROM NSFValues"];
         } else {
-            theSQL = [[NSMutableString alloc]initWithFormat:@"SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE %@", [expression description]];
+            [sqlComponents addObject:@"SELECT DISTINCT (NSFKEY) FROM NSFValues"];
         }
-        
-        if ((count > 1) && (i < count-1)) {
-            [theSQL appendString:@" AND NSFKEY IN ("];
-            [parentheses appendString:@")"];
+    } else {
+        for (i = 0; i < count; i++) {
+            NSFNanoExpression *expression = [someExpressions objectAtIndex:i];
+            NSMutableString *theSQL = nil;;
+            
+            if (NSFReturnObjects == returnType) {
+                theSQL = [[NSMutableString alloc]initWithFormat:@"SELECT NSFKEY FROM NSFValues WHERE %@", [expression description]];
+            } else {
+                theSQL = [[NSMutableString alloc]initWithFormat:@"SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE %@", [expression description]];
+            }
+            
+            if ((count > 1) && (i < count-1)) {
+                [theSQL appendString:@" AND NSFKEY IN ("];
+                [parentheses appendString:@")"];
+            }
+            
+            [sqlComponents addObject:theSQL];
         }
-        
-        [sqlComponents addObject:theSQL];
     }
     
     if ([parentheses length] > 0)

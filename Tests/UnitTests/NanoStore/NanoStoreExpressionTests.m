@@ -83,6 +83,25 @@
     }
 }
 
+- (void)testEmptyExpressions
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"hello", @"name", nil]]] error:nil];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"world", @"name", nil]]] error:nil];
+
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    [search setExpressions:[NSArray array]];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    
+    searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
+    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    
+    [nanoStore closeWithError:nil];
+}
+
 - (void)testOnePredicateOneExpressionEqualTo
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
