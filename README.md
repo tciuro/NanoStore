@@ -35,8 +35,12 @@ Now you should have a new ***Distribution*** directory within the NanoStore proj
 
     1) Drag the Distribution directory to the Project Navigator panel
     2) Include #import "NanoStore.h" in your code
+    
+You will also have to activate LLVM's "Instrument Program Flow" setting:
 
-Example:
+![Alt text](http://cloud.github.com/downloads/tciuro/NanoStore/profile_settings.png)
+
+Usage example:
 
     #import "NanoStore.h"
     
