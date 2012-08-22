@@ -35,30 +35,57 @@
 
 @synthesize info, key, originalClassString;
 
-+ (NSFNanoObject*)nanoObject
++ (NSFNanoObject *)nanoObject
 {
-    NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [[self alloc]initNanoObjectFromDictionaryRepresentation:nil forKey:theKey store:nil];
+    return [[self alloc]initNanoObjectFromDictionaryRepresentation:nil forKey:nil store:nil];
 }
 
-+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)aDictionary
++ (NSFNanoObject *)nanoObjectWithDictionary:(NSDictionary *)aDictionary
 {
-    NSString *theKey = [NSFNanoEngine stringWithUUID];
-    return [[self alloc]initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil];
+    return [[self alloc]initNanoObjectFromDictionaryRepresentation:aDictionary forKey:nil store:nil];
+}
+
++ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary key:(NSString *)theKey
+{
+    return [[self alloc]initNanoObjectFromDictionaryRepresentation:theDictionary forKey:theKey store:nil];
 }
 
 - (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary
 {
-    NSString *theKey = [NSFNanoEngine stringWithUUID];
+    return [self initNanoObjectFromDictionaryRepresentation:aDictionary forKey:nil store:nil];
+}
+
+- (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary key:(NSString *)theKey
+{
     return [self initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil];
 }
 
-- (NSString*)description
+- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
+{
+    // We allow a nil dictionary because: 1) it's interpreted as empty and 2) reduces memory consumption on the caller if no data is being passed.
+    
+    if ((self = [self init])) {
+        // If we have supplied a key, honor it and overwrite the original one
+        if (nil != aKey) {
+            key = [aKey copy];
+        }
+        
+        // Keep the dictionary if needed
+        if (nil != aDictionary) {
+            info = [NSMutableDictionary new];
+            [info addEntriesFromDictionary:aDictionary];
+        }
+    }
+    
+    return self;
+}
+
+- (NSString *)description
 {
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoObject address : 0x%x\n", self]];
+    [description appendString:[NSString stringWithFormat:@"NanoObject address : 0x%x\n", (unsigned int)self]];
     [description appendString:[NSString stringWithFormat:@"Original class     : %@\n", (nil != originalClassString) ? originalClassString : NSStringFromClass ([self class])]];
     [description appendString:[NSString stringWithFormat:@"Key                : %@\n", key]];
     [description appendString:[NSString stringWithFormat:@"Info               : %ld key/value pairs\n", [info count]]];
@@ -66,8 +93,23 @@
     return description;
 }
 
+- (void)addEntriesFromDictionary:(NSDictionary *)otherDictionary
+{
+    // Allocate the dictionary if needed
+    if (nil == info) {
+        info = [NSMutableDictionary new];
+    }
+    
+    [info addEntriesFromDictionary:otherDictionary];
+}
+
 - (void)setObject:(id)anObject forKey:(NSString *)aKey
 {
+    // Allocate the dictionary if needed
+    if (nil == info) {
+        info = [NSMutableDictionary new];
+    }
+    
     [info setObject:anObject forKey:aKey];
 }
 
@@ -122,8 +164,8 @@
 - (id)init
 {
     if ((self = [super init])) {
-        key = nil;
-        info = [NSMutableDictionary new];
+        key = [[NSFNanoEngine stringWithUUID]copy];
+        info = nil;
         originalClassString = nil;
     }
     
@@ -131,23 +173,6 @@
 }
 
 #pragma mark -
-
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
-{
-    // We allow a nil dictionary because: 1) it's interpreted as empty and 2) reduces memory consumption on the caller if no data is being passed.
-    
-    if (nil == aKey)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: aKey is nil.", [self class], _cmd]
-                               userInfo:nil]raise];
-    
-    if ((self = [self init])) {
-        [info addEntriesFromDictionary:aDictionary];
-        key = [aKey copy];
-    }
-    
-    return self;
-}
 
 - (id)copyWithZone:(NSZone *)zone
 {

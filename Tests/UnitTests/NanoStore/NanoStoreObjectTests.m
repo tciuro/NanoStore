@@ -34,15 +34,19 @@
 - (void)testObjectEmptyNanoObject
 {
     NSFNanoObject *nanoObject = [NSFNanoObject nanoObject];
-    NSString *objectKey = [nanoObject nanoObjectKey];
-    STAssertTrue (([objectKey length] > 0) && (nil != nanoObject), @"Expected the NanoObject to be valid.");
+    NSString *key = nanoObject.key;
+    STAssertTrue (([key length] > 0), @"Expected key to be valid.");
+    NSDictionary *info = nanoObject.info;
+    STAssertTrue ((nil == info) && ([info count] == 0), @"Expected info to be valid.");
+    NSString *originalClassString = nanoObject.originalClassString;
+    STAssertTrue ((nil == originalClassString), @"Expected originalClassString to be valid.");
 }
 
 - (void)testObjectForUUID
 {
     NSFNanoObject *nanoObject = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSString *objectKey = [nanoObject nanoObjectKey];
-    STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the NanoObject to return a valid UUID.");
+    STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected key to be valid.");
     
     objectKey = [nanoObject key];
     STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the NanoObject to return a valid UUID.");
@@ -55,12 +59,48 @@
     STAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the NanoObject to return a valid UUID.");
 }
 
-- (void)testObjectWithRegularKey
+- (void)testSetObjectForKey
 {
-    NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    NSString *retrievedKey = [object nanoObjectKey];
-    
-    STAssertTrue ((nil != object) && ([retrievedKey length] > 0), @"Expected a valid object key.");
+    NSFNanoObject *nanoObject = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSString *key = nanoObject.key;
+    STAssertTrue (([key length] > 0), @"Expected key to be valid.");
+    [nanoObject setObject:@"bar" forKey:@"foo"];
+    NSString *value = [nanoObject objectForKey:@"foo"];
+    STAssertTrue (([value isEqualToString:@"bar"]), @"Expected setObject:forKey: to succeed.");
+}
+
+- (void)testHonorExternalKey
+{
+    NSString *externalKey = @"fooBar";
+    NSFNanoObject *nanoObject = [[NSFNanoObject alloc]initNanoObjectFromDictionaryRepresentation:_defaultTestInfo forKey:externalKey store:nil];
+    NSString *key = nanoObject.key;
+    STAssertTrue (([key isEqualToString:externalKey]), @"Expected the external key to prevail.");
+}
+
+- (void)testHonorExternalKey2
+{
+    NSFNanoObject *nanoObject = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo key:@"fooBar"];
+    NSString *key = nanoObject.key;
+    STAssertTrue (([key isEqualToString:@"fooBar"]), @"Expected the external key to prevail.");
+}
+
+- (void)testAddEntriesFromDictionary
+{
+    NSFNanoObject *nanoObject = [NSFNanoObject nanoObject];
+    NSString *key = nanoObject.key;
+    STAssertTrue (([key length] > 0), @"Expected key to be valid.");
+    [nanoObject addEntriesFromDictionary:_defaultTestInfo];
+    NSDictionary *info = nanoObject.info;
+    STAssertTrue ((nil != info) && ([info count] > 0), @"Expected info to be valid.");
+    STAssertTrue ([info isEqualToDictionary:_defaultTestInfo], @"Expected info to be equal to _defaultTestInfo.");
+}
+
+- (void)testAddEntriesFromDictionary2
+{
+    NSFNanoObject *nanoObject = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo key:@"fooBar"];
+    NSDictionary *info = nanoObject.info;
+    STAssertTrue ((nil != info) && ([info count] > 0), @"Expected info to be valid.");
+    STAssertTrue ([info isEqualToDictionary:_defaultTestInfo], @"Expected info to be equal to _defaultTestInfo.");
 }
 
 - (void)testObjectWithEmptyDictionary

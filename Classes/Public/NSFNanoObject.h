@@ -208,6 +208,16 @@
 
 + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary;
 
+/** * Creates and returns a NanoObject with the given dictionary and key.
+ * @param theDictionary the information associated with the object. Must not be nil.
+ * @param theKey the object key associated with the object. If nil, a new key will be assigned.
+ * @return An initialized object upon success, nil otherwise.
+ * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
+ * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink
+ */
+
++ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary key:(NSString *)theKey;
+
 /** * Initializes a newly allocated NanoObject with the given dictionary.
  * @param theDictionary the information associated with the object. Must not be nil.
  * @return An initialized object upon success, nil otherwise.
@@ -217,12 +227,27 @@
 
 - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary;
 
+/** * Initializes a newly allocated NanoObject with the given dictionary and key.
+ * @param theDictionary the information associated with the object. Must not be nil.
+ * @param theKey the object key associated with the object. If nil, a new key will be assigned.
+ * @return An initialized object upon success, nil otherwise.
+ * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
+ */
+
+- (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary key:(NSString *)theKey;
+
 //@}
 
 /** @name Setting and Removing Contents
  */
 
 //@{
+
+/** * Adds the entries from a dictionary to the NanoObject.
+ * @param otherDictionary The dictionary from which to add entries.
+*/
+
+- (void)addEntriesFromDictionary:(NSDictionary *)otherDictionary;
 
 /** * Adds a given key-value pair to the NanoObject.
  * @param anObject the value for key. Must not be nil.
