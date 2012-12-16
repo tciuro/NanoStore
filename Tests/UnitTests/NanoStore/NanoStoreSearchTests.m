@@ -1118,7 +1118,7 @@
 
 - (void)testSearchObjectsQuotesUsingExpression
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/AAA" stringByExpandingTildeInPath] error:nil];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NanoPersonTestClass *person = [NanoPersonTestClass new];
