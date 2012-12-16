@@ -1090,4 +1090,60 @@
     STAssertTrue (isLioniOS5OrLater && ([results error] == nil), @"Wasn't expecting an error.");
 }
 
+- (void)testSearchObjectsQuotes
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Leo'd";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
+    
+    NSArray* allPeople = [nanoStore objectsOfClassNamed:NSStringFromClass([NanoPersonTestClass class])];
+    STAssertTrue(([allPeople count] == 1), @"Should have one person");
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = NanoPersonFirst;
+    search.match = NSFEqualTo;
+    search.value = person.name;
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([searchResults count] == 1), @"Expected to find one person object, found %d", [searchResults count]);
+}
+
+- (void)testSearchObjectsQuotesUsingExpression
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/AAA" stringByExpandingTildeInPath] error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Leo'd";
+    person.last = @"Doe";
+    person.key = [NSFNanoEngine stringWithUUID];
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
+    
+    NSFNanoObject *obj = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    [nanoStore addObject:obj error:nil];
+    
+    NSFNanoPredicate *firstNamePred = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:NanoPersonFirst];
+    NSFNanoPredicate *valuePred = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:person.name];
+    NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:firstNamePred];
+    [expression addPredicate:valuePred withOperator:NSFAnd];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    [search setExpressions:[NSArray arrayWithObjects:expression, nil]];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+}
+
 @end

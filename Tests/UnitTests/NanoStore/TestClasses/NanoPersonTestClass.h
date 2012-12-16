@@ -10,6 +10,9 @@
 
 #import "NSFNanoObjectProtocol.h"
 
+extern NSString *NanoPersonFirst;
+extern NSString *NanoPersonLast;
+
 @interface NanoPersonTestClass : NSObject <NSFNanoObjectProtocol>
 
 @property (nonatomic, strong) NSString *name;

@@ -80,6 +80,9 @@
             break;
     }
     
+    // Make sure we escape quotes if present and the value is a string
+    value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    
     switch (match) {
         case NSFEqualTo:
             [description appendString:[NSString stringWithFormat:@"%@ = '%@'", columnValue, value]];

@@ -8,8 +8,8 @@
 
 #import "NanoPersonTestClass.h"
 
-#define kName   @"kName"
-#define kLast   @"kLast"
+NSString *NanoPersonFirst = @"NanoPersonFirst";
+NSString *NanoPersonLast  = @"NanoPersonLast";
 
 @implementation NanoPersonTestClass
 
@@ -20,8 +20,8 @@
 - (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore
 {
     if (self = [self init]) {
-        self.name = [theDictionary objectForKey:kName];
-        self.last = [theDictionary objectForKey:kLast];
+        self.name = [theDictionary objectForKey:NanoPersonFirst];
+        self.last = [theDictionary objectForKey:NanoPersonLast];
         self.key = aKey;
     }
     
@@ -30,8 +30,8 @@
 
 - (NSDictionary *)nanoObjectDictionaryRepresentation
 {
-    return [NSDictionary dictionaryWithObjectsAndKeys:self.name, kName,
-            self.last, kLast,
+    return [NSDictionary dictionaryWithObjectsAndKeys:self.name, NanoPersonFirst,
+            self.last, NanoPersonLast,
             nil];
 }
 

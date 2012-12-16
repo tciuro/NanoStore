@@ -507,6 +507,11 @@
     NSMutableString *theSQLStatement = nil;
     NSString *attributes = nil;
     
+    // Make sure we escape quotes if present and the value is a string
+    if (YES == [aValue isKindOfClass:[NSString class]]) {
+        aValue = [aValue stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    }
+    
     if (nil != attributesToBeReturned) {
         // Prepare the list of attributes we need to gather. Include NSFKEY as well.
         NSMutableSet *set = [[NSMutableSet alloc]initWithArray:attributesToBeReturned];
