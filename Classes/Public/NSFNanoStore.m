@@ -1024,6 +1024,10 @@
         return NSFNanoTypeDate;
     else if ([value isKindOfClass:[NSData class]])
         return NSFNanoTypeData;
+#if USEKEYARCHIVER
+    else if ([value isKindOfClass:[NSNull class]])
+        return NSFNanoTypeNULL;
+#endif
     
     return type;
 }
