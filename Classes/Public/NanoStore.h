@@ -24,6 +24,8 @@
      SUCH DAMAGE.
 */
 
+#define USEKEYARCHIVER 1
+
 #import "NSFNanoObjectProtocol.h"
 #import "NSFNanoObject.h"
 #import "NSFNanoGlobals.h"

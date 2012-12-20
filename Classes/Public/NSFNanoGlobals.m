@@ -49,7 +49,9 @@ NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype)
         case NSFNanoTypeDate: value = @"TEXT"; break;
         case NSFNanoTypeNumber: value = @"REAL"; break;
         case NSFNanoTypeRowUID: value = @"INTEGER"; break;
+#ifdef USEKEYARCHIVER
         case NSFNanoTypeNULL: value = @"NULL"; break;
+#endif
     }
     
     return value;
@@ -64,8 +66,9 @@ NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
     else if ([aNanoDatatype isEqualToString:@"TEXT"]) value = NSFNanoTypeDate;
     else if ([aNanoDatatype isEqualToString:@"REAL"]) value = NSFNanoTypeNumber;
     else if ([aNanoDatatype isEqualToString:@"INTEGER"]) value = NSFNanoTypeRowUID;
+#ifdef USEKEYARCHIVER
     else if ([aNanoDatatype isEqualToString:@"NULL"]) value = NSFNanoTypeNULL;
-
+#endif
     return value;
 }
 

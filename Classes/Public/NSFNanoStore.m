@@ -800,7 +800,11 @@
     
     // Setup the Plist table
     if ([tables containsObject:NSFKeys] == NO) {
+#ifdef USEKEYARCHIVER
         theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ BLOB, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFPlist, NSFCalendarDate, NSFObjectClass];
+#else
+        theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ TEXT, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFPlist, NSFCalendarDate, NSFObjectClass];
+#endif
         success = (nil == [[[self nanoStoreEngine]executeSQL:theSQLStatement]error]);
         if (NO == success)
             return NO;
@@ -898,9 +902,11 @@
                         case NSFNanoTypeNumber:
                             resultBindValue = (sqlite3_bind_double (storeValuesStatement, 3, [value doubleValue]) == SQLITE_OK);
                             break;
+#ifdef USEKEYARCHIVER
                         case NSFNanoTypeNULL:
                             resultBindValue = (sqlite3_bind_null(storeValuesStatement, 3) == SQLITE_OK);
                             break;
+#endif
                         default:
                             [[NSException exceptionWithName:NSFUnexpectedParameterException
                                                      reason:[NSString stringWithFormat:@"*** -[%@ %s]: datatype %@ cannot be stored because its class type is unknown.", [self class], _cmd, [value class]]
@@ -923,6 +929,7 @@
     }
     
     if (YES == success) {
+#ifdef USEKEYARCHIVER       
         NSData *dictBinData = [NSKeyedArchiver archivedDataWithRootObject:someInfo];
         {
             int status = sqlite3_reset (_storeKeysStatement);
@@ -950,8 +957,7 @@
             }
 
         }
-        /*
-        
+#else
         // Save the Key and its Plist (if it applies)
         NSString *dictXML = nil;
         NSString *errorString = nil;
@@ -999,8 +1005,8 @@
                     }
                 }
             }
-            */
-        //}
+        }
+#endif
     }
     
     return success;
