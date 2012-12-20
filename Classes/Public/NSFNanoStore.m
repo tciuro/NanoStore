@@ -800,7 +800,7 @@
     
     // Setup the Plist table
     if ([tables containsObject:NSFKeys] == NO) {
-        theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ TEXT, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFPlist, NSFCalendarDate, NSFObjectClass];
+        theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ BLOB, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFPlist, NSFCalendarDate, NSFObjectClass];
         success = (nil == [[[self nanoStoreEngine]executeSQL:theSQLStatement]error]);
         if (NO == success)
             return NO;
@@ -898,6 +898,9 @@
                         case NSFNanoTypeNumber:
                             resultBindValue = (sqlite3_bind_double (storeValuesStatement, 3, [value doubleValue]) == SQLITE_OK);
                             break;
+                        case NSFNanoTypeNULL:
+                            resultBindValue = (sqlite3_bind_null(storeValuesStatement, 3) == SQLITE_OK);
+                            break;
                         default:
                             [[NSException exceptionWithName:NSFUnexpectedParameterException
                                                      reason:[NSString stringWithFormat:@"*** -[%@ %s]: datatype %@ cannot be stored because its class type is unknown.", [self class], _cmd, [value class]]
@@ -920,6 +923,35 @@
     }
     
     if (YES == success) {
+        NSData *dictBinData = [NSKeyedArchiver archivedDataWithRootObject:someInfo];
+        {
+            int status = sqlite3_reset (_storeKeysStatement);
+            
+            // Since we're operating with extended result code support, extract the bits
+            // and obtain the regular result code
+            // For more info check: http://www.sqlite.org/c3ref/c_ioerr_access.html
+            
+            status = [NSFNanoEngine NSFP_stripBitsFromExtendedResultCode:status];
+            
+            // Bind and execute the statement...
+            if (SQLITE_OK == status) {
+                
+                BOOL resultBindKey = (sqlite3_bind_text (_storeKeysStatement, 1, aKeyUTF8, -1, SQLITE_STATIC) == SQLITE_OK);
+                
+                //BOOL resultBindPlist = (sqlite3_bind_text (_storeKeysStatement, 2, [dictXML UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindData = (sqlite3_bind_blob(_storeKeysStatement, 2, [dictBinData bytes], [dictBinData length], SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindCalendarDate = (sqlite3_bind_text (_storeKeysStatement, 3, [[NSFNanoStore _calendarDateToString:[NSDate date]]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [className UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                
+                success = (resultBindKey && resultBindData && resultBindCalendarDate && resultBindClass);
+                if (success) {
+                    [self _executeSQLite3StepUsingSQLite3Statement:_storeKeysStatement];
+                }
+            }
+
+        }
+        /*
+        
         // Save the Key and its Plist (if it applies)
         NSString *dictXML = nil;
         NSString *errorString = nil;
@@ -967,7 +999,8 @@
                     }
                 }
             }
-        }
+            */
+        //}
     }
     
     return success;

@@ -322,21 +322,25 @@
             default:
                 while (SQLITE_ROW == sqlite3_step (theSQLiteStatement)) {
                     char *keyUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, 0);
-                    char *dictXMLUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, 1);
+                    //char *dictXMLUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, 1);
+                    NSData *dictBinData = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, 1) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
+
                     char *objectClassUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, 2);
                     
                     // Sanity check: some queries return NULL, which would a crash below.
                     // Since these are values that are NanoStore's resposibility, they should *never* be NULL. Log it for posterity.
-                    if ((NULL == keyUTF8) || (NULL == dictXMLUTF8) || (NULL == objectClassUTF8)) {
-                        NSLog(@"*** Warning! These values are NanoStore's resposibility and should *never* be NULL: keyUTF8 (%s) - dictXMLUTF8 (%s) - objectClassUTF8 (%s)", keyUTF8, dictXMLUTF8, objectClassUTF8);
+                    if ((NULL == keyUTF8) || (dictBinData == nil)/*(NULL == dictXMLUTF8)*/ || (NULL == objectClassUTF8)) {
+                        NSLog(@"*** Warning! These values are NanoStore's resposibility and should *never* be NULL: keyUTF8 (%s) - dictXMLUTF8 (\%s) - objectClassUTF8 (%s)", keyUTF8, /*dictXMLUTF8,*/ objectClassUTF8);
                         continue;
                     }
                     
                     NSString *keyValue = [[NSString alloc]initWithUTF8String:keyUTF8];
-                    NSString *dictXML = [[NSString alloc]initWithUTF8String:dictXMLUTF8];
+                    //NSString *dictXML = [[NSString alloc]initWithUTF8String:dictXMLUTF8];
                     NSString *objectClass = [[NSString alloc]initWithUTF8String:objectClassUTF8];
                     
-                    NSDictionary *info = [NSFNanoEngine _plistToDictionary:dictXML];
+                    //NSDictionary *info = [NSFNanoEngine _plistToDictionary:dictXML];
+                    NSDictionary *info = [NSKeyedUnarchiver unarchiveObjectWithData:dictBinData];
+                    
                     if (nil == info) {
                         continue;
                     }
@@ -459,7 +463,8 @@
                 
             for (i = 0; i < count; i++) {
                 @autoreleasepool {
-                    NSDictionary *info = [NSFNanoEngine _plistToDictionary:[resultsObjects objectAtIndex:i]];
+                    NSDictionary *info = [NSKeyedUnarchiver unarchiveObjectWithData:[resultsObjects objectAtIndex:i]];
+                    //NSDictionary *info = [NSFNanoEngine _plistToDictionary:[resultsObjects objectAtIndex:i]];
                     if (nil != info) {
                         NSString *keyValue = [resultsKeys objectAtIndex:i];
                         
