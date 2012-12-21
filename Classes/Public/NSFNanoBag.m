@@ -67,7 +67,7 @@
 {
     if (nil == someObjects) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: 'someObjects' cannot be nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: 'someObjects' cannot be nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -134,9 +134,9 @@
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoBag address      : 0x%x\n", self]];
+    [description appendString:[NSString stringWithFormat:@"NanoBag address      : %p\n", self]];
     [description appendString:[NSString stringWithFormat:@"Name                 : %@\n", (nil != name) ? name : @"<untitled>"]];
-    [description appendString:[NSString stringWithFormat:@"Document store       : 0x%x\n", store]];
+    [description appendString:[NSString stringWithFormat:@"Document store       : %@\n", store]];
     [description appendString:[NSString stringWithFormat:@"Has unsaved changes? : %@\n", (hasUnsavedChanges ? @"YES" : @"NO")]];
     [description appendString:[NSString stringWithFormat:@"Saved objects        : %ld key/value pairs\n", [savedObjects count]]];
     [description appendString:[NSString stringWithFormat:@"Unsaved objects      : %ld key/value pairs\n", [unsavedObjects count]]];
@@ -202,7 +202,7 @@
 {
     if (NO == [(id)object conformsToProtocol:@protocol(NSFNanoObjectProtocol)]) {
         [[NSException exceptionWithName:NSFNonConformingNanoObjectProtocolException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the object does not conform to NSFNanoObjectProtocol.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the object does not conform to NSFNanoObjectProtocol.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];            
     }
     
@@ -217,9 +217,9 @@
     } else {
         NSString *message = nil;
         if (nil == objectKey)
-            message = [NSString stringWithFormat:@"*** -[%@ %s]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", [self class], _cmd];
+            message = [NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", [self class], NSStringFromSelector(_cmd)];
         else
-            message = [NSString stringWithFormat:@"*** -[%@ %s]: unexpected NSFNanoObject behavior. Reason: the object's dictionary is nil.", [self class], _cmd];  
+            message = [NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's dictionary is nil.", [self class], NSStringFromSelector(_cmd)];  
         
         [[NSException exceptionWithName:NSFNanoObjectBehaviorException reason:message userInfo:nil]raise];  
     }
@@ -233,7 +233,7 @@
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: the object cannot be added because the list provided is nil.", [self class], _cmd]
+                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: the object cannot be added because the list provided is nil.", [self class], NSStringFromSelector(_cmd)]
                                                                              forKey:NSLocalizedFailureReasonErrorKey]];
         }
         return NO;
@@ -254,7 +254,7 @@
 {
     if (NO == [(id)object conformsToProtocol:@protocol(NSFNanoObjectProtocol)]) {
         [[NSException exceptionWithName:NSFNonConformingNanoObjectProtocolException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the object does not conform to NSFNanoObjectProtocol.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the object does not conform to NSFNanoObjectProtocol.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];    
     }
     
@@ -291,7 +291,7 @@
 {
     if (nil == objectKey) {
         [[NSException exceptionWithName:NSFNanoObjectBehaviorException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise]; 
     }
     
@@ -332,7 +332,7 @@
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: unable to save the bag. Reason: the store has not been set.", [self class], _cmd]
+                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: unable to save the bag. Reason: the store has not been set.", [self class], NSStringFromSelector(_cmd)]
                                                                              forKey:NSLocalizedFailureReasonErrorKey]];
         }
         return NO;
@@ -379,7 +379,7 @@
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: the bag could not be refreshed.", [self class], _cmd]
+                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: the bag could not be refreshed.", [self class], NSStringFromSelector(_cmd)]
                                                                              forKey:NSLocalizedFailureReasonErrorKey]];
         }
         return NO;

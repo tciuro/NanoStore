@@ -46,7 +46,7 @@
 {
     if (nil == aPredicate) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the predicate is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -71,7 +71,7 @@
 {
     if (nil == aPredicate)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the predicate is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     [predicates addObject:aPredicate];

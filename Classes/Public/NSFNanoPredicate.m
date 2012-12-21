@@ -39,7 +39,7 @@
 {
     if (nil == aValue)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: value is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     return [[self alloc]initWithColumn:type matching:matching value:aValue];
@@ -49,7 +49,7 @@
 {
     if (nil == aValue)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: value is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [super init])) {

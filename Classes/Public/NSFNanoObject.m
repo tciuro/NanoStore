@@ -85,7 +85,7 @@
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoObject address : 0x%x\n", (unsigned int)self]];
+    [description appendString:[NSString stringWithFormat:@"NanoObject address : %@\n", self]];
     [description appendString:[NSString stringWithFormat:@"Original class     : %@\n", (nil != originalClassString) ? originalClassString : NSStringFromClass ([self class])]];
     [description appendString:[NSString stringWithFormat:@"Key                : %@\n", key]];
     [description appendString:[NSString stringWithFormat:@"Info               : %ld key/value pairs\n", [info count]]];

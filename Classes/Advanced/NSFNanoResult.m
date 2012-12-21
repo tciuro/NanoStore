@@ -61,7 +61,7 @@
     
     NSMutableString *description = [NSMutableString string];
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"Result address     : 0x%x\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Result address     : %@\n", self]];
     [description appendString:[NSString stringWithFormat:@"Number of columns  : %ld\n", numberOfColumns]];
     if (nil == error)
         if ([[self columns]count] > 0)
@@ -199,12 +199,12 @@
 {
     if (nil == theResults)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theResults is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theResults is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([theResults respondsToSelector:@selector(objectForKey:)] == NO)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theResults is not of type NSDictionary.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theResults is not of type NSDictionary.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
@@ -219,12 +219,12 @@
 {
     if (nil == theError)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theError is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theError is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([theError respondsToSelector:@selector(localizedDescription)] == NO)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theError is not of type NSError.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theError is not of type NSError.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
