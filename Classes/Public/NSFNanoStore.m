@@ -815,7 +815,7 @@
     return YES;
 }
 
-- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)className usingSQLite3Statement:(sqlite3_stmt *)storeValuesStatement error:(out NSError **)outError
+- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType error:(out NSError **)outError
 {
     if (nil == someInfo)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -827,7 +827,7 @@
                                  reason:[NSString stringWithFormat:@"*** -[%@ %s]: aKey is nil.", [self class], _cmd]
                                userInfo:nil]raise];
     
-    if (nil == storeValuesStatement)
+    if (NULL == _storeValuesStatement)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
                                  reason:[NSString stringWithFormat:@"*** -[%@ %s]: aStatement is NULL.", [self class], _cmd]
                                userInfo:nil]raise];
@@ -867,7 +867,7 @@
                 id value = [flattenedValues objectAtIndex:i];
                 
                 // Reset, as required by SQLite...
-                int status = sqlite3_reset (storeValuesStatement);
+                int status = sqlite3_reset (_storeValuesStatement);
                 
                 // Since we're operating with extended result code support, extract the bits
                 // and obtain the regular result code
@@ -878,8 +878,8 @@
                 if (SQLITE_OK == status) {
                     
                     // Bind and execute the statement...
-                    BOOL resultBindKey = (sqlite3_bind_text (storeValuesStatement, 1, aKeyUTF8, -1, SQLITE_STATIC) == SQLITE_OK);
-                    BOOL resultBindAttribute = (sqlite3_bind_text (storeValuesStatement, 2, [attribute UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                    BOOL resultBindKey = (sqlite3_bind_text (_storeValuesStatement, 1, aKeyUTF8, -1, SQLITE_STATIC) == SQLITE_OK);
+                    BOOL resultBindAttribute = (sqlite3_bind_text (_storeValuesStatement, 2, [attribute UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                     
                     // Take advantage of manifest typing
                     // Branch the type of bind based on the type to be stored: NSString, NSData, NSDate or NSNumber
@@ -888,15 +888,15 @@
                     
                     switch (valueDataType) {
                         case NSFNanoTypeData:
-                            resultBindValue = (sqlite3_bind_blob(storeValuesStatement, 3, [value bytes], [value length], NULL) == SQLITE_OK);
+                            resultBindValue = (sqlite3_bind_blob(_storeValuesStatement, 3, [value bytes], [value length], NULL) == SQLITE_OK);
                             break;
                         case NSFNanoTypeString:
                         case NSFNanoTypeDate:
-                            resultBindValue = (sqlite3_bind_text (storeValuesStatement, 3, [[self _stringFromValue:value]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                            resultBindValue = (sqlite3_bind_text (_storeValuesStatement, 3, [[self _stringFromValue:value]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                             break;
                             break;
                         case NSFNanoTypeNumber:
-                            resultBindValue = (sqlite3_bind_double (storeValuesStatement, 3, [value doubleValue]) == SQLITE_OK);
+                            resultBindValue = (sqlite3_bind_double (_storeValuesStatement, 3, [value doubleValue]) == SQLITE_OK);
                             break;
                         default:
                             [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -907,11 +907,11 @@
                     
                     // Store the element's datatype so we can recreate it later on when we read it back from the store...
                     NSString *valueDatatypeString = NSFStringFromNanoDataType(valueDataType);
-                    BOOL resultBindDatatype = (sqlite3_bind_text (storeValuesStatement, 4, [valueDatatypeString UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                    BOOL resultBindDatatype = (sqlite3_bind_text (_storeValuesStatement, 4, [valueDatatypeString UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                     
                     success = (resultBindKey && resultBindAttribute && resultBindValue && resultBindDatatype);
                     if (success) {
-                        [self _executeSQLite3StepUsingSQLite3Statement:storeValuesStatement];
+                        [self _executeSQLite3StepUsingSQLite3Statement:_storeValuesStatement];
                     }
                 }
             }
@@ -959,7 +959,7 @@
                     BOOL resultBindKey = (sqlite3_bind_text (_storeKeysStatement, 1, aKeyUTF8, -1, SQLITE_STATIC) == SQLITE_OK);
                     BOOL resultBindPlist = (sqlite3_bind_text (_storeKeysStatement, 2, [dictXML UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                     BOOL resultBindCalendarDate = (sqlite3_bind_text (_storeKeysStatement, 3, [[NSFNanoStore _calendarDateToString:[NSDate date]]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
-                    BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [className UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                    BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [classType UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                     
                     success = (resultBindKey && resultBindPlist && resultBindCalendarDate && resultBindClass);
                     if (success) {
@@ -1187,7 +1187,7 @@
                     className = NSStringFromClass([object class]);
                 }
                 
-                if (NO == [self _storeDictionary:[object nanoObjectDictionaryRepresentation] forKey:[(id)object nanoObjectKey] forClassNamed:className usingSQLite3Statement:_storeValuesStatement error:outError]) {
+                if (NO == [self _storeDictionary:[object nanoObjectDictionaryRepresentation] forKey:[(id)object nanoObjectKey] forClassNamed:className error:outError]) {
                     [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
                                              reason:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, [*outError localizedDescription]]
                                            userInfo:nil]raise];

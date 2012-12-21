@@ -37,7 +37,7 @@
 - (void)_setIsOurTransaction:(BOOL)value;
 - (BOOL)_isOurTransaction;
 - (BOOL)_setupCachingSchema;
-- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType usingSQLite3Statement:(sqlite3_stmt *)storeValuesStatement error:(out NSError **)outError;
+- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType error:(out NSError **)outError;
 - (BOOL)__storeDictionaries:(NSArray *)someObjects forKeys:(NSArray *)someKeys error:(out NSError **)outError;
 - (BOOL)_bindValue:(id)aValue forAttribute:(NSString *)anAttribute parameterNumber:(NSInteger)aParamNumber usingSQLite3Statement:(sqlite3_stmt *)aStatement;
 - (BOOL)_checkNanoStoreIsReadyAndReturnError:(out NSError **)outError;
