@@ -337,6 +337,61 @@
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
+- (void)testSearchWithAttributeContainingPeriodAndValue
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:@"~/Desktop/AAA.sqlite" error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSDictionary *countriesInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"Llavaneres", @"Spain",
+                                   @"San Francisco", @"USA",
+                                   @"Very Good", @"Rating",
+                                   nil, nil];
+    NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
+                          @"John", @"FirstName",
+                          @"Doe", @"LastName",
+                          countriesInfo, @"Countries",
+                          [NSNumber numberWithUnsignedInt:(arc4random() % 32767) + 1], @"SomeNumber",
+                          @"To be decided", @"Rating",
+                          nil, nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:info];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"Countries.Spain";
+    search.match = NSFEqualTo;
+    search.value = @"Barcelona";
+    
+    NSError *searchError = nil;
+    id searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:&searchError];
+
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+}
+
+- (void)testSearchWithAttributeContainingPeriodNoValue
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:@"~/Desktop/AAA.sqlite" error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"Countries.Spain";
+    
+    NSError *searchError = nil;
+    id searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:&searchError];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+}
+
 - (void)testSearchTwoExpressions
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];

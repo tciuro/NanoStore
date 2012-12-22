@@ -573,10 +573,14 @@
         if (NSNotFound == [anAttribute rangeOfString:@"."].location) {
             segment = [NSFNanoSearch _querySegmentForAttributeColumnWithValue:anAttribute matching:aMatch valueColumnWithValue:aValue];
         } else {
-             if (nil == aValue)
+            if (nil == aValue) {
                 segment = [NSFNanoSearch _querySegmentForColumn:NSFAttribute value:anAttribute matching:aMatch];
-            else
+            } else {
                 segment = [NSFNanoSearch _querySegmentForColumn:NSFAttribute value:anAttribute matching:NSFEqualTo];
+                [theSQLStatement appendString:segment];
+                [theSQLStatement appendString:@" AND "];
+                segment = [NSFNanoSearch _querySegmentForColumn:NSFValue value:aValue matching:NSFEqualTo];
+            }
         }
         
         [theSQLStatement appendString:segment];
