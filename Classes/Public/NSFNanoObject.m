@@ -89,6 +89,15 @@
     [description appendString:[NSString stringWithFormat:@"Original class     : %@\n", (nil != originalClassString) ? originalClassString : NSStringFromClass ([self class])]];
     [description appendString:[NSString stringWithFormat:@"Key                : %@\n", key]];
     [description appendString:[NSString stringWithFormat:@"Info               : %ld key/value pairs\n", [info count]]];
+
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:info options:NSJSONWritingPrettyPrinted error:&error];
+    if (nil == error) {
+        NSString *JSONInfo = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+        [description appendString:[NSString stringWithFormat:@"%@\n", JSONInfo]];
+    } else {
+        [description appendString:[NSString stringWithFormat:@"Contents:          : <unable to display the contents>\n"]];
+    }
     
     return description;
 }
