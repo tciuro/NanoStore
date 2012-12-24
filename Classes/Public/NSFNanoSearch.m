@@ -37,7 +37,7 @@
 }
 
 
-@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort, filterClass;
+@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort, filterClass, offset, limit;
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -88,7 +88,7 @@
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : %@\n", self]];
+    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : %p\n", self]];
     [description appendString:[NSString stringWithFormat:@"Document store            : %@\n", nanoStore]];
     [description appendString:[NSString stringWithFormat:@"Attributes to be returned : %@\n", (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All")]];
     [description appendString:[NSString stringWithFormat:@"Key                       : %@\n", key]];
@@ -99,6 +99,8 @@
     [description appendString:[NSString stringWithFormat:@"Group values?             : %@\n", (groupValues ? @"YES" : @"NO")]];
     [description appendString:[NSString stringWithFormat:@"Sort                      : %@\n", sort]];
     [description appendString:[NSString stringWithFormat:@"Filter class              : %@\n", filterClass]];
+    [description appendString:[NSString stringWithFormat:@"Offset                    : %li\n", offset]];
+    [description appendString:[NSString stringWithFormat:@"Limit                     : %li\n", limit]];
 
     return description;
 }
@@ -173,16 +175,17 @@
 
 - (void)reset
 {
-     attributesToBeReturned= nil;
-     key = nil;
-     attribute = nil;
-     value = nil;
+    attributesToBeReturned= nil;
+    key = nil;
+    attribute = nil;
+    value = nil;
     match = NSFContains;
     groupValues = NO;
-     sql = nil;
-     sort = nil;
-
-     returnedObjectType = NSFReturnObjects;
+    sql = nil;
+    sort = nil;
+    offset = 0;
+    limit = 0;
+    returnedObjectType = NSFReturnObjects;
 }
 
 #pragma mark -
@@ -497,6 +500,16 @@
         aSQLQuery = [self _prepareSQLQueryStringWithKey:key attribute:attribute value:value matching:match];
     } else {
         aSQLQuery = [self _prepareSQLQueryStringWithExpressions:expressions];
+    }
+    
+    // Add the limit clause if required
+    if (limit > 0) {
+        aSQLQuery = [NSString stringWithFormat:@"%@ LIMIT %li", aSQLQuery, limit];
+    }
+    
+    // Add the offset clause if required
+    if (offset > 0) {
+        aSQLQuery = [NSString stringWithFormat:@"%@ OFFSET %li", aSQLQuery, offset];
     }
     
     return aSQLQuery;
@@ -877,7 +890,7 @@
 {
     id theResults = results;
     
-    if (nil != sort) {
+    if ([sort count] > 0) {
         NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
         
         for (NSFNanoSortDescriptor *descriptor in sort) {
@@ -891,9 +904,7 @@
         } else {
             theResults = [results allKeys];
         }
-    }
-    else if (NSFReturnKeys == theReturnType)
-    {
+    } else if (NSFReturnKeys == theReturnType) {
         theResults = [results allKeys];
     }
     

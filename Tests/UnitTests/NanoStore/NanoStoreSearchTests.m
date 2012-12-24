@@ -14,6 +14,7 @@
 #import "NSFNanoSortDescriptor.h"
 #import "NanoCarTestClass.h"
 #import "NanoPersonTestClass.h"
+#import "NSFNanoGlobals_Private.h"
 
 @implementation NanoStoreSearchTests
 
@@ -339,7 +340,7 @@
 
 - (void)testSearchWithAttributeContainingPeriodAndValue
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:@"~/Desktop/AAA.sqlite" error:nil];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSDictionary *countriesInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -390,6 +391,66 @@
     [nanoStore closeWithError:nil];
     
     STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+}
+
+- (void)testSearchObjectsWithOffsetAndLimit
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    for (int i = 0; i < 10; i++) {
+        [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]]] error:nil];
+    }
+    
+    NSFNanoSortDescriptor *sortByNumber = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"SomeNumber" ascending:YES];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.value = @"Barcelona";
+    search.match = NSFEqualTo;
+    search.limit = 5;
+    search.offset = 3;
+    search.sort = [NSArray arrayWithObjects:sortByNumber, nil];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+}
+
+- (void)testSearchObjectsWithOffsetAndLimitWithExpressions
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    for (int i = 0; i < 10; i++) {
+        [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    }
+    
+    NSFNanoSortDescriptor *sortByValue = [[NSFNanoSortDescriptor alloc]initWithAttribute:NSFKey ascending:YES];
+    NSFNanoSortDescriptor *sortByROWID = [[NSFNanoSortDescriptor alloc]initWithAttribute:NSFRowIDColumnName ascending:YES];
+    
+    NSFNanoPredicate *firstNamePred = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"FirstName"];
+    NSFNanoPredicate *valuePred = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:@"Tito"];
+    NSFNanoExpression *expression1 = [NSFNanoExpression expressionWithPredicate:firstNamePred];
+    [expression1 addPredicate:valuePred withOperator:NSFAnd];
+    
+    NSFNanoPredicate *countryPred = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"Countries.Spain"];
+    NSFNanoPredicate *cityPred = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEndsWith value:@"celona"];
+    NSFNanoExpression *expression2 = [NSFNanoExpression expressionWithPredicate:countryPred];
+    [expression2 addPredicate:cityPred withOperator:NSFAnd];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.expressions = [NSArray arrayWithObjects:expression1, expression2, nil];
+    search.limit = 5;
+    search.offset = 3;
+    search.sort = [NSArray arrayWithObjects:sortByValue, sortByROWID, nil];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
 }
 
 - (void)testSearchTwoExpressions
