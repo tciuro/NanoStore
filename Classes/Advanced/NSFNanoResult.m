@@ -61,7 +61,7 @@
     
     NSMutableString *description = [NSMutableString string];
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"Result address     : %@\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Result address     : %p\n", self]];
     [description appendString:[NSString stringWithFormat:@"Number of columns  : %ld\n", numberOfColumns]];
     if (nil == error)
         if ([[self columns]count] > 0)
