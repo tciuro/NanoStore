@@ -606,6 +606,10 @@
         }
     }
     
+    if ((limit > 0) || (offset > 0)) {
+        [theSQLStatement appendString:@" ORDER BY ROWID"];
+    }
+    
     if (YES == groupValues) {
         [theSQLStatement appendString:@" GROUP BY NSFValue"];
     }
