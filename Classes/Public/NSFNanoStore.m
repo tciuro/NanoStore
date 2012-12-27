@@ -904,7 +904,7 @@
                             break;
 #ifdef USEKEYARCHIVER
                         case NSFNanoTypeNULL:
-                            resultBindValue = (sqlite3_bind_null(storeValuesStatement, 3) == SQLITE_OK);
+                            resultBindValue = (sqlite3_bind_null(_storeValuesStatement, 3) == SQLITE_OK);
                             break;
 #endif
                         default:
@@ -948,7 +948,7 @@
                 //BOOL resultBindPlist = (sqlite3_bind_text (_storeKeysStatement, 2, [dictXML UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                 BOOL resultBindData = (sqlite3_bind_blob(_storeKeysStatement, 2, [dictBinData bytes], [dictBinData length], SQLITE_STATIC) == SQLITE_OK);
                 BOOL resultBindCalendarDate = (sqlite3_bind_text (_storeKeysStatement, 3, [[NSFNanoStore _calendarDateToString:[NSDate date]]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
-                BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [className UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [classType UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                 
                 success = (resultBindKey && resultBindData && resultBindCalendarDate && resultBindClass);
                 if (success) {
