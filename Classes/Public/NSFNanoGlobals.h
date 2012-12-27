@@ -72,10 +72,8 @@ typedef enum {
     NSFNanoTypeDate,
     /** * Used to store NSNumber elements. Its string equivalent is <b>REAL</b>. */
     NSFNanoTypeNumber,
-#ifdef USEKEYARCHIVER
     /** * Used to store NSNull elements. Its string equivalent is <b>NULL</b>. */
     NSFNanoTypeNULL
-#endif
 } NSFNanoDatatype;
 
 /** * Returns the name of a NSFNanoDatatype datatype as a string. */

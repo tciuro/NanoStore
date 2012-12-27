@@ -49,9 +49,7 @@ NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype)
         case NSFNanoTypeDate: value = @"TEXT"; break;
         case NSFNanoTypeNumber: value = @"REAL"; break;
         case NSFNanoTypeRowUID: value = @"INTEGER"; break;
-#ifdef USEKEYARCHIVER
         case NSFNanoTypeNULL: value = @"NULL"; break;
-#endif
     }
     
     return value;
@@ -66,9 +64,7 @@ NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
     else if ([aNanoDatatype isEqualToString:@"TEXT"]) value = NSFNanoTypeDate;
     else if ([aNanoDatatype isEqualToString:@"REAL"]) value = NSFNanoTypeNumber;
     else if ([aNanoDatatype isEqualToString:@"INTEGER"]) value = NSFNanoTypeRowUID;
-#ifdef USEKEYARCHIVER
     else if ([aNanoDatatype isEqualToString:@"NULL"]) value = NSFNanoTypeNULL;
-#endif
     return value;
 }
 
@@ -120,12 +116,12 @@ NSString * const NSFValue                                       = @"NSFValue";
 NSString * const NSFDatatype                                    = @"NSFDatatype";
 NSString * const NSFCalendarDate                                = @"NSFCalendarDate";
 NSString * const NSFObjectClass                                 = @"NSFObjectClass";
-NSString * const NSFPlist                                       = @"NSFPlist";
+NSString * const NSFKeyedArchive                                = @"NSFKeyedArchive";
 
 #pragma mark -
 
 NSString * const NSF_Private_NSFKeys_NSFKey             = @"NSFKeys.NSFKey";
-NSString * const NSF_Private_NSFKeys_NSFPlist           = @"NSFKeys.NSFPlist";
+NSString * const NSF_Private_NSFKeys_NSFKeyedArchive    = @"NSFKeys.NSFKeyedArchive";
 NSString * const NSF_Private_NSFValues_NSFKey           = @"NSFValues.NSFKey";
 NSString * const NSF_Private_NSFValues_NSFAttribute     = @"NSFValues.NSFAttribute";
 NSString * const NSF_Private_NSFValues_NSFValue         = @"NSFValues.NSFValue";

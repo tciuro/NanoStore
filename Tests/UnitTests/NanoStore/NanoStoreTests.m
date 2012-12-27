@@ -855,7 +855,6 @@
     STAssertTrue ((test1 && test2 && (NO == test3)) == YES, @"Expected all tests against NSFNanoEngine to succeed.");
 }
 
-#if USEKEYARCHIVER
 - (void)testStoreNSNullObjects
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
@@ -877,6 +876,5 @@
     
     STAssertTrue (([keys1 count] + [keys2 count] == 2), @"Expected to find two null stored objects.");
 }
-#endif
 
 @end

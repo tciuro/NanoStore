@@ -602,9 +602,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     NSString *column = [[NSString alloc]initWithUTF8String:columnUTF8];
 
                     // Sanity check: some queries return NULL, which would cause a crash below.
-#ifdef USEKEYARCHIVER 
-                    if ([column isEqualToString:@"NSFKeys.NSFPlist"]) {
-                        //NSFPlist is a blob
+                    if ([column isEqualToString:@"NSFKeys.NSFKeyedArchive"]) {
+                        //KeyedArchive is a blob
                         NSData *dictBinData = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
                         
                         // Obtain the array to collect the values. If the array doesn't exist, create it.
@@ -615,7 +614,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                         [values addObject:dictBinData];
                         [info setObject:values forKey:column];
                     }else
-#endif
                     {
                         char *valueUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, columnIndex);
                         NSString *value = nil;
