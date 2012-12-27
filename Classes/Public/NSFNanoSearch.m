@@ -37,7 +37,7 @@
 }
 
 
-@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort, filterClass;
+@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort, filterClass, offset, limit;
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -52,7 +52,7 @@
 {
     if (nil == store) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: store is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: store is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -88,8 +88,8 @@
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : 0x%x\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Document store            : 0x%x\n", nanoStore]];
+    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : %p\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Document store            : %@\n", nanoStore]];
     [description appendString:[NSString stringWithFormat:@"Attributes to be returned : %@\n", (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All")]];
     [description appendString:[NSString stringWithFormat:@"Key                       : %@\n", key]];
     [description appendString:[NSString stringWithFormat:@"Attribute                 : %@\n", attribute]];
@@ -99,6 +99,8 @@
     [description appendString:[NSString stringWithFormat:@"Group values?             : %@\n", (groupValues ? @"YES" : @"NO")]];
     [description appendString:[NSString stringWithFormat:@"Sort                      : %@\n", sort]];
     [description appendString:[NSString stringWithFormat:@"Filter class              : %@\n", filterClass]];
+    [description appendString:[NSString stringWithFormat:@"Offset                    : %li\n", offset]];
+    [description appendString:[NSString stringWithFormat:@"Limit                     : %li\n", limit]];
 
     return description;
 }
@@ -109,13 +111,13 @@
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if (0 == [theSQLStatement length]) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is empty.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -136,13 +138,13 @@
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if (0 == [theSQLStatement length]) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is empty.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -158,13 +160,13 @@
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if (0 == [theSQLStatement length]) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is empty.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -173,16 +175,17 @@
 
 - (void)reset
 {
-     attributesToBeReturned= nil;
-     key = nil;
-     attribute = nil;
-     value = nil;
+    attributesToBeReturned= nil;
+    key = nil;
+    attribute = nil;
+    value = nil;
     match = NSFContains;
     groupValues = NO;
-     sql = nil;
-     sort = nil;
-
-     returnedObjectType = NSFReturnObjects;
+    sql = nil;
+    sort = nil;
+    offset = 0;
+    limit = 0;
+    returnedObjectType = NSFReturnObjects;
 }
 
 #pragma mark -
@@ -341,7 +344,7 @@
                     
 #else
                     if ((NULL == keyUTF8) || (NULL == dictXMLUTF8) || (NULL == objectClassUTF8)) {
-                        NSLog(@"*** Warning! These values are NanoStore's resposibility and should *never* be NULL: keyUTF8 (%s) - dictXMLUTF8 (\%s) - objectClassUTF8 (%s)", keyUTF8, /*dictXMLUTF8,*/ objectClassUTF8);
+                        NSLog(@"*** Warning! These values are NanoStore's resposibility and should *never* be NULL: keyUTF8 (%s) - dictXMLUTF8 (%s) - objectClassUTF8 (%s)", keyUTF8, dictXMLUTF8, objectClassUTF8);
                         continue;
                     }
                     NSString *dictXML = [[NSString alloc]initWithUTF8String:dictXMLUTF8];
@@ -410,10 +413,10 @@
         
     } else {
         if (nil != outError) {
-            NSString *msg = [NSString stringWithFormat:@"SQLite error ID: %ld", status];
+            NSString *msg = [NSString stringWithFormat:@"SQLite error ID: %d", status];
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, msg]
+                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: %@", [self class], NSStringFromSelector(_cmd), msg]
                                                                              forKey:NSLocalizedFailureReasonErrorKey]];
         }
         searchResults = nil;
@@ -517,6 +520,16 @@
         aSQLQuery = [self _prepareSQLQueryStringWithExpressions:expressions];
     }
     
+    // Add the limit clause if required
+    if (limit > 0) {
+        aSQLQuery = [NSString stringWithFormat:@"%@ LIMIT %li", aSQLQuery, limit];
+    }
+    
+    // Add the offset clause if required
+    if (offset > 0) {
+        aSQLQuery = [NSString stringWithFormat:@"%@ OFFSET %li", aSQLQuery, offset];
+    }
+    
     return aSQLQuery;
 }
 
@@ -591,10 +604,14 @@
         if (NSNotFound == [anAttribute rangeOfString:@"."].location) {
             segment = [NSFNanoSearch _querySegmentForAttributeColumnWithValue:anAttribute matching:aMatch valueColumnWithValue:aValue];
         } else {
-             if (nil == aValue)
+            if (nil == aValue) {
                 segment = [NSFNanoSearch _querySegmentForColumn:NSFAttribute value:anAttribute matching:aMatch];
-            else
+            } else {
                 segment = [NSFNanoSearch _querySegmentForColumn:NSFAttribute value:anAttribute matching:NSFEqualTo];
+                [theSQLStatement appendString:segment];
+                [theSQLStatement appendString:@" AND "];
+                segment = [NSFNanoSearch _querySegmentForColumn:NSFValue value:aValue matching:NSFEqualTo];
+            }
         }
         
         [theSQLStatement appendString:segment];
@@ -605,6 +622,10 @@
             segment = [NSFNanoSearch _querySegmentForColumn:NSFValue value:aValue matching:aMatch];
             [theSQLStatement appendString:segment];
         }
+    }
+    
+    if ((limit > 0) || (offset > 0)) {
+        [theSQLStatement appendString:@" ORDER BY ROWID"];
     }
     
     if (YES == groupValues) {
@@ -891,7 +912,7 @@
 {
     id theResults = results;
     
-    if (nil != sort) {
+    if ([sort count] > 0) {
         NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
         
         for (NSFNanoSortDescriptor *descriptor in sort) {
@@ -905,9 +926,7 @@
         } else {
             theResults = [results allKeys];
         }
-    }
-    else if (NSFReturnKeys == theReturnType)
-    {
+    } else if (NSFReturnKeys == theReturnType) {
         theResults = [results allKeys];
     }
     

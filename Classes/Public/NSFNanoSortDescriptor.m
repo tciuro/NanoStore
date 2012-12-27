@@ -46,7 +46,7 @@
 {
     if (theAttribute.length == 0)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theAttribute is invalid.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theAttribute is invalid.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [super init])) {
@@ -69,7 +69,7 @@
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"Sort descriptor address  : 0x%x\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Sort descriptor address  : %p\n", self]];
     [description appendString:[NSString stringWithFormat:@"Attribute                : %@\n", attribute]];
     [description appendString:[NSString stringWithFormat:@"Is ascending?            : %@\n", (isAscending ? @"YES" : @"NO")]];
     
