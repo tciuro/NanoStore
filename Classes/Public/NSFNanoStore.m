@@ -374,7 +374,7 @@
 - (NSArray *)bags
 {
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
-    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", NSStringFromClass([NSFNanoBag class])];
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", NSStringFromClass([NSFNanoBag class])];
     
     return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil]allValues];
 
@@ -410,7 +410,7 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
     NSString *quotedString = [NSFNanoSearch _quoteStrings:someKeys joiningWithDelimiter:@","];
-    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@) AND NSFObjectClass = \"%@\"", quotedString, NSStringFromClass([NSFNanoBag class])];
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@) AND NSFObjectClass = \"%@\"", quotedString, NSStringFromClass([NSFNanoBag class])];
     
     return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil]allValues];
 }
@@ -422,7 +422,7 @@
     }
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
-    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE NSFValue = \"%@\") AND NSFObjectClass = \"%@\"", aKey, NSStringFromClass([NSFNanoBag class])];
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE NSFValue = \"%@\") AND NSFObjectClass = \"%@\"", aKey, NSStringFromClass([NSFNanoBag class])];
     
     return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil]allValues];
 }
@@ -435,7 +435,7 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
     NSString *quotedString = [NSFNanoSearch _quoteStrings:someKeys joiningWithDelimiter:@","];
-    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", quotedString];
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", quotedString];
     
     return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil]allValues];
 }
@@ -463,7 +463,7 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
     search.sort = theSortDescriptors;
     
-    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", theClassName];
+    NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFObjectClass = \"%@\"", theClassName];
     
     if (nil == theSortDescriptors) 
         return [[search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil] allValues];
@@ -714,7 +714,7 @@
     }
     
     if ((NULL == _storeKeysStatement) && (YES == hasInitializationSucceeded)) {
-        NSString *theSQLStatement = [[NSString alloc]initWithFormat:@"INSERT INTO %@(%@, %@, %@, %@) VALUES (?,?,?,?);", NSFKeys, NSFKey, NSFPlist, NSFCalendarDate, NSFObjectClass];
+        NSString *theSQLStatement = [[NSString alloc]initWithFormat:@"INSERT INTO %@(%@, %@, %@, %@) VALUES (?,?,?,?);", NSFKeys, NSFKey, NSFKeyedArchive, NSFCalendarDate, NSFObjectClass];
         hasInitializationSucceeded = [self _prepareSQLite3Statement:&_storeKeysStatement theSQLStatement:theSQLStatement];
         
         if ((nil != outError) && (NO == hasInitializationSucceeded)) {
@@ -810,14 +810,15 @@
     
     // Setup the Plist table
     if ([tables containsObject:NSFKeys] == NO) {
-        theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ TEXT, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFPlist, NSFCalendarDate, NSFObjectClass];
+        theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ BLOB, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFKeyedArchive, NSFCalendarDate, NSFObjectClass];
+
         success = (nil == [[[self nanoStoreEngine]executeSQL:theSQLStatement]error]);
         if (NO == success)
             return NO;
         
         [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFRowIDColumnName, rowUIDDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
         [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFKey, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFPlist, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
+        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFKeyedArchive, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
         [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, dateDatatype, dateDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];        
         [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFObjectClass, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
     }
@@ -908,6 +909,9 @@
                         case NSFNanoTypeNumber:
                             resultBindValue = (sqlite3_bind_double (_storeValuesStatement, 3, [value doubleValue]) == SQLITE_OK);
                             break;
+                        case NSFNanoTypeNULL:
+                            resultBindValue = (sqlite3_bind_null(_storeValuesStatement, 3) == SQLITE_OK);
+                            break;
                         default:
                             [[NSException exceptionWithName:NSFUnexpectedParameterException
                                                      reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatype %@ cannot be stored because its class type is unknown.", [self class], NSStringFromSelector(_cmd), [value class]]
@@ -930,51 +934,27 @@
     }
     
     if (YES == success) {
-        // Save the Key and its Plist (if it applies)
-        NSString *dictXML = nil;
-        NSString *errorString = nil;
-        
-        NSData *dictData = [NSPropertyListSerialization dataFromPropertyList:someInfo format:NSPropertyListXMLFormat_v1_0 errorDescription:&errorString];
-        if (nil != errorString) {
-            NSLog(@"     Dictionary: %@", someInfo);
-            NSLog(@"*** -[%@ %@]: [NSPropertyListSerialization dataFromPropertyList] failure. %@", [self class], NSStringFromSelector(_cmd), errorString);
-            NSLog(@"     Dictionary info: %@", someInfo);
-            success = NO;
-        } else {
-            if ([dictData length] > 0)
-                dictXML = [[NSString alloc]initWithBytes:[dictData bytes]length:[dictData length]encoding:NSUTF8StringEncoding];
-            else
-                dictXML = @"";
+        NSData *dictBinData = [NSKeyedArchiver archivedDataWithRootObject:someInfo];
+        {
+            int status = sqlite3_reset (_storeKeysStatement);
             
-            if (nil == dictXML) {
-                if (nil != outError)
-                    *outError = [NSError errorWithDomain:NSFDomainKey
-                                                    code:NSF_Private_InvalidParameterDataCodeKey
-                                                userInfo:[NSDictionary dictionaryWithObject:@"Couldn't serialize the object: %@"
-                                                                                     forKey:NSLocalizedDescriptionKey]];
-                success = NO;
-            } else {
-                // Reset, as required by SQLite...
-                int status = sqlite3_reset (_storeKeysStatement);
+            // Since we're operating with extended result code support, extract the bits
+            // and obtain the regular result code
+            // For more info check: http://www.sqlite.org/c3ref/c_ioerr_access.html
+            
+            status = [NSFNanoEngine NSFP_stripBitsFromExtendedResultCode:status];
+            
+            // Bind and execute the statement...
+            if (SQLITE_OK == status) {
                 
-                // Since we're operating with extended result code support, extract the bits
-                // and obtain the regular result code
-                // For more info check: http://www.sqlite.org/c3ref/c_ioerr_access.html
+                BOOL resultBindKey = (sqlite3_bind_text (_storeKeysStatement, 1, aKeyUTF8, -1, SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindData = (sqlite3_bind_blob(_storeKeysStatement, 2, [dictBinData bytes], (int)[dictBinData length], SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindCalendarDate = (sqlite3_bind_text (_storeKeysStatement, 3, [[NSFNanoStore _calendarDateToString:[NSDate date]]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [classType UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
                 
-                status = [NSFNanoEngine NSFP_stripBitsFromExtendedResultCode:status];
-                
-                // Bind and execute the statement...
-                if (SQLITE_OK == status) {
-                    
-                    BOOL resultBindKey = (sqlite3_bind_text (_storeKeysStatement, 1, aKeyUTF8, -1, SQLITE_STATIC) == SQLITE_OK);
-                    BOOL resultBindPlist = (sqlite3_bind_text (_storeKeysStatement, 2, [dictXML UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
-                    BOOL resultBindCalendarDate = (sqlite3_bind_text (_storeKeysStatement, 3, [[NSFNanoStore _calendarDateToString:[NSDate date]]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
-                    BOOL resultBindClass = (sqlite3_bind_text (_storeKeysStatement, 4, [classType UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
-                    
-                    success = (resultBindKey && resultBindPlist && resultBindCalendarDate && resultBindClass);
-                    if (success) {
-                        [self _executeSQLite3StepUsingSQLite3Statement:_storeKeysStatement];
-                    }
+                success = (resultBindKey && resultBindData && resultBindCalendarDate && resultBindClass);
+                if (success) {
+                    [self _executeSQLite3StepUsingSQLite3Statement:_storeKeysStatement];
                 }
             }
         }
@@ -995,7 +975,9 @@
         return NSFNanoTypeDate;
     else if ([value isKindOfClass:[NSData class]])
         return NSFNanoTypeData;
-    
+    else if ([value isKindOfClass:[NSNull class]])
+        return NSFNanoTypeNULL;
+
     return type;
 }
 

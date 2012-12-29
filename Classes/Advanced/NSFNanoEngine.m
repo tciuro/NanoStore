@@ -602,21 +602,36 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     NSString *column = [[NSString alloc]initWithUTF8String:columnUTF8];
 
                     // Sanity check: some queries return NULL, which would cause a crash below.
-                    char *valueUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, columnIndex);
-                    NSString *value = nil;
-                    if (NULL != valueUTF8) {
-                        value = [[NSString alloc]initWithUTF8String:valueUTF8];
-                    } else {
-                        value = [[NSNull null]description];
+                    if ([column isEqualToString:@"NSFKeys.NSFKeyedArchive"]) {
+                        //KeyedArchive is a blob
+                        NSData *dictBinData = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
+                        
+                        // Obtain the array to collect the values. If the array doesn't exist, create it.
+                        NSMutableArray *values = [info objectForKey:column];
+                        if (nil == values) {
+                            values = [NSMutableArray new];
+                        }
+                        [values addObject:dictBinData];
+                        [info setObject:values forKey:column];
+                    }else
+                    {
+                        char *valueUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, columnIndex);
+                        NSString *value = nil;
+                        if (NULL != valueUTF8) {
+                            value = [[NSString alloc]initWithUTF8String:valueUTF8];
+                        } else {
+                            value = [[NSNull null]description];
+                        }
+                        
+                        // Obtain the array to collect the values. If the array doesn't exist, create it.
+                        NSMutableArray *values = [info objectForKey:column];
+                        if (nil == values) {
+                            values = [NSMutableArray new];
+                        }
+                        [values addObject:value];
+                        [info setObject:values forKey:column];
                     }
-                    
-                    // Obtain the array to collect the values. If the array doesn't exist, create it.
-                    NSMutableArray *values = [info objectForKey:column];
-                    if (nil == values) {
-                        values = [NSMutableArray new];
-                    }
-                    [values addObject:value];
-                    [info setObject:values forKey:column];
+
                     
                     // Let's cleanup. This will keep the memory footprint low...
                 }

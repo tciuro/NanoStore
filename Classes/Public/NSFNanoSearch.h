@@ -281,7 +281,7 @@
  * NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
  *
  * // Perform the search
- * // The query will be rewritten as @"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys"
+ * // The query will be rewritten as @"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys"
  * NSDictionary *results = [search executeSQL:@"SELECT foo, bar FROM NSFKeys" returnType:NSFReturnObjects error:nil];
  * @endcode
  * @note The sort descriptor will be ignored when executing custom SQL statements.
