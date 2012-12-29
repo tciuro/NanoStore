@@ -388,8 +388,18 @@
     search.match = NSFEqualTo;
     search.value = theName;
     
-    // Returns a dictionary with the UUID of the object (key) and the NanoObject (value).
     return [[[search searchObjectsWithReturnType:NSFReturnObjects error:nil]allObjects]lastObject];
+}
+
+- (NSArray *)bagsWithName:(NSString *)theName
+{
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:self];
+    
+    search.attribute = NSF_Private_NSFNanoBag_Name;
+    search.match = NSFEqualTo;
+    search.value = theName;
+    
+    return [[search searchObjectsWithReturnType:NSFReturnObjects error:nil]allObjects];
 }
 
 - (NSArray *)bagsWithKeysInArray:(NSArray *)someKeys

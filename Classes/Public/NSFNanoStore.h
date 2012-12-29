@@ -297,6 +297,13 @@
 
 - (NSFNanoBag *)bagWithName:(NSString *)theName;
 
+/** * Retrieves all bags associated with the specified name.
+ * @param theName the name of the bag.
+ * @returns The bags that match the specified name, an empty array otherwise.
+ */
+
+- (NSArray *)bagsWithName:(NSString *)theName;
+
 /** * Returns a new array containing the bags found in the document store matching the specified list of keys.
  * @param theKeys the list of bag keys.
  * @returns An array with the bags that match the specified list of keys.

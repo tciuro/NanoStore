@@ -135,6 +135,7 @@
     
     [description appendString:@"\n"];
     [description appendString:[NSString stringWithFormat:@"NanoBag address      : %p\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Key                  : %@\n", key]];
     [description appendString:[NSString stringWithFormat:@"Name                 : %@\n", (nil != name) ? name : @"<untitled>"]];
     [description appendString:[NSString stringWithFormat:@"Document store       : %@\n", store]];
     [description appendString:[NSString stringWithFormat:@"Has unsaved changes? : %@\n", (hasUnsavedChanges ? @"YES" : @"NO")]];

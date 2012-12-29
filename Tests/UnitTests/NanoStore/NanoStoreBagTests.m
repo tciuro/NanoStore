@@ -244,6 +244,20 @@
     STAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
 }
 
+- (void)testTwoBagsWithSameName
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoBag *bag1 = [NSFNanoBag bagWithName:@"foo" andObjects:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]]];
+    NSFNanoBag *bag2 = [NSFNanoBag bagWithName:@"foo" andObjects:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]]];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bag1, bag2, nil] error:nil];
+    NSArray *bags = [nanoStore bagsWithName:@"foo"];
+    STAssertTrue (2 == bags.count, @"Expected to find two bags.");
+    
+    [nanoStore closeWithError:nil];
+}
+
 - (void)testBagCountTwoDeleteOne
 {
     NSFNanoObject *objectOne = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
