@@ -118,7 +118,7 @@
                 for (j = 0; j < numberOfColumns; j++) {
                     NSString *columnName = [columns objectAtIndex:j];
                     const char *value = "<plist data>    ";
-                    if (NO == [columnName hasSuffix:@"NSFPlist"]) {
+                    if (NO == [columnName hasSuffix:@"NSFKeyedArchive"]) {
                         value = [[self valueAtIndex:i forColumn:columnName]UTF8String];
                     }
                     
