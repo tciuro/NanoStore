@@ -113,10 +113,15 @@
 
 /** * Returns a string representation of the predicate.
  * @note Check properties column, match and value to find out the current state of the predicate.
- * @see \link description - (NSString *)description \endlink
  */
 
 - (NSString *)description;
+
+/** * Returns a JSON representation of the predicate.
+ * @note Check properties column, match and value to find out the current state of the predicate.
+ */
+
+- (NSString *)JSONDescription;
 
 //@}
 

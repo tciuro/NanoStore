@@ -139,6 +139,114 @@
     return description;
 }
 
+- (NSFOrderedDictionary *)dictionaryDescription
+{
+    NSUInteger numberOfColumns = [[results allKeys]count];
+
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"Result address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Number of columns"] = @(numberOfColumns);
+    if (nil == error) {
+        if ([[self columns]count] > 0) {
+            values[@"Columns"] = [[self columns]componentsJoinedByString:@", "];
+        } else {
+            values[@"Columns"] = @"()";
+        }
+    } else {
+        values[@"Columns"] = @"<column info not available>";
+    }
+    values[@"Number of rows"] = @(numberOfRows);
+    if (nil == error) {
+        values[@"Error"] = @"<nil>";
+    } else {
+        values[@"Error"] = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+    }
+    
+    // Print up to the first ten rows to help visualize the cursor
+    if (0 != numberOfColumns) {
+        NSUInteger i;
+        NSArray *columns = [self columns];
+        NSMutableString *contentString = [NSMutableString new];
+        NSMutableArray *printedContent = [NSMutableArray new];
+        
+        // Print the names of the columns
+        [contentString appendString:[NSString stringWithFormat:@"%-15@ | ", @"Row #          "]];
+        for (i = 0; i < numberOfColumns; i++) {
+            const char *value = [[columns objectAtIndex:i]UTF8String];
+            if (numberOfColumns - 1 > i) {
+                [contentString appendString:[NSString stringWithFormat:@"%-15s | ", value]];
+            } else {
+                [contentString appendString:[NSString stringWithFormat:@"%-15s", value]];
+            }
+        }
+        [printedContent addObject:[contentString copy]];
+        
+        // Print the underline
+        [contentString setString:@""];
+        const char *value = "===============";
+        [contentString appendString:[NSString stringWithFormat:@"%-15s | ", value]];
+        for (i = 0; i < numberOfColumns; i++) {
+            if (numberOfColumns - 1 > i) {
+                [contentString appendString:[NSString stringWithFormat:@"%-15s | ", value]];
+            } else {
+                [contentString appendString:[NSString stringWithFormat:@"%-15s", value]];
+            }
+        }
+        [printedContent addObject:[contentString copy]];
+
+        // Print the preview of the contents
+        if (numberOfRows > 0) {
+            NSInteger numberOfRowsToPrint = numberOfRows;
+            NSUInteger j;
+            
+            if (numberOfRows > 100) {
+                numberOfRowsToPrint = 100;
+            }
+            
+            [contentString setString:@""];
+
+            for (i = 0; i < numberOfRowsToPrint; i++) {
+                [contentString appendString:[NSString stringWithFormat:@"%-15ld | ", i]];
+                for (j = 0; j < numberOfColumns; j++) {
+                    NSString *columnName = [columns objectAtIndex:j];
+                    const char *value = "<plist data>    ";
+                    if (NO == [columnName hasSuffix:@"NSFPlist"]) {
+                        value = [[self valueAtIndex:i forColumn:columnName]UTF8String];
+                    }
+                    
+                    if (numberOfColumns - 1 > j) {
+                        [contentString appendString:[NSString stringWithFormat:@"%-15s | ", value]];
+                    } else {
+                        [contentString appendString:[NSString stringWithFormat:@"%-15s", value]];
+                    }
+                }
+                
+                [printedContent addObject:[contentString copy]];
+            }
+        } else {
+            [printedContent addObject:@"<no data available>"];
+        }
+        
+        values[@"Preview of contents"] = printedContent;
+    }
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSFOrderedDictionary *values = [self dictionaryDescription];
+    
+    NSError *outError = nil;
+    NSString *description = NSObjectToJSONString(values, &outError);
+    if (nil != outError) {
+        description = [outError localizedDescription];
+    }
+    
+    return description;
+}
+
 #pragma mark -
 
 - (NSArray *)columns

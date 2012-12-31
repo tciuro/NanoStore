@@ -80,6 +80,9 @@ extern  NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype);
 /** * Obtains a NSFNanoDatatype datatype by name. */
 extern  NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype);
 
+/** * Converts an NSDictionary to a JSON string. */
+extern NSString * NSObjectToJSONString (id object, NSError **error);
+
 /** * Types of backing store supported by NanoStore.
  * These values represent the storage options available when generating a NanoStore.
  @see NSFNanoStore

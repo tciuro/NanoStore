@@ -30,6 +30,7 @@
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoSearch_Private.h"
+#import "NSFOrderedDictionary.h"
 
 @implementation NSFNanoBag
 {
@@ -129,21 +130,57 @@
     return savedObjects.count + unsavedObjects.count;
 }
 
-- (NSString*)description
+- (NSString *)description
 {
-    NSMutableString *description = [NSMutableString string];
-    
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoBag address      : %p\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Key                  : %@\n", key]];
-    [description appendString:[NSString stringWithFormat:@"Name                 : %@\n", (nil != name) ? name : @"<untitled>"]];
-    [description appendString:[NSString stringWithFormat:@"Document store       : %@\n", store]];
-    [description appendString:[NSString stringWithFormat:@"Has unsaved changes? : %@\n", (hasUnsavedChanges ? @"YES" : @"NO")]];
-    [description appendString:[NSString stringWithFormat:@"Saved objects        : %ld key/value pairs\n", [savedObjects count]]];
-    [description appendString:[NSString stringWithFormat:@"Unsaved objects      : %ld key/value pairs\n", [unsavedObjects count]]];
-    [description appendString:[NSString stringWithFormat:@"Removed objects      : %ld key/value pairs\n", [removedObjects count]]];
+    return [self JSONDescription];
+}
 
+- (NSDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"NanoBag address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Key"] = key;
+    values[@"Name"] = (nil != name) ? name : @"<untitled>";
+    values[@"Document store"] = ([store dictionaryDescription] ? [store dictionaryDescription] : @"<nil>");
+    values[@"Has unsaved changes?"] = (hasUnsavedChanges ? @"YES" : @"NO");
+    values[@"Saved objects"] = @([savedObjects count]);
+    values[@"Unsaved objects"] = @([unsavedObjects count]);
+    values[@"Removed objects"] = @([removedObjects count]);
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSDictionary *values = [self dictionaryDescription];
+    
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
+    
     return description;
+}
+
+- (NSDictionary *)dictionaryRepresentation
+{
+    // Iterate the objects collecting the object keys
+    NSMutableArray *objectKeys = [NSMutableArray new];
+    for (NSString *objectKey in self.savedObjects) {
+        [objectKeys addObject:objectKey];
+    }
+    for (NSString *objectKey in self.unsavedObjects) {
+        [objectKeys addObject:objectKey];
+    }
+    
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    
+    if (nil != name) {
+        [info setObject:name forKey:NSF_Private_NSFNanoBag_Name];
+    }
+    [info setObject:self.key forKey:NSF_Private_NSFNanoBag_NSFKey];
+    [info setObject:objectKeys forKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    
+    return info;
 }
 
 - (BOOL)isEqualToNanoBag:(NSFNanoBag *)otherNanoBag
@@ -173,28 +210,6 @@
     }
 
     return success;
-}
-
-- (NSDictionary *)dictionaryRepresentation
-{
-    // Iterate the objects collecting the object keys
-    NSMutableArray *objectKeys = [NSMutableArray new];
-    for (NSString *objectKey in self.savedObjects) {
-        [objectKeys addObject:objectKey];
-    }
-    for (NSString *objectKey in self.unsavedObjects) {
-        [objectKeys addObject:objectKey];
-    }
-    
-    NSMutableDictionary *info = [NSMutableDictionary dictionary];
-    
-    if (nil != name) {
-        [info setObject:name forKey:NSF_Private_NSFNanoBag_Name];
-    }
-    [info setObject:self.key forKey:NSF_Private_NSFNanoBag_NSFKey];
-    [info setObject:objectKeys forKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
-    
-    return info;
 }
 
 #pragma mark -

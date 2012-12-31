@@ -302,10 +302,15 @@
 
 /** * Returns a string representation of the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link dictionaryRepresentation - (NSDictionary *)dictionaryRepresentation \endlink
  */
 
 - (NSString *)description;
+
+/** Returns a JSON representation of the bag.
+ * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
+ */
+
+- (NSString *)JSONDescription;
 
 //@}
 

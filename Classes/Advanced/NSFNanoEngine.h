@@ -537,6 +537,11 @@
 
 - (NSString *)description;
 
+/** Returns a JSON representation of the engine.
+ */
+
+- (NSString *)JSONDescription;
+
 //@}
 
 @end

@@ -26,6 +26,7 @@
  
 #import "NanoStore.h"
 #import "NanoStore_Private.h"
+#import "NSFOrderedDictionary.h"
 
 #import <stdio.h>
 #import <stdlib.h>
@@ -111,15 +112,34 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 - (void)dealloc
 {
     [self close];
-    
-    
 }
 
 /** \endcond */
 
-- (NSString*)description
+- (NSString *)description
 {
-    return [self NSFP_nestedDescriptionWithPrefixedSpace:@""];
+    return [self JSONDescription];
+}
+
+- (NSFOrderedDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"SQLite address"] = [NSString stringWithFormat:@"%p", self.sqlite];
+    values[@"Database path"] = path;
+    values[@"Cache method"] = [self NSFP_cacheMethodToString];
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSFOrderedDictionary *values = [self dictionaryDescription];
+    
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
+    
+    return description;
 }
 
 #pragma mark// ==================================
@@ -1061,21 +1081,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 + (int)NSFP_stripBitsFromExtendedResultCode:(int)extendedResult
 {
     return (extendedResult & 0x00FF);
-}
-
-- (NSString*)NSFP_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace
-{
-    if (nil == prefixedSpace) {
-        prefixedSpace = @"";
-    }
-    
-    NSMutableString *description = [NSMutableString string];
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"%@SQLite address  : %p\n", prefixedSpace, self.sqlite]];
-    [description appendString:[NSString stringWithFormat:@"%@Database path   : %@\n", prefixedSpace, path]];
-    [description appendString:[NSString stringWithFormat:@"%@Cache method    : %@\n", prefixedSpace, [self NSFP_cacheMethodToString]]];
-    
-    return description;
 }
 
 + (NSDictionary *)_plistToDictionary:(NSString *)aPlist

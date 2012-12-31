@@ -477,6 +477,11 @@
 
 - (NSString *)description;
 
+/** Returns a JSON representation of the store.
+ */
+
+- (NSString *)JSONDescription;
+
 //@}
 
 @end

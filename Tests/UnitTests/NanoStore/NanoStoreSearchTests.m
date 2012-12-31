@@ -41,7 +41,6 @@
 
 - (void)tearDown
 {
-    
     NSFSetIsDebugOn (NO);
     
     [super tearDown];

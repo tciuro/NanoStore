@@ -27,6 +27,7 @@
 #import "NanoStore.h"
 #import "NanoStore_Private.h"
 #import "NSFNanoSearch_Private.h"
+#import "NSFNanoExpression_Private.h"
 
 @implementation NSFNanoSearch
 {
@@ -81,28 +82,6 @@
         return [self _preparedSQL];
     
     return sql;
-}
-
-- (NSString *)description
-{
-    NSMutableString *description = [NSMutableString string];
-    
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : %p\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Document store            : %@\n", nanoStore]];
-    [description appendString:[NSString stringWithFormat:@"Attributes to be returned : %@\n", (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All")]];
-    [description appendString:[NSString stringWithFormat:@"Key                       : %@\n", key]];
-    [description appendString:[NSString stringWithFormat:@"Attribute                 : %@\n", attribute]];
-    [description appendString:[NSString stringWithFormat:@"Value                     : %@\n", value]];
-    [description appendString:[NSString stringWithFormat:@"Match                     : %@\n", NSFStringFromMatchType(match)]];
-    [description appendString:[NSString stringWithFormat:@"Expressions               : %@\n", expressions]];
-    [description appendString:[NSString stringWithFormat:@"Group values?             : %@\n", (groupValues ? @"YES" : @"NO")]];
-    [description appendString:[NSString stringWithFormat:@"Sort                      : %@\n", sort]];
-    [description appendString:[NSString stringWithFormat:@"Filter class              : %@\n", filterClass]];
-    [description appendString:[NSString stringWithFormat:@"Offset                    : %li\n", offset]];
-    [description appendString:[NSString stringWithFormat:@"Limit                     : %li\n", limit]];
-
-    return description;
 }
 
 #pragma mark -
@@ -913,6 +892,51 @@
     }
     
     return theResults;
+}
+
+- (NSString *)description
+{
+    return [self JSONDescription];
+}
+
+- (NSFOrderedDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"NanoSearch address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Document store"] = [nanoStore dictionaryDescription];
+    values[@"Attributes to be returned"] = (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All");
+    values[@"Key"] = (key ? key : @"<nil>");
+    values[@"Attribute"] = (attribute ? attribute : @"<nil>");
+    values[@"Value"] = (value ? value : @"<nil>");
+    values[@"Match"] = NSFStringFromMatchType(match);
+    
+    NSMutableArray *tempExpressions = [NSMutableArray new];
+    for (NSFNanoExpression *expression in expressions) {
+        [tempExpressions addObject:[expression description]];
+    }
+    values[@"Expressions"] = ([tempExpressions count] > 0 ? tempExpressions : @"<nil>");
+    
+    values[@"Group values?"] = (groupValues ? @"YES" : @"NO");
+    
+    NSString *tempSQL = [self sql];
+    values[@"SQL"] = (tempSQL ? tempSQL : @"<nil>");
+    values[@"Sort"] = (sort ? sort : @"<nil>");
+    values[@"Filter class"] = (filterClass ? filterClass : @"<nil>");
+    values[@"Offset"] = @(offset);
+    values[@"Limit"] = @(limit);
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSFOrderedDictionary *values = [self dictionaryDescription];
+    
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
+    
+    return description;
 }
 
 /** \endcond */

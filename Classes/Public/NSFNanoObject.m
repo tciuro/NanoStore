@@ -26,7 +26,9 @@
 
 #import "NSFNanoObject.h"
 #import "NSFNanoObject_Private.h"
+#import "NSFNanoGlobals.h"
 #import "NSFNanoGlobals_Private.h"
+#import "NSFOrderedDictionary.h"
 
 @implementation NSFNanoObject
 {
@@ -82,22 +84,28 @@
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString string];
-    
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoObject address : %p\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Original class     : %@\n", (nil != originalClassString) ? originalClassString : NSStringFromClass ([self class])]];
-    [description appendString:[NSString stringWithFormat:@"Key                : %@\n", key]];
-    [description appendString:[NSString stringWithFormat:@"Info               : %ld key/value pairs\n", [info count]]];
+    return [self JSONDescription];
+}
 
+- (NSDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"NanoObject address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Original class"] = (nil != originalClassString) ? originalClassString : NSStringFromClass ([self class]);
+    values[@"Key"] = key;
+    values[@"Property count"] = @([info count]);
+    values[@"Contents"] = info;
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSDictionary *values = [self dictionaryDescription];
+    
     NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:info options:NSJSONWritingPrettyPrinted error:&error];
-    if (nil == error) {
-        NSString *JSONInfo = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [description appendString:[NSString stringWithFormat:@"%@\n", JSONInfo]];
-    } else {
-        [description appendString:[NSString stringWithFormat:@"Contents:          : <unable to display the contents>\n"]];
-    }
+    NSString *description = NSObjectToJSONString(values, &error);
     
     return description;
 }

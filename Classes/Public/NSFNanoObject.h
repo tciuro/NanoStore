@@ -311,12 +311,15 @@
 
 - (NSDictionary *)dictionaryRepresentation;
 
-/** * Returns a string representation of the bag.
- * @note Check properties info and key to find out the current state of the object.
- * @see \link dictionaryRepresentation - (NSString *)dictionaryRepresentation \endlink
+/** * Returns a string representation of the nano object.
  */
 
 - (NSString *)description;
+
+/** Returns a JSON representation of the nano object.
+ */
+
+- (NSString *)JSONDescription;
 
 //@}
 

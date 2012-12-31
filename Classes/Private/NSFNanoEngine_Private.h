@@ -30,10 +30,12 @@
 #import "NSFNanoEngine.h"
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoResult.h"
+#import "NSFOrderedDictionary.h"
 
 /** \cond */
 
 @interface NSFNanoEngine (Private)
+- (NSFOrderedDictionary *)dictionaryDescription;
 + (NSArray *)NSFP_sharedROWIDKeywords;
 - (NSString *)NSFP_cacheMethodToString;
 - (NSString*)NSFP_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;

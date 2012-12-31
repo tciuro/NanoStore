@@ -26,6 +26,7 @@
 
 #import "NSFNanoExpression.h"
 #import "NanoStore_Private.h"
+#import "NSFOrderedDictionary.h"
 
 @implementation NSFNanoPredicate
 
@@ -63,10 +64,16 @@
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString string];
+    return [[self arrayDescription]lastObject];
+}
+
+- (NSArray *)arrayDescription
+{
+    NSMutableArray *values = [NSMutableArray new];
+    
+    NSString *columnValue = nil;
     NSMutableString *mutatedString = nil;
     NSInteger mutatedStringLength = 0;
-    NSString *columnValue = nil;
     
     switch (column) {
         case NSFKeyColumn:
@@ -85,42 +92,52 @@
     
     switch (match) {
         case NSFEqualTo:
-            [description appendString:[NSString stringWithFormat:@"%@ = '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ = '%@'", columnValue, value]];
             break;
         case NSFBeginsWith:
             mutatedString = [NSMutableString stringWithString:value];
             mutatedStringLength = [value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [description appendString:[NSString stringWithFormat:@"(%@ >= '%@' AND %@ < '%@')", columnValue, value, columnValue, mutatedString]];
+            [values addObject:[NSString stringWithFormat:@"(%@ >= '%@' AND %@ < '%@')", columnValue, value, columnValue, mutatedString]];
             break;
         case NSFContains:
-            [description appendString:[NSString stringWithFormat:@"%@ GLOB '*%@*'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@*'", columnValue, value]];
             break;
         case NSFEndsWith:
-            [description appendString:[NSString stringWithFormat:@"%@ GLOB '*%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@'", columnValue, value]];
             break;
         case NSFInsensitiveEqualTo:
-            [description appendString:[NSString stringWithFormat:@"upper(%@) = '%@'", columnValue, [value uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"upper(%@) = '%@'", columnValue, [value uppercaseString]]];
             break;
         case NSFInsensitiveBeginsWith:
             mutatedString = [NSMutableString stringWithString:value];
             mutatedStringLength = [value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [description appendString:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [value uppercaseString], columnValue, [mutatedString uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [value uppercaseString], columnValue, [mutatedString uppercaseString]]];
             break;
         case NSFInsensitiveContains:
-            [description appendString:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", value, @"%"]];
+            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", value, @"%"]];
             break;
         case NSFInsensitiveEndsWith:
-            [description appendString:[NSString stringWithFormat:@"%@ LIKE '%@%@'", columnValue, @"%", value]];
+            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@'", columnValue, @"%", value]];
             break;
         case NSFGreaterThan:
-            [description appendString:[NSString stringWithFormat:@"%@ > '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ > '%@'", columnValue, value]];
             break;
         case NSFLessThan:
-            [description appendString:[NSString stringWithFormat:@"%@ < '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ < '%@'", columnValue, value]];
             break;
     }
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSArray *values = [self arrayDescription];
+    
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
     
     return description;
 }

@@ -57,6 +57,11 @@
 		74A7DA561399B0E7008F46F1 /* NSFNanoStore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */; };
 		74A7DA581399B0E7008F46F1 /* NSFNanoEngine.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74B63DD0129F25C400B3B2A7 /* NSFNanoEngine.h */; };
 		74A7DA5A1399B0E7008F46F1 /* NSFNanoResult.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74B63DD2129F25C400B3B2A7 /* NSFNanoResult.h */; };
+		74ACCBAA168FA05800585114 /* NSFOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 74ACCBA8168FA05800585114 /* NSFOrderedDictionary.h */; };
+		74ACCBAB168FA05800585114 /* NSFOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */; };
+		74ACCBAC168FA05800585114 /* NSFOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */; };
+		74ACCBAD168FA05800585114 /* NSFOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */; };
+		74ACCBAE168FA05800585114 /* NSFOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */; };
 		74B63DF0129F25C400B3B2A7 /* NSFNanoEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 74B63DD0129F25C400B3B2A7 /* NSFNanoEngine.h */; };
 		74B63DF1129F25C400B3B2A7 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */; };
 		74B63DF2129F25C400B3B2A7 /* NSFNanoResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 74B63DD2129F25C400B3B2A7 /* NSFNanoResult.h */; };
@@ -195,6 +200,8 @@
 		74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NSFNanoSortDescriptor.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		74A4EF18138E47B100FBC46C /* NanoStoreSortTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreSortTests.h; sourceTree = "<group>"; };
 		74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NanoStoreSortTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		74ACCBA8168FA05800585114 /* NSFOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFOrderedDictionary.h; sourceTree = "<group>"; };
+		74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFOrderedDictionary.m; sourceTree = "<group>"; };
 		74B20983122B280C0079E2FF /* NanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStore.m; sourceTree = "<group>"; };
 		74B20984122B280C0079E2FF /* NanoStoreTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreTester.h; sourceTree = "<group>"; };
 		74B20985122B280C0079E2FF /* NanoStoreTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreTester.m; sourceTree = "<group>"; };
@@ -505,6 +512,8 @@
 				74B63DD1129F25C400B3B2A7 /* NSFNanoEngine.m */,
 				74B63DD2129F25C400B3B2A7 /* NSFNanoResult.h */,
 				74B63DD3129F25C400B3B2A7 /* NSFNanoResult.m */,
+				74ACCBA8168FA05800585114 /* NSFOrderedDictionary.h */,
+				74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -590,6 +599,7 @@
 				74B63E0A129F25C400B3B2A7 /* NSFNanoSearch.h in Headers */,
 				74B63E0C129F25C400B3B2A7 /* NSFNanoStore.h in Headers */,
 				74A4EF12138E3EBD00FBC46C /* NSFNanoSortDescriptor.h in Headers */,
+				74ACCBAA168FA05800585114 /* NSFOrderedDictionary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,6 +795,7 @@
 				748D34701397730900FD5565 /* NSFNanoEngine.m in Sources */,
 				748D34721397730900FD5565 /* NSFNanoResult.m in Sources */,
 				74FA5DE4155795CC00217E09 /* fopenCompatibilityFix.c in Sources */,
+				74ACCBAC168FA05800585114 /* NSFOrderedDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +824,7 @@
 				748EB00A153F09A600F5C7F2 /* NanoStoreGlobalsTests.m in Sources */,
 				7412893A15718D90002D5138 /* NanoCarTestClass.m in Sources */,
 				7412893E15718F2C002D5138 /* NanoPersonTestClass.m in Sources */,
+				74ACCBAD168FA05800585114 /* NSFOrderedDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +854,7 @@
 				74FA5DE6155795CC00217E09 /* fopenCompatibilityFix.c in Sources */,
 				7412893B15718D90002D5138 /* NanoCarTestClass.m in Sources */,
 				7412893F15718F2C002D5138 /* NanoPersonTestClass.m in Sources */,
+				74ACCBAE168FA05800585114 /* NSFOrderedDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +872,7 @@
 				74B63E0B129F25C400B3B2A7 /* NSFNanoSearch.m in Sources */,
 				74B63E0D129F25C400B3B2A7 /* NSFNanoStore.m in Sources */,
 				74A4EF13138E3EBD00FBC46C /* NSFNanoSortDescriptor.m in Sources */,
+				74ACCBAB168FA05800585114 /* NSFOrderedDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

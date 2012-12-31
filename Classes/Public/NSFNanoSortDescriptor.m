@@ -26,6 +26,7 @@
 
 #import "NSFNanoSortDescriptor.h"
 #import "NSFNanoGlobals.h"
+#import "NSFOrderedDictionary.h"
 
 @implementation NSFNanoSortDescriptor
 {
@@ -64,14 +65,28 @@
 
 #pragma mark -
 
-- (NSString*)description
+- (NSString *)description
 {
-    NSMutableString *description = [NSMutableString string];
+    return [self JSONDescription];
+}
+
+- (NSFOrderedDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
     
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"Sort descriptor address  : %p\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Attribute                : %@\n", attribute]];
-    [description appendString:[NSString stringWithFormat:@"Is ascending?            : %@\n", (isAscending ? @"YES" : @"NO")]];
+    values[@"Sort descriptor address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Attribute"] = attribute;
+    values[@"Is ascending?"] = (isAscending ? @"YES" : @"NO");
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSFOrderedDictionary *values = [self dictionaryDescription];
+    
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
     
     return description;
 }

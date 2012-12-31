@@ -25,10 +25,12 @@
  */
 
 #import "NSFNanoStore.h"
+#import "NSFOrderedDictionary.h"
 
 /** \cond */
 
 @interface NSFNanoStore (Private)
+- (NSFOrderedDictionary *)dictionaryDescription;
 + (NSFNanoStore *)_createAndOpenDebugDatabase;
 - (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement;
 - (NSString*)_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;

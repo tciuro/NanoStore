@@ -28,6 +28,8 @@
 #import "NSFNanoObjectProtocol.h"
 #import "NanoStore_Private.h"
 #import "NSFNanoStore_Private.h"
+#import "NSFNanoEngine_Private.h"
+#import "NSFOrderedDictionary.h"
 
 #include <stdlib.h>
 
@@ -173,9 +175,31 @@
     return ([nanoStoreEngine isDatabaseOpen] == NO);
 }
 
-- (NSString*)description
+- (NSString *)description
 {
-    return [self _nestedDescriptionWithPrefixedSpace:@""];
+    return [self JSONDescription];
+}
+
+- (NSFOrderedDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"NanoStore address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Is our transaction?"] = (_isOurTransaction ? @"YES" : @"NO");
+    values[@"Save interval"] = (saveInterval ? @(saveInterval) : @(1));
+    values[@"Engine"] = [nanoStoreEngine dictionaryDescription];
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSFOrderedDictionary *values = [self dictionaryDescription];
+    
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
+    
+    return description;
 }
 
 - (BOOL)hasUnsavedChanges
@@ -744,22 +768,6 @@
 - (BOOL)_isOurTransaction
 {
     return _isOurTransaction;
-}
-
-- (NSString*)_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace
-{
-    if (nil == prefixedSpace) {
-        prefixedSpace = @"";
-    }
-    
-    NSMutableString *description = [NSMutableString string];
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"%@NanoStore address      : %p\n", prefixedSpace, self]];
-    [description appendString:[NSString stringWithFormat:@"%@Is our transaction?    : %@\n", prefixedSpace, (_isOurTransaction ? @"Yes" : @"No")]];
-    [description appendString:[NSString stringWithFormat:@"%@Save interval           : %ld\n", prefixedSpace, (saveInterval == 0 ? 1 : saveInterval)]];
-    [description appendString:[NSString stringWithFormat:@"%@Engine                 : %@\n", prefixedSpace, [nanoStoreEngine NSFP_nestedDescriptionWithPrefixedSpace:@"          "]]];
-    
-    return description;
 }
 
 - (BOOL)_checkNanoStoreIsReadyAndReturnError:(out NSError **)outError

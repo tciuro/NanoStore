@@ -384,4 +384,14 @@
 
 //@}
 
+/** Returns a string representation of the search.
+ */
+
+- (NSString *)description;
+
+/** Returns a JSON representation of the search.
+ */
+
+- (NSString *)JSONDescription;
+
 @end

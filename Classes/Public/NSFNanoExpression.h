@@ -120,6 +120,12 @@
 
 - (NSString *)description;
 
+/** Returns a JSON representation of the expression.
+ * @note Check properties predicates and operators to find out the current state of the expression.
+ */
+
+- (NSString *)JSONDescription;
+
 //@}
 
 @end

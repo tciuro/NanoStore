@@ -132,6 +132,11 @@
 
 - (NSString *)description;
 
+/** Returns a JSON representation of the result.
+ */
+
+- (NSString *)JSONDescription;
+
 //@}
 
 @end

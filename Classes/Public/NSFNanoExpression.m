@@ -26,6 +26,7 @@
 
 #import "NSFNanoExpression.h"
 #import "NanoStore_Private.h"
+#import "NSFOrderedDictionary.h"
 
 @implementation NSFNanoExpression
 {
@@ -80,20 +81,35 @@
 
 - (NSString *)description
 {
+    NSArray *values = [self arrayDescription];
+    
+    return [values componentsJoinedByString:@""];
+}
+
+- (NSArray *)arrayDescription
+{
     NSUInteger i, count = [predicates count];
     NSMutableArray *values = [NSMutableArray new];
     
     // We always have one predicate, so make sure add it
     [values addObject:[[predicates objectAtIndex:0]description]];
-
+    
     for (i = 1; i < count; i++) {
         NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[predicates objectAtIndex:i]description]];
         [values addObject:compound];
     }
     
-    NSString *value = [values componentsJoinedByString:@""];
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSArray *values = [self arrayDescription];
     
-    return value;
+    NSError *error = nil;
+    NSString *description = NSObjectToJSONString(values, &error);
+    
+    return description;
 }
 
 @end

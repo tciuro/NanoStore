@@ -119,6 +119,12 @@
 
 - (NSString *)description;
 
+/** Returns a JSON representation of the sort.
+ * @note Check properties attribute and isAscending to find out the current state of the sort.
+ */
+
+- (NSString *)JSONDescription;
+
 //@}
 
 @end
