@@ -489,7 +489,7 @@
     if ([someKeys count] != 0) {
         NSFNanoSearch *search = [NSFNanoSearch searchWithStore:store];
         NSString *quotedString = [NSFNanoSearch _quoteStrings:someKeys joiningWithDelimiter:@","];
-        NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", quotedString];
+        NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", quotedString];
         
         NSDictionary *results = [search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil];
         

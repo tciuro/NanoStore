@@ -855,4 +855,26 @@
     STAssertTrue ((test1 && test2 && (NO == test3)) == YES, @"Expected all tests against NSFNanoEngine to succeed.");
 }
 
+- (void)testStoreNSNullObjects
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:@{@"aNull" : [NSNull null]}];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:@{@"bNull" : [NSNull null]}];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSFNanoSearch *search1 = [NSFNanoSearch searchWithStore:nanoStore];
+    [search1 setKey:obj1.key];
+    NSArray *keys1 = [search1 searchObjectsWithReturnType:NSFReturnKeys error:nil];
+    
+    NSFNanoSearch *search2 = [NSFNanoSearch searchWithStore:nanoStore];
+    [search2 setKey:obj2.key];
+    NSArray *keys2 = [search2 searchObjectsWithReturnType:NSFReturnKeys error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue (([keys1 count] + [keys2 count] == 2), @"Expected to find two null stored objects.");
+}
+
 @end

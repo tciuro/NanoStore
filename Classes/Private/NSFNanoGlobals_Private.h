@@ -67,13 +67,13 @@ extern NSString * const NSFValue;
 extern NSString * const NSFDatatype;
 extern NSString * const NSFCalendarDate;
 extern NSString * const NSFObjectClass;
-extern NSString * const NSFPlist;
+extern NSString * const NSFKeyedArchive;
 extern NSString * const NSFAttribute;
 
 #pragma mark -
 
 extern NSString * const NSF_Private_NSFKeys_NSFKey;
-extern NSString * const NSF_Private_NSFKeys_NSFPlist;
+extern NSString * const NSF_Private_NSFKeys_NSFKeyedArchive;
 extern NSString * const NSF_Private_NSFValues_NSFKey;
 extern NSString * const NSF_Private_NSFValues_NSFAttribute;
 extern NSString * const NSF_Private_NSFValues_NSFValue;
