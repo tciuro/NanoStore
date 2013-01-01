@@ -1,4 +1,5 @@
 # Welcome To NanoStore
+-
 
 **What is NanoStore?**
 
@@ -22,7 +23,16 @@ Relational databases tend to have a rich understanding of the structure of your 
 * iOS library runs on the device and simulator
 * ARC compliant
 
+# Latest changes
+-
+v2.5 - January 1, 2013
+
+* Starting with v2.5, the plist mechanism has been replaced with NSKeyedArchiver. There are several reasons for it: it's more compact, faster and uses less memory. Perhaps the most important reason is that it opens the possibility to store other data types.
+
+* NSNull is now supported. Big thanks to Wanny (https://github.com/mrwanny) for taking the time to improve this section of NanoStore.
+
 # Installation
+-
 
 Building NanoStore is very easy. Just follow these steps:
 
@@ -64,6 +74,7 @@ Usage example:
 	4) Click "+" and add NanoStore
 					
 # How does NanoStore work?
+-
 
 The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the `NSFNanoObjectProtocol` protocol.
 
@@ -104,6 +115,7 @@ Regardless of the route you decide to take, NanoStore will be able to store and 
 	App A retrieves the updated object as a Car object, in exactly the same format as it was originally stored.
 
 # Types of Document Stores
+-
 
 There are three types of document stores available in NanoStore: in-memory, temporary and file-based. These document stores are defined by the `NSFNanoStoreType` type:
 
@@ -167,6 +179,7 @@ There are three types of document stores available in NanoStore: in-memory, temp
 	Check the section Performance Tips below for important information about how to get the most out of NanoStore.
 
 # Working with a NanoObject
+-
 
 There are three basic operations that NanoStore can perform with a NanoObject:
 
@@ -248,6 +261,7 @@ To remove an object, there are several options available. The most common method
     [nanoStore removeObjectsWithKeysInArray:[NSArray arrayWithObject:[object nanoObjectKey]] error:nil];
 
 # It's not a flat World
+-
 
 Most database solutions force the developer to think in a two-dimensional space (rows and columns), forcing the developer to plan the schema ahead of time. This situation is not ideal because in most cases schema refinements could be required, oftentimes impacting the code as well.
 
@@ -258,6 +272,7 @@ By default, NanoStore allows objects to be stored without any sense of relations
 The `NSFNanoBag` API is rich, allowing the developer to add, remove, reload and undo its changes, deflate it (thus saving memory) and inflate it whenever it's required. In addition, it provides methods to obtain all bags, specific bags matching some keys, and bags containing a specific object (see `NSFNanoStore` for more information).
 
 # Where are my objects?
+-
 
 While `NSFNanoStore` provides some convenience methods to obtain standard objects such as bags, the bulk of the search mechanism is handled by `NSFNanoSearch`. The steps involved to perform a search are quite simple:
 
@@ -314,6 +329,7 @@ Another cool feature is the possibility to invoke aggregated functions (count, a
     float averageSalary = [[search aggregateOperation:NSFAverage onAttribute:@"Salary"]floatValue];
 
 # Sorting
+-
 
 Combining search and sort is an extremely easy operation. There are two simple parts:
 
@@ -370,6 +386,7 @@ If we wanted to retrieve all the existing people with <i>firstName</i> equal to 
     [sortByLastName release];
 
 # Paging using Limit and Offset
+-
 
 SQLite provides a really cool feature called OFFSET that is usually used with a LIMIT clause.
 
@@ -399,6 +416,7 @@ Using pagination is also quite easy with NanoStore. This example based on one of
 	// the first 5 records right after the 3rd one from the result set.
 
 # Performance Tips
+-
 
 NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's `saveInterval` property.
 
@@ -430,6 +448,7 @@ NanoStore by defaults saves every object to disk one by one. To speed up inserts
 	time reading the journal file and writing the changes to the store.
 
 # Need more help?
+-
 
 There are two quick ways to find answers: reading the documentation and browsing the Unit tests.
 
@@ -440,5 +459,6 @@ While several attempts have been made to make the documentation easy to read and
 * Twitter: http://twitter.com/nanostoredev
 
 # Official Source Repository
+-
 
 The official repository for NanoStore is hosted on GitHub: https://github.com/tciuro/NanoStore
