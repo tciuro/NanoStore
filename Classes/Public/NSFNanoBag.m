@@ -88,6 +88,7 @@
 - (id)init
 {
     if ((self = [super init])) {
+        store = nil;
         key = [NSFNanoEngine stringWithUUID];
         savedObjects = [NSMutableDictionary new];
         unsavedObjects = [NSMutableDictionary new];

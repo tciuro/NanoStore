@@ -77,9 +77,16 @@
             info = [NSMutableDictionary new];
             [info addEntriesFromDictionary:aDictionary];
         }
+        
+        _store = aStore;
     }
     
     return self;
+}
+
+- (void)setStore:(NSFNanoStore *)store
+{
+    _store = store;
 }
 
 - (NSString *)description
@@ -171,6 +178,13 @@
     return success;
 }
 
+- (BOOL)saveStoreAndReturnError:(out NSError **)outError
+{
+    [_store addObject:self error:outError];
+    
+    return [_store saveStoreAndReturnError:outError];
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
     return self.info;
@@ -184,6 +198,7 @@
         key = [[NSFNanoEngine stringWithUUID]copy];
         info = nil;
         originalClassString = nil;
+        _store = nil;
     }
     
     return self;

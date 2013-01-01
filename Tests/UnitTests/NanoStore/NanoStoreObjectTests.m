@@ -176,7 +176,7 @@
 
 - (void)testSaveObject
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];

@@ -701,7 +701,7 @@
 
 + (NSFNanoStore *)_createAndOpenDebugDatabase
 {
-    NSFNanoStore *db =  [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/NanoStoreDebug.db" stringByExpandingTildeInPath]];
+    NSFNanoStore *db =  [NSFNanoStore createStoreWithType:NSFPersistentStoreType path:[@"~/Desktop/NanoStoreDebug.sqlite" stringByExpandingTildeInPath]];
     NSError *outError = nil;
     
     if (NO == [db openWithError:&outError]) {
@@ -1196,6 +1196,14 @@
                     [[NSException exceptionWithName:NSFNanoStoreUnableToManipulateStoreException
                                              reason:[NSString stringWithFormat:@"*** -[%@ %@]: %@", [self class], NSStringFromSelector(_cmd), [*outError localizedDescription]]
                                            userInfo:nil]raise];
+                } else {
+                    SEL setStoreSelector = @selector(setStore:);
+                    if (YES == [object respondsToSelector:setStoreSelector]) {
+                        #pragma clang diagnostic push
+                        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                        [object performSelector:setStoreSelector withObject:self];
+                        #pragma clang diagnostic pop
+                    }
                 }
                 
                 i++;
