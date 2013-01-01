@@ -53,6 +53,10 @@
  
  */
 
+extern NSDictionary * safeJSONDictionaryFromDictionary (NSDictionary *dictionary);
+extern NSArray * safeJSONArrayFromArray (NSArray *array);
+extern id safeJSONObjectFromObject (id object);
+
 extern NSString * NSFStringFromMatchType (NSFMatchType aMatchType);
 
 extern void _NSFLog (NSString  *format, ...);

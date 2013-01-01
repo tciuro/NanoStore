@@ -106,8 +106,8 @@
 {
     NSArray *values = [self arrayDescription];
     
-    NSError *error = nil;
-    NSString *description = NSObjectToJSONString(values, &error);
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
 }

@@ -239,7 +239,7 @@
     NSFOrderedDictionary *values = [self dictionaryDescription];
     
     NSError *outError = nil;
-    NSString *description = NSObjectToJSONString(values, &outError);
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     if (nil != outError) {
         description = [outError localizedDescription];
     }

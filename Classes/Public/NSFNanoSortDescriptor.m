@@ -27,6 +27,7 @@
 #import "NSFNanoSortDescriptor.h"
 #import "NSFNanoGlobals.h"
 #import "NSFOrderedDictionary.h"
+#import "NSFNanoObject_Private.h"
 
 @implementation NSFNanoSortDescriptor
 {
@@ -85,8 +86,8 @@
 {
     NSFOrderedDictionary *values = [self dictionaryDescription];
     
-    NSError *error = nil;
-    NSString *description = NSObjectToJSONString(values, &error);
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
 }

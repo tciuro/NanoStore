@@ -174,4 +174,33 @@
     STAssertTrue ((YES == [object isEqualToNanoObject:copiedObject]), @"Equality test should have succeeded.");
 }
 
+- (void)testSaveObject
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];
+    
+    STAssertTrue (nil == [object store], @"Expected the object store to be nil.");
+
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:object, nil] error:nil];
+    
+    STAssertTrue (nil != [object store], @"Expected the object store to be valid.");
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    [search setKey:object.key];
+    NSFNanoObject *foundObject = [[[search searchObjectsWithReturnType:NSFReturnObjects error:nil]allValues]lastObject];
+    
+    NSDate *now = [NSDate new];
+    [foundObject setObject:now forKey:@"Date"];
+    NSError *error = nil;
+    BOOL success = [foundObject saveStoreAndReturnError:&error];
+    STAssertTrue ((YES == success) && (nil == error), @"Expected to save the object.");
+
+    foundObject = [[[search searchObjectsWithReturnType:NSFReturnObjects error:nil]allValues]lastObject];
+    STAssertTrue (YES == [[foundObject objectForKey:@"Date"]isEqualToDate:now], @"Expected to find the right object.");
+
+    [nanoStore closeWithError:nil];
+}
+
 @end

@@ -104,8 +104,8 @@
 {
     NSDictionary *values = [self dictionaryDescription];
     
-    NSError *error = nil;
-    NSString *description = NSObjectToJSONString(values, &error);
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
 }
@@ -222,6 +222,90 @@
     if (originalClassString != theClassString) {
         originalClassString = theClassString;
     }
+}
+
++ (NSString *)_NSObjectToJSONString:(id)object error:(NSError **)error
+{
+    // Make sure we have a safe object
+    object = [NSFNanoObject _safeObjectFromObject:object];
+    
+    NSError *tempError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:&tempError];
+    if (nil == tempError) {
+        NSString *JSONInfo = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+        return JSONInfo;
+    }
+    
+    if (*error) {
+        *error = tempError;
+    }
+    
+    return [tempError localizedDescription];
+}
+
++ (id)_safeObjectFromObject:(id)object
+{
+    if ([object isKindOfClass:[NSArray class]]) {
+        return [NSFNanoObject _safeArrayFromArray:object];
+    }
+    
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        return [NSFNanoObject _safeDictionaryFromDictionary:object];
+    }
+    
+	NSArray *validClasses = @[ [NSString class], [NSNumber class], [NSNull class] ];
+	for (Class c in validClasses) {
+		if ([object isKindOfClass:c])
+			return object;
+	}
+    
+	if ([object isKindOfClass:[NSDate class]]) {
+		NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+		[formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+		[formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+		NSString *ISOString = [formatter stringFromDate:object];
+		return ISOString;
+	}
+    
+	return [object description];
+}
+
++ (NSDictionary *)_safeDictionaryFromDictionary:(NSDictionary *)dictionary
+{
+	NSMutableDictionary *cleanDictionary = [NSMutableDictionary dictionary];
+    
+	for (NSString *theKey in [dictionary allKeys]) {
+		id object = [dictionary objectForKey:theKey];
+        
+		if ([object isKindOfClass:[NSDictionary class]])
+			[cleanDictionary setObject:[NSFNanoObject _safeDictionaryFromDictionary:object] forKey:theKey];
+        
+		else if ([object isKindOfClass:[NSArray class]])
+			[cleanDictionary setObject:[NSFNanoObject _safeArrayFromArray:object] forKey:theKey];
+        
+		else
+			[cleanDictionary setObject:[NSFNanoObject _safeObjectFromObject:object] forKey:theKey];
+	}
+    
+	return cleanDictionary;
+}
+
++ (NSArray *)_safeArrayFromArray:(NSArray *)array
+{
+	NSMutableArray *cleanArray = [NSMutableArray array];
+    
+	for (id object in array) {
+		if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSSet class]])
+			[cleanArray addObject:[NSFNanoObject _safeArrayFromArray:object]];
+        
+		else if ([object isKindOfClass:[NSDictionary class]])
+			[cleanArray addObject:[NSFNanoObject _safeDictionaryFromDictionary:object]];
+        
+		else
+			[cleanArray addObject:[NSFNanoObject _safeObjectFromObject:object]];
+	}
+    
+	return cleanArray;
 }
 
 /** \endcond */

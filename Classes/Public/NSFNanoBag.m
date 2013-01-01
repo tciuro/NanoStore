@@ -31,6 +31,7 @@
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoSearch_Private.h"
 #import "NSFOrderedDictionary.h"
+#import "NSFNanoObject_Private.h"
 
 @implementation NSFNanoBag
 {
@@ -155,8 +156,8 @@
 {
     NSDictionary *values = [self dictionaryDescription];
     
-    NSError *error = nil;
-    NSString *description = NSObjectToJSONString(values, &error);
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
 }

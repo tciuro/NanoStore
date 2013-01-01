@@ -70,17 +70,6 @@ NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
     return value;
 }
 
-NSString * NSObjectToJSONString (id object, NSError **error)
-{
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:error];
-    if (nil == *error) {
-        NSString *JSONInfo = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-        return JSONInfo;
-    }
-    
-    return nil;
-}
-
 NSString * NSFStringFromMatchType (NSFMatchType aMatchType)
 {
     NSString *value = nil;
