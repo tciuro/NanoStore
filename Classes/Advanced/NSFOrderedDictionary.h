@@ -24,8 +24,6 @@
 //     distribution.
 //
 
-#import <Cocoa/Cocoa.h>
-
 @interface NSFOrderedDictionary : NSMutableDictionary
 
 - (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex;
