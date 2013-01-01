@@ -50,6 +50,7 @@ NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype)
         case NSFNanoTypeNumber: value = @"REAL"; break;
         case NSFNanoTypeRowUID: value = @"INTEGER"; break;
         case NSFNanoTypeNULL: value = @"NULL"; break;
+        case NSFNanoTypeURL: value = @"URL"; break;
     }
     
     return value;
@@ -65,6 +66,7 @@ NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
     else if ([aNanoDatatype isEqualToString:@"REAL"]) value = NSFNanoTypeNumber;
     else if ([aNanoDatatype isEqualToString:@"INTEGER"]) value = NSFNanoTypeRowUID;
     else if ([aNanoDatatype isEqualToString:@"NULL"]) value = NSFNanoTypeNULL;
+    else if ([aNanoDatatype isEqualToString:@"URL"]) value = NSFNanoTypeURL;
     return value;
 }
 

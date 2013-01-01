@@ -73,7 +73,9 @@ typedef enum {
     /** * Used to store NSNumber elements. Its string equivalent is <b>REAL</b>. */
     NSFNanoTypeNumber,
     /** * Used to store NSNull elements. Its string equivalent is <b>NULL</b>. */
-    NSFNanoTypeNULL
+    NSFNanoTypeNULL,
+    /** * Used to store NSURL elements. Its string equivalent is <b>URL</b>. */
+    NSFNanoTypeURL
 } NSFNanoDatatype;
 
 /** * Returns the name of a NSFNanoDatatype datatype as a string. */

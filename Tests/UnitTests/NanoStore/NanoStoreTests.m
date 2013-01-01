@@ -877,4 +877,32 @@
     STAssertTrue (([keys1 count] + [keys2 count] == 2), @"Expected to find two null stored objects.");
 }
 
+- (void)testStoreNSURLObjects
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSURL *url1 = [NSURL URLWithString:@"https://github.com/tciuro/NanoStore"];
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:@{@"aURL" : url1}];
+    NSURL *url2 = [NSURL URLWithString:@"http://www.apple.com"];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:@{@"bURL" : url2}];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSFNanoSearch *search1 = [NSFNanoSearch searchWithStore:nanoStore];
+    [search1 setKey:obj1.key];
+    NSDictionary *objects1 = [search1 searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    NSFNanoSearch *search2 = [NSFNanoSearch searchWithStore:nanoStore];
+    [search2 setKey:obj2.key];
+    NSDictionary *objects2 = [search2 searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    NSURL *retrievedURL1 = [[[objects1 allValues]lastObject]objectForKey:@"aURL"];
+    NSURL *retrievedURL2 = [[[objects2 allValues]lastObject]objectForKey:@"bURL"];
+
+    STAssertTrue ([[url1 absoluteString]isEqualToString:[retrievedURL1 absoluteString]], @"Expected to find aURL.");
+    STAssertTrue ([[url2 absoluteString]isEqualToString:[retrievedURL2 absoluteString]], @"Expected to find bURL.");
+}
+
 @end

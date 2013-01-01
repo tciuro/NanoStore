@@ -920,6 +920,9 @@
                         case NSFNanoTypeNULL:
                             resultBindValue = (sqlite3_bind_null(_storeValuesStatement, 3) == SQLITE_OK);
                             break;
+                        case NSFNanoTypeURL:
+                            resultBindValue = (sqlite3_bind_text (_storeValuesStatement, 3, [[self _stringFromValue:value]UTF8String], -1, SQLITE_STATIC) == SQLITE_OK);
+                            break;
                         default:
                             [[NSException exceptionWithName:NSFUnexpectedParameterException
                                                      reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatype %@ cannot be stored because its class type is unknown.", [self class], NSStringFromSelector(_cmd), [value class]]
@@ -985,7 +988,9 @@
         return NSFNanoTypeData;
     else if ([value isKindOfClass:[NSNull class]])
         return NSFNanoTypeNULL;
-
+    else if ([value isKindOfClass:[NSURL class]])
+        return NSFNanoTypeURL;
+    
     return type;
 }
 
