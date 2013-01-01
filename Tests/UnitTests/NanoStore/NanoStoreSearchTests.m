@@ -374,7 +374,7 @@
 
 - (void)testSearchWithAttributeContainingPeriodNoValue
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:@"~/Desktop/AAA.sqlite" error:nil];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
