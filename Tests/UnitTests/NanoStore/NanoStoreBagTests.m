@@ -129,25 +129,6 @@
     [nanoStore closeWithError:nil];
 }
 
-- (void)testBagForUniqueName
-{
-    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
-    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    
-    NSError *error = nil;
-    NSFNanoBag *bagA = [NSFNanoBag bag];
-    bagA.name = @"FooBar A";
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bagA] error:&error];
-    STAssertTrue (nil == error, @"Saving bag A should have succeded.");
-
-    NSFNanoBag *bagB = [NSFNanoBag bag];
-    bagB.name = @"FooBar A";
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bagB] error:&error];
-    STAssertTrue (nil != error, @"Saving bag B should have failed because a bag with the same name exists.");
-    
-    [nanoStore closeWithError:nil];
-}
-
 - (void)testBagSearchByName
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
@@ -248,7 +229,7 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    
+
     NSFNanoBag *bag1 = [NSFNanoBag bagWithName:@"foo" andObjects:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]]];
     NSFNanoBag *bag2 = [NSFNanoBag bagWithName:@"foo" andObjects:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]]];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bag1, bag2, nil] error:nil];

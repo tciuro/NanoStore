@@ -29,16 +29,15 @@
 #import "NSFNanoSearch_Private.h"
 #import "NSFNanoExpression_Private.h"
 
+@interface NSFNanoSearch ()
+
+/** \cond */
+@property (nonatomic, copy, readwrite) NSString *sql;
+@property (nonatomic) NSFReturnType returnedObjectType;
+/** \endcond */
+@end
+
 @implementation NSFNanoSearch
-{
-    /** \cond */
-@protected
-    NSFReturnType returnedObjectType;
-    /** \endcond */
-}
-
-
-@synthesize nanoStore, attributesToBeReturned, key, attribute, value, match, expressions, groupValues, sql, sort, filterClass, offset, limit;
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -58,7 +57,7 @@
     }
     
     if ((self = [self init])) {
-        nanoStore = store;
+        _nanoStore = store;
         [self reset];
     }
     
@@ -78,10 +77,10 @@
 
 - (NSString *)sql
 {
-    if (nil == sql)
+    if (nil == _sql)
         return [self _preparedSQL];
     
-    return sql;
+    return _sql;
 }
 
 #pragma mark -
@@ -105,8 +104,8 @@
     [self reset];
     self.sort = savedSort;
     
-    returnedObjectType = theReturnType;
-    sql = [theSQLStatement copy];
+    _returnedObjectType = theReturnType;
+    _sql = theSQLStatement;
     
     NSDictionary *results = [self _retrieveDataWithError:outError];
     
@@ -130,9 +129,9 @@
     // Make sure we don't have any lingering parameters that could mess with the results...
     [self reset];
     
-    sql = theSQLStatement;
+    _sql = theSQLStatement;
     
-    return [nanoStore _executeSQL:theSQLStatement];
+    return [_nanoStore _executeSQL:theSQLStatement];
 }
 
 - (NSFNanoResult *)explainSQL:(NSString *)theSQLStatement
@@ -149,32 +148,32 @@
                                userInfo:nil]raise];
     }
     
-    return [nanoStore _executeSQL:[NSString stringWithFormat:@"EXPLAIN %@", theSQLStatement]];
+    return [_nanoStore _executeSQL:[NSString stringWithFormat:@"EXPLAIN %@", theSQLStatement]];
 }
 
 - (void)reset
 {
-    attributesToBeReturned= nil;
-    key = nil;
-    attribute = nil;
-    value = nil;
-    match = NSFContains;
-    groupValues = NO;
-    sql = nil;
-    sort = nil;
-    offset = 0;
-    limit = 0;
-    returnedObjectType = NSFReturnObjects;
+    _attributesToBeReturned = nil;
+    _key = nil;
+    _attribute = nil;
+    _value = nil;
+    _match = NSFContains;
+    _groupValues = NO;
+    _sql = nil;
+    _sort = nil;
+    _offset = 0;
+    _limit = 0;
+    _returnedObjectType = NSFReturnObjects;
 }
 
 #pragma mark -
 
 - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
-    returnedObjectType = theReturnType;
+    _returnedObjectType = theReturnType;
     
     // Make sure we don't have a SQL statement around...
-    sql = nil;
+    _sql = nil;
     
     id results = [self _retrieveDataWithError:outError];
     
@@ -183,10 +182,10 @@
 
 - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
-    returnedObjectType = theReturnType;
+    _returnedObjectType = theReturnType;
     
     // Make sure we don't have a SQL statement around...
-    sql = nil;
+    _sql = nil;
     
     id results = [self _retrieveDataAdded:theDateMatch calendarDate:theDate error:outError];
     
@@ -199,11 +198,11 @@
 
 - (NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute
 {    
-    NSFReturnType savedObjectTypeReturned = returnedObjectType;
-    returnedObjectType = NSFReturnKeys;
+    NSFReturnType savedObjectTypeReturned = _returnedObjectType;
+    _returnedObjectType = NSFReturnKeys;
     
-    NSString *savedSQL = sql;
-    sql = nil;
+    NSString *savedSQL = _sql;
+    _sql = nil;
     
     NSString *theSearchSQLStatement = [self sql];
     NSMutableString *theAggregatedSQLStatement = [NSMutableString new];
@@ -232,10 +231,10 @@
             break;
     }
     
-    NSFNanoResult *result = [nanoStore _executeSQL:theAggregatedSQLStatement];
+    NSFNanoResult *result = [_nanoStore _executeSQL:theAggregatedSQLStatement];
 
-    returnedObjectType = savedObjectTypeReturned;
-    sql = savedSQL;
+    _returnedObjectType = savedObjectTypeReturned;
+    _sql = savedSQL;
     
     return [NSNumber numberWithFloat:[[result firstValue]floatValue]];
 }
@@ -248,13 +247,13 @@
 
 - (NSDictionary *)_retrieveDataWithError:(out NSError **)outError
 {
-    if (YES == [nanoStore isClosed]) {
+    if (YES == [_nanoStore isClosed]) {
         return nil;
     }
     
     NSMutableDictionary *searchResults = [NSMutableDictionary dictionary];
     
-    NSString *aSQLQuery = sql;
+    NSString *aSQLQuery = _sql;
 
     if (nil != aSQLQuery) {
         // We are going to check whether the user has specified the proper columns based on the search type selected.
@@ -263,7 +262,7 @@
         // We basically honor the specified query but replace the columns with the expected ones per returned type.
         
         NSString *subStatement = [aSQLQuery substringFromIndex:[aSQLQuery rangeOfString:@"FROM" options:NSCaseInsensitiveSearch].location];
-        NSFReturnType returnType = returnedObjectType;
+        NSFReturnType returnType = _returnedObjectType;
         switch (returnType) {
             case NSFReturnKeys:
                 aSQLQuery = [NSString stringWithFormat:@"SELECT NSFKey %@", subStatement];
@@ -278,7 +277,7 @@
     
     _NSFLog(@"_dataWithKey SQL query: %@", aSQLQuery);
     
-    sqlite3 *sqliteStore = [[nanoStore nanoStoreEngine]sqlite];    
+    sqlite3 *sqliteStore = [[_nanoStore nanoStoreEngine]sqlite];    
     sqlite3_stmt *theSQLiteStatement = NULL;
     
     int status = sqlite3_prepare_v2 (sqliteStore, [aSQLQuery UTF8String], -1, &theSQLiteStatement, NULL );
@@ -286,7 +285,7 @@
     status = [NSFNanoEngine NSFP_stripBitsFromExtendedResultCode:status];
     
     if (SQLITE_OK == status) {        
-        switch (returnedObjectType) {
+        switch (_returnedObjectType) {
             case NSFReturnKeys:
                 while (SQLITE_ROW == sqlite3_step (theSQLiteStatement)) {
                     // Sanity check: some queries return NULL, which would cause a crash below.
@@ -322,7 +321,7 @@
                         continue;
                     }
                     
-                    if ([attributesToBeReturned count] == 0) {
+                    if ([_attributesToBeReturned count] == 0) {
                         // Will be released below...
                     } else {
                         // Since we want a subset of the attributes, we need to traverse
@@ -332,7 +331,7 @@
                         
                         NSMutableDictionary *subset = [NSMutableDictionary new];
                         
-                        for (NSString *attributeValue in attributesToBeReturned) {
+                        for (NSString *attributeValue in _attributesToBeReturned) {
                             id theValue = [info valueForKeyPath:attributeValue];
                             if (nil != theValue) {
                                 if (NSNotFound == [attributeValue rangeOfString:@"."].location) {
@@ -359,7 +358,7 @@
                         saveOriginalClassReference = YES;
                     }
                     
-                    id nanoObject = [[storedObjectClass alloc]initNanoObjectFromDictionaryRepresentation:info forKey:keyValue store:nanoStore];
+                    id nanoObject = [[storedObjectClass alloc]initNanoObjectFromDictionaryRepresentation:info forKey:keyValue store:_nanoStore];
                     
                     // If this process does not have knowledge of the original class as was saved in the store, keep a reference
                     // so that we can later on restore the object properly (otherwise it would be stored as a NanoObject.)
@@ -391,7 +390,7 @@
 
 - (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(out NSError **)outError
 {
-    if ([nanoStore isClosed] == YES) {
+    if ([_nanoStore isClosed] == YES) {
         return nil;
     }
     
@@ -422,12 +421,12 @@
             break;
     }
     
-    NSFNanoResult *result = [nanoStore _executeSQL:theSQLStatement];
+    NSFNanoResult *result = [_nanoStore _executeSQL:theSQLStatement];
     
     NSMutableDictionary *searchResults = [NSMutableDictionary dictionaryWithCapacity:result.numberOfRows];
     
     if (result.numberOfRows > 0) {
-        if (NSFReturnKeys == returnedObjectType) {
+        if (NSFReturnKeys == _returnedObjectType) {
             NSArray *resultsKeys = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFKey]];
             for (NSString *resultKey in resultsKeys)
                 [searchResults setObject:[NSNull null] forKey:resultKey];
@@ -452,7 +451,7 @@
                             saveOriginalClassReference = YES;
                         }
                         
-                        id nanoObject = [[storedObjectClass alloc]initNanoObjectFromDictionaryRepresentation:info forKey:keyValue store:nanoStore];
+                        id nanoObject = [[storedObjectClass alloc]initNanoObjectFromDictionaryRepresentation:info forKey:keyValue store:_nanoStore];
                         
                         // If this process does not have knowledge of the original class as was saved in the store, keep a reference
                         // so that we can later on restore the object properly (otherwise it would be stored as a NanoObject.)
@@ -474,20 +473,20 @@
 {
     NSString *aSQLQuery = nil;
     
-    if (nil == expressions) {
-        aSQLQuery = [self _prepareSQLQueryStringWithKey:key attribute:attribute value:value matching:match];
+    if (nil == _expressions) {
+        aSQLQuery = [self _prepareSQLQueryStringWithKey:_key attribute:_attribute value:_value matching:_match];
     } else {
-        aSQLQuery = [self _prepareSQLQueryStringWithExpressions:expressions];
+        aSQLQuery = [self _prepareSQLQueryStringWithExpressions:_expressions];
     }
     
     // Add the limit clause if required
-    if (limit > 0) {
-        aSQLQuery = [NSString stringWithFormat:@"%@ LIMIT %li", aSQLQuery, limit];
+    if (_limit > 0) {
+        aSQLQuery = [NSString stringWithFormat:@"%@ LIMIT %li", aSQLQuery, _limit];
     }
     
     // Add the offset clause if required
-    if (offset > 0) {
-        aSQLQuery = [NSString stringWithFormat:@"%@ OFFSET %li", aSQLQuery, offset];
+    if (_offset > 0) {
+        aSQLQuery = [NSString stringWithFormat:@"%@ OFFSET %li", aSQLQuery, _offset];
     }
     
     return aSQLQuery;
@@ -503,9 +502,9 @@
         aValue = [aValue stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
     }
     
-    if (nil != attributesToBeReturned) {
+    if (nil != _attributesToBeReturned) {
         // Prepare the list of attributes we need to gather. Include NSFKEY as well.
-        NSMutableSet *set = [[NSMutableSet alloc]initWithArray:attributesToBeReturned];
+        NSMutableSet *set = [[NSMutableSet alloc]initWithArray:_attributesToBeReturned];
         NSArray *objects = [set allObjects];
         NSMutableArray *quotedObjects = [NSMutableArray new];
         for (NSString *object in objects) {
@@ -515,7 +514,7 @@
         attributes = [quotedObjects componentsJoinedByString:@","];
     }
     
-    NSFReturnType returnType = returnedObjectType;
+    NSFReturnType returnType = _returnedObjectType;
     
     if ((nil == aKey) && (nil == anAttribute) && (nil == aValue)) {
         switch (returnType) {
@@ -529,7 +528,7 @@
     } else {
         switch (returnType) {
             case NSFReturnKeys:
-                if (NO == groupValues) {
+                if (NO == _groupValues) {
                     theSQLStatement = [NSMutableString stringWithString:@"SELECT DISTINCT (NSFKEY) FROM NSFValues WHERE "];
                 } else {
                     theSQLStatement = [NSMutableString stringWithString:@"SELECT NSFKEY FROM NSFValues WHERE "];
@@ -584,11 +583,11 @@
         }
     }
     
-    if ((limit > 0) || (offset > 0)) {
+    if ((_limit > 0) || (_offset > 0)) {
         [theSQLStatement appendString:@" ORDER BY ROWID"];
     }
     
-    if (YES == groupValues) {
+    if (YES == _groupValues) {
         [theSQLStatement appendString:@" GROUP BY NSFValue"];
     }
     
@@ -612,7 +611,7 @@
     NSUInteger i, count = [someExpressions count];
     NSMutableArray *sqlComponents = [NSMutableArray new];
     NSMutableString *parentheses = [NSMutableString new];
-    NSFReturnType returnType = returnedObjectType;
+    NSFReturnType returnType = _returnedObjectType;
 
     if (count == 0) {
         if (NSFReturnObjects == returnType) {
@@ -872,10 +871,10 @@
 {
     id theResults = results;
     
-    if ([sort count] > 0) {
+    if ([_sort count] > 0) {
         NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
         
-        for (NSFNanoSortDescriptor *descriptor in sort) {
+        for (NSFNanoSortDescriptor *descriptor in _sort) {
             NSString *targetKeyPath = [[NSString alloc]initWithFormat:@"rootObject.%@", descriptor.attribute];
             NSSortDescriptor *cocoaSort = [[NSSortDescriptor alloc]initWithKey:targetKeyPath ascending:descriptor.isAscending];
             [cocoaSortDescriptors addObject:cocoaSort];
@@ -903,27 +902,27 @@
     NSFOrderedDictionary *values = [NSFOrderedDictionary new];
     
     values[@"NanoSearch address"] = [NSString stringWithFormat:@"%p", self];
-    values[@"Document store"] = [nanoStore dictionaryDescription];
-    values[@"Attributes to be returned"] = (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All");
-    values[@"Key"] = (key ? key : @"<nil>");
-    values[@"Attribute"] = (attribute ? attribute : @"<nil>");
-    values[@"Value"] = (value ? value : @"<nil>");
-    values[@"Match"] = NSFStringFromMatchType(match);
+    values[@"Document store"] = [_nanoStore dictionaryDescription];
+    values[@"Attributes to be returned"] = (_attributesToBeReturned ? [_attributesToBeReturned componentsJoinedByString:@","] : @"All");
+    values[@"Key"] = (_key ? _key : @"<nil>");
+    values[@"Attribute"] = (_attribute ? _attribute : @"<nil>");
+    values[@"Value"] = (_value ? _value : @"<nil>");
+    values[@"Match"] = NSFStringFromMatchType(_match);
     
     NSMutableArray *tempExpressions = [NSMutableArray new];
-    for (NSFNanoExpression *expression in expressions) {
+    for (NSFNanoExpression *expression in _expressions) {
         [tempExpressions addObject:[expression description]];
     }
     values[@"Expressions"] = ([tempExpressions count] > 0 ? tempExpressions : @"<nil>");
     
-    values[@"Group values?"] = (groupValues ? @"YES" : @"NO");
+    values[@"Group values?"] = (_groupValues ? @"YES" : @"NO");
     
     NSString *tempSQL = [self sql];
     values[@"SQL"] = (tempSQL ? tempSQL : @"<nil>");
-    values[@"Sort"] = (sort ? sort : @"<nil>");
-    values[@"Filter class"] = (filterClass ? filterClass : @"<nil>");
-    values[@"Offset"] = @(offset);
-    values[@"Limit"] = @(limit);
+    values[@"Sort"] = (_sort ? _sort : @"<nil>");
+    values[@"Filter class"] = (_filterClass ? _filterClass : @"<nil>");
+    values[@"Offset"] = @(_offset);
+    values[@"Limit"] = @(_limit);
     
     return values;
 }

@@ -31,12 +31,10 @@
 @implementation NSFNanoExpression
 {
     /** \cond */
-    NSMutableArray      *predicates;
-    NSMutableArray      *operators;
+    NSMutableArray *_predicates;
+    NSMutableArray *_operators;
     /** \endcond */
 }
-
-@synthesize predicates, operators;
 
 + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)aPredicate
 {
@@ -52,10 +50,10 @@
     }
     
     if ((self = [super init])) {
-        predicates = [NSMutableArray new];
-        [predicates addObject:aPredicate];
-        operators = [NSMutableArray new];
-        [operators addObject:[NSNumber numberWithInt:NSFAnd]];
+        _predicates = [NSMutableArray new];
+        [_predicates addObject:aPredicate];
+        _operators = [NSMutableArray new];
+        [_operators addObject:[NSNumber numberWithInt:NSFAnd]];
     }
     
     return self;
@@ -75,8 +73,8 @@
                                  reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
-    [predicates addObject:aPredicate];
-    [operators addObject:[NSNumber numberWithInt:someOperator]];
+    [_predicates addObject:aPredicate];
+    [_operators addObject:[NSNumber numberWithInt:someOperator]];
 }
 
 - (NSString *)description
@@ -88,14 +86,14 @@
 
 - (NSArray *)arrayDescription
 {
-    NSUInteger i, count = [predicates count];
+    NSUInteger i, count = [_predicates count];
     NSMutableArray *values = [NSMutableArray new];
     
     // We always have one predicate, so make sure add it
-    [values addObject:[[predicates objectAtIndex:0]description]];
+    [values addObject:[[_predicates objectAtIndex:0]description]];
     
     for (i = 1; i < count; i++) {
-        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[predicates objectAtIndex:i]description]];
+        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[_operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[_predicates objectAtIndex:i]description]];
         [values addObject:compound];
     }
     

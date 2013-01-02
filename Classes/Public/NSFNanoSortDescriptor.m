@@ -29,15 +29,16 @@
 #import "NSFOrderedDictionary.h"
 #import "NSFNanoObject_Private.h"
 
-@implementation NSFNanoSortDescriptor
-{
-    /** \cond */
-    NSString    *attribute;
-    BOOL        isAscending;
-    /** \endcond */
-}
+@interface NSFNanoSortDescriptor ()
 
-@synthesize attribute, isAscending;
+/** \cond */
+@property (nonatomic, copy, readwrite) NSString *attribute;
+@property (nonatomic, readwrite) BOOL isAscending;
+/** \endcond */
+
+@end
+
+@implementation NSFNanoSortDescriptor
 
 + (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
 {
@@ -52,8 +53,8 @@
                                userInfo:nil]raise];
     
     if ((self = [super init])) {
-        attribute = [theAttribute copy];
-        isAscending = ascending;
+        _attribute = theAttribute;
+        _isAscending = ascending;
     }
     
     return self;
@@ -76,8 +77,8 @@
     NSFOrderedDictionary *values = [NSFOrderedDictionary new];
     
     values[@"Sort descriptor address"] = [NSString stringWithFormat:@"%p", self];
-    values[@"Attribute"] = attribute;
-    values[@"Is ascending?"] = (isAscending ? @"YES" : @"NO");
+    values[@"Attribute"] = _attribute;
+    values[@"Is ascending?"] = (_isAscending ? @"YES" : @"NO");
     
     return values;
 }

@@ -28,9 +28,17 @@
 #import "NanoStore_Private.h"
 #import "NSFOrderedDictionary.h"
 
-@implementation NSFNanoPredicate
+@interface NSFNanoPredicate ()
 
-@synthesize column, match, value;
+    /** \cond */
+    @property (nonatomic, assign, readwrite) NSFTableColumnType column;
+    @property (nonatomic, assign, readwrite) NSFMatchType match;
+    @property (nonatomic, copy, readwrite) NSString *value;
+    /** \endcond */
+
+@end
+
+@implementation NSFNanoPredicate
 
 // ----------------------------------------------
 // Initialization / Cleanup
@@ -54,9 +62,9 @@
                                userInfo:nil]raise];
     
     if ((self = [super init])) {
-        column = type;
-        match = matching;
-        value = aValue;
+        _column = type;
+        _match = matching;
+        _value = aValue;
     }
     
     return self;
@@ -75,7 +83,7 @@
     NSMutableString *mutatedString = nil;
     NSInteger mutatedStringLength = 0;
     
-    switch (column) {
+    switch (_column) {
         case NSFKeyColumn:
             columnValue = NSFKey;
             break;
@@ -88,44 +96,44 @@
     }
     
     // Make sure we escape quotes if present and the value is a string
-    value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    _value = [_value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
     
-    switch (match) {
+    switch (_match) {
         case NSFEqualTo:
-            [values addObject:[NSString stringWithFormat:@"%@ = '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ = '%@'", columnValue, _value]];
             break;
         case NSFBeginsWith:
-            mutatedString = [NSMutableString stringWithString:value];
-            mutatedStringLength = [value length];
+            mutatedString = [NSMutableString stringWithString:_value];
+            mutatedStringLength = [_value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [values addObject:[NSString stringWithFormat:@"(%@ >= '%@' AND %@ < '%@')", columnValue, value, columnValue, mutatedString]];
+            [values addObject:[NSString stringWithFormat:@"(%@ >= '%@' AND %@ < '%@')", columnValue, _value, columnValue, mutatedString]];
             break;
         case NSFContains:
-            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@*'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@*'", columnValue, _value]];
             break;
         case NSFEndsWith:
-            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@'", columnValue, _value]];
             break;
         case NSFInsensitiveEqualTo:
-            [values addObject:[NSString stringWithFormat:@"upper(%@) = '%@'", columnValue, [value uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"upper(%@) = '%@'", columnValue, [_value uppercaseString]]];
             break;
         case NSFInsensitiveBeginsWith:
-            mutatedString = [NSMutableString stringWithString:value];
-            mutatedStringLength = [value length];
+            mutatedString = [NSMutableString stringWithString:_value];
+            mutatedStringLength = [_value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [values addObject:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [value uppercaseString], columnValue, [mutatedString uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [_value uppercaseString], columnValue, [mutatedString uppercaseString]]];
             break;
         case NSFInsensitiveContains:
-            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", value, @"%"]];
+            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", _value, @"%"]];
             break;
         case NSFInsensitiveEndsWith:
-            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@'", columnValue, @"%", value]];
+            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@'", columnValue, @"%", _value]];
             break;
         case NSFGreaterThan:
-            [values addObject:[NSString stringWithFormat:@"%@ > '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ > '%@'", columnValue, _value]];
             break;
         case NSFLessThan:
-            [values addObject:[NSString stringWithFormat:@"%@ < '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ < '%@'", columnValue, _value]];
             break;
     }
     

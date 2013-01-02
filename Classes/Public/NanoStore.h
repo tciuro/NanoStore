@@ -64,6 +64,13 @@
  - iOS library runs on the device and simulator
  - ARC compliant
  
+ @section latest_changes Latest changes
+ v2.5 - January 1, 2013
+ 
+ Starting with v2.5, the plist mechanism has been replaced with NSKeyedArchiver. There are several reasons for it: it's more compact, faster and uses less memory. Perhaps the most important reason is that it opens the possibility to store other data types.
+ 
+ NSNull is now supported. Big thanks to Wanny (https://github.com/mrwanny) for taking the time to improve this section of NanoStore.
+ 
  @section installation_sec Installation
  
  Building NanoStore is very easy. Just follow these steps:
@@ -423,6 +430,35 @@
  [sortByLastName release];
  @endcode
 
+ @section paging_limit_sec Paging using Limit and Offset
+ SQLite provides a really cool feature called OFFSET that is usually used with a LIMIT clause.
+ 
+ The LIMIT clause is used to limit the number of results returned in a SQL statement. So if you have 1000 rows in table, but only want to return the first 10, you would do something like this:
+ @code
+ SELECT column FROM table LIMIT 10
+ @endcode
+ Now suppose you wanted to show results 11-20. With the OFFSET keyword it's just as easy. The following query will do:
+ @code
+ SELECT column FROM table LIMIT 10 OFFSET 10
+ @endcode
+ Using pagination is also quite easy with NanoStore. This example based on one of the unit tests provided with the NanoStore distro:
+ @code
+ NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+ 
+ // Assume we have added objects to the store
+ 
+ NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+ search.value = @"Barcelona";
+ search.match = NSFEqualTo;
+ search.limit = 5;
+ search.offset = 3;
+ 
+ NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+ 
+ // Assuming the query matches some results, NanoStore should have retrieved
+ // the first 5 records right after the 3rd one from the result set.
+ @endcode
+ 
  @section performancetips_sec Performance Tips
  
  NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's \link NSFNanoStore::saveInterval saveInterval \endlink property.

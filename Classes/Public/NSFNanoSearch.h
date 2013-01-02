@@ -175,7 +175,7 @@
 /** * The sort holds an array of one or more sort descriptors of type \link NSFNanoSortDescriptor NSFNanoSortDescriptor \endlink. */
 @property (nonatomic, strong, readwrite) NSArray *sort;
 /** * The filterClass allows to filter the results based on a specific object class. */
-@property (nonatomic, strong, readwrite) NSString *filterClass;
+@property (nonatomic, copy, readwrite) NSString *filterClass;
 /** * If an expression has an offset clause, then the first M rows are omitted from the result set returned by the search operation and the next N rows are returned, where M and N are the values that the offset and limit clauses evaluate to, respectively. Or, if the search would return less than M+N rows if it did not have a limit clause, then the first M rows are skipped and the remaining rows (if any) are returned. */
 @property (nonatomic, assign, readwrite) NSUInteger offset;
 /** * The limit clause is used to place an upper bound on the number of rows returned by a Search operation. */
