@@ -135,6 +135,9 @@
         case NSFLessThan:
             [values addObject:[NSString stringWithFormat:@"%@ < '%@'", columnValue, _value]];
             break;
+        case NSFNotEqualTo:
+            [values addObject:[NSString stringWithFormat:@"%@ <> '%@'", columnValue, _value]];
+            break;
     }
     
     return values;

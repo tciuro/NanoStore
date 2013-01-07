@@ -732,6 +732,10 @@
                 value = [[NSMutableString alloc]initWithFormat:@"%@ < '%@'", aColumn, aValue];
                 [segment appendString:value];
                 break;
+            case NSFNotEqualTo:
+                value = [[NSMutableString alloc]initWithFormat:@"%@ <> '%@'", aColumn, aValue];
+                [segment appendString:value];
+                break;
         }
     } else if (YES == [aValue isKindOfClass:[NSArray class]]) {
         // Quote the parameters
@@ -806,6 +810,11 @@
                 case NSFLessThan:
                     value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ < '%@') OR (%@ GLOB '%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@' AND %@ < '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
+                    break;
+                case NSFNotEqualTo:
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ <> '%@' AND %@ <> '%@') OR (%@ GLOB '%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@' AND %@ <> '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    [segment appendString:value];
+
                     break;
             }
         }
