@@ -180,6 +180,8 @@
 @property (nonatomic, assign, readwrite) NSUInteger offset;
 /** * The limit clause is used to place an upper bound on the number of rows returned by a Search operation. */
 @property (nonatomic, assign, readwrite) NSUInteger limit;
+/** * limit a Search to a particular bag. */
+@property (nonatomic, assign, readwrite) NSFNanoBag *bag;
 
 /** @name Creating and Initializing a Search
  */
