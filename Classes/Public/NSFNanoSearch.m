@@ -569,11 +569,15 @@
                 segment = [NSFNanoSearch _querySegmentForColumn:NSFAttribute value:anAttribute matching:NSFEqualTo];
                 [theSQLStatement appendString:segment];
                 [theSQLStatement appendString:@" AND "];
-                segment = [NSFNanoSearch _querySegmentForColumn:NSFValue value:aValue matching:NSFEqualTo];
+                segment = [NSFNanoSearch _querySegmentForColumn:NSFValue value:aValue matching:aMatch];
             }
         }
         
         [theSQLStatement appendString:segment];
+        if (self.bag != nil) {
+            NSString *selectInABag = [NSString stringWithFormat:@" AND NSFKey IN (SELECT NSFValue FROM NSFVALUES WHERE NSFKEY IN (SELECT NSFKEY FROM NSFVALUES WHERE NSFVALUE == '%@' AND NSFATTRIBUTE == '%@') AND NSFATTRIBUTE == '%@')",self.bag.name,NSF_Private_NSFNanoBag_Name,NSF_Private_NSFNanoBag_NSFObjectKeys];
+            [theSQLStatement appendString:selectInABag];
+        }
     } else {
         if (nil != aValue) {
             if (YES == querySegmentWasAdded)
@@ -732,6 +736,10 @@
                 value = [[NSMutableString alloc]initWithFormat:@"%@ < '%@'", aColumn, aValue];
                 [segment appendString:value];
                 break;
+            case NSFNotEqualTo:
+                value = [[NSMutableString alloc]initWithFormat:@"%@ <> '%@'", aColumn, aValue];
+                [segment appendString:value];
+                break;
         }
     } else if (YES == [aValue isKindOfClass:[NSArray class]]) {
         // Quote the parameters
@@ -749,6 +757,17 @@
         [segment appendString:value];
         
         // Free allocated resources
+    } else if (YES == [aValue isKindOfClass:[NSNull class]]){
+        switch (match) {
+            case NSFEqualTo:
+                value = [[NSMutableString alloc]initWithFormat:@"%@ IS NULL", aColumn];
+                [segment appendString:value];
+                break;
+            case NSFNotEqualTo:
+                value = [[NSMutableString alloc]initWithFormat:@"%@ IS NOT NULL", aColumn];
+                [segment appendString:value];
+                break;
+        }
     }
     
     return segment;
@@ -806,6 +825,11 @@
                 case NSFLessThan:
                     value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ < '%@') OR (%@ GLOB '%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@' AND %@ < '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
+                    break;
+                case NSFNotEqualTo:
+                    value = [[NSMutableString alloc]initWithFormat:@"(%@ <> '%@' AND %@ <> '%@') OR (%@ GLOB '%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@' AND %@ <> '%@')", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    [segment appendString:value];
+
                     break;
             }
         }

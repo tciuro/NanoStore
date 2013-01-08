@@ -144,7 +144,9 @@ typedef enum {
     /** * Greater Ththanan */
     NSFGreaterThan,
     /** * Less than */
-    NSFLessThan
+    NSFLessThan,
+    /** * Not Equal to from */
+    NSFNotEqualTo
 } NSFMatchType;
 
 /** * Column types for the Attributes table.
