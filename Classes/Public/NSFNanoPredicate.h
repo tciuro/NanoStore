@@ -77,7 +77,7 @@
 /** * The comparison operator to be used. */
 @property (nonatomic, assign, readonly) NSFMatchType match;
 /** * The value to be used for comparison.  */
-@property (nonatomic, copy, readonly) NSString *value;
+@property (nonatomic, readonly) id value;
 
 /** @name Creating and Initializing a Predicate
  */
@@ -87,22 +87,22 @@
 /** * Creates and returns a predicate.
  * @param theType is the column type. Can be \link Globals::NSFKeyColumn NSFKeyColumn \endlink, \link Globals::NSFAttributeColumn NSFAttributeColumn \endlink or \link Globals::NSFValueColumn NSFValueColumn \endlink.
  * @param theMatch is the match operator.
- * @param theValue is the value.
+ * @param theValue can be an NSString or [NSNull null]
  * @return A predicate which can be used in an NSFNanoExpression.
  * @see \link initWithColumn:matching:value: - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
  */
 
-+ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue;
++ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue;
 
 /** * Initializes a newly allocated predicate.
  * @param theType is the column type. Can be \link Globals::NSFKeyColumn NSFKeyColumn \endlink, \link Globals::NSFAttributeColumn NSFAttributeColumn \endlink or \link Globals::NSFValueColumn NSFValueColumn \endlink.
  * @param theMatch is the match operator.
- * @param theValue is the value.
+ * @param theValue can be an NSString or [NSNull null]
  * @return A predicate which can be used in an NSFNanoExpression.
  * @see \link predicateWithColumn:matching:value: + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
  */
 
-- (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue;
+- (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue;
 
 //@}
 

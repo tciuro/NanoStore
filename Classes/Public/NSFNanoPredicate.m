@@ -33,7 +33,7 @@
     /** \cond */
     @property (nonatomic, assign, readwrite) NSFTableColumnType column;
     @property (nonatomic, assign, readwrite) NSFMatchType match;
-    @property (nonatomic, copy, readwrite) NSString *value;
+    @property (nonatomic, readwrite) id value;
     /** \endcond */
 
 @end
@@ -44,23 +44,16 @@
 // Initialization / Cleanup
 // ----------------------------------------------
 
-+ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(NSString *)aValue
++ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
 {
-    if (nil == aValue)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
     return [[self alloc]initWithColumn:type matching:matching value:aValue];
 }
 
-- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(NSString *)aValue
+- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
 {
-    if (nil == aValue)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
+    NSAssert(nil != aValue, @"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd));
+    NSAssert([aValue isKindOfClass:[NSString class]] || [aValue isKindOfClass:[NSNull class]], @"*** -[%@ %@]: value must be of type NSString or NSNull.", [self class], NSStringFromSelector(_cmd));
+
     if ((self = [super init])) {
         _column = type;
         _match = matching;
@@ -96,7 +89,12 @@
     }
     
     // Make sure we escape quotes if present and the value is a string
-    _value = [_value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    if (YES == [_value isKindOfClass:[NSString class]]) {
+        _value = [_value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    } else {
+        _value = NSFStringFromNanoDataType(NSFNanoTypeNULL);
+        columnValue = NSFDatatype;
+    }
     
     switch (_match) {
         case NSFEqualTo:

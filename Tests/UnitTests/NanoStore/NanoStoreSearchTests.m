@@ -1261,4 +1261,89 @@
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
+#pragma mark -
+
+- (void)testSearchWithNullValue
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *personA = [NanoPersonTestClass new];
+    personA.name = @"Leo'd";
+    personA.last = @"Doe";
+    personA.key = [NSFNanoEngine stringWithUUID];
+    
+    NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
+    NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.match = NSFEqualTo;
+    search.value = [NSNull null];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    STAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
+}
+
+- (void)testSearchWithAttributeHasNullValue
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *personA = [NanoPersonTestClass new];
+    personA.name = @"Leo'd";
+    personA.last = @"Doe";
+    personA.key = [NSFNanoEngine stringWithUUID];
+    
+    NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
+    NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = @"last";
+    search.match = NSFEqualTo;
+    search.value = [NSNull null];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    STAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
+}
+
+- (void)testSearchWithNullValuePredicate
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *personA = [NanoPersonTestClass new];
+    personA.name = @"Leo'd";
+    personA.last = @"Doe";
+    personA.key = [NSFNanoEngine stringWithUUID];
+    
+    NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
+    NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    
+    NSFNanoPredicate *lastNamePred = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"last"];
+    NSFNanoPredicate *valuePred = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:[NSNull null]];
+    NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:lastNamePred];
+    [expression addPredicate:valuePred withOperator:NSFAnd];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    [search setExpressions:[NSArray arrayWithObjects:expression, nil]];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    STAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
+}
+
 @end

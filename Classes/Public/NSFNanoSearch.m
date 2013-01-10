@@ -749,6 +749,9 @@
         [segment appendString:value];
         
         // Free allocated resources
+    } else if (YES == [aValue isKindOfClass:[NSNull class]]) {
+        value = [[NSMutableString alloc]initWithFormat:@"%@ = '%@'", NSFDatatype, NSFStringFromNanoDataType (NSFNanoTypeNULL)];
+        [segment appendString:value];
     }
     
     return segment;
@@ -825,6 +828,52 @@
         [segment appendString:value];
         
         // Free allocated resources
+    } else if (YES == [aValue isKindOfClass:[NSNull class]]) {
+        NSString *NULLStringValue = NSFStringFromNanoDataType (NSFNanoTypeNULL);
+        switch (match) {
+            case NSFEqualTo:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ = '%@') OR (%@ GLOB '%@.*' AND %@ = '%@') OR (%@ GLOB '*.%@.*' AND %@ = '%@') OR (%@ GLOB '*.%@' AND %@ = '%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFBeginsWith:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '%@*') OR (%@ GLOB '%@.*' AND %@ GLOB '%@*') OR (%@ GLOB '*.%@.*' AND %@ GLOB '%@*') OR (%@ GLOB '*.%@' AND %@ GLOB '%@*')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFContains:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '%@') OR (%@ GLOB '%@.*' AND %@ GLOB '%@') OR (%@ GLOB '*.%@.*' AND %@ GLOB '%@') OR (%@ GLOB '*.%@' AND %@ GLOB '%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFEndsWith:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ GLOB '*%@') OR (%@ GLOB '%@.*' AND %@ GLOB '*%@') OR (%@ GLOB '*.%@.*' AND %@ GLOB '*%@') OR (%@ GLOB '*.%@' AND %@ GLOB '*%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFInsensitiveEqualTo:
+                aValue = [aValue uppercaseString];
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) = '%@') OR (%@ GLOB '%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@' AND upper(%@) = '%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFInsensitiveBeginsWith:
+                aValue = [aValue uppercaseString];
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) GLOB '%@*') OR (%@ GLOB '%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@' AND upper(%@) GLOB '%@*')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFInsensitiveContains:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ LIKE '%@') OR (%@ GLOB '%@.*' AND %@ LIKE '%@') OR (%@ GLOB '*.%@.*' AND %@ LIKE '%@') OR (%@ GLOB '*.%@' AND %@ LIKE '%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFInsensitiveEndsWith:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ LIKE '%%%@') OR (%@ GLOB '%@.*' AND %@ LIKE '%%%@') OR (%@ GLOB '*.%@.*' AND %@ LIKE '%%%@') OR (%@ GLOB '*.%@' AND %@ LIKE '%%%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFGreaterThan:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ > '%@') OR (%@ GLOB '%@.*' AND %@ > '%@') OR (%@ GLOB '*.%@.*' AND %@ > '%@') OR (%@ GLOB '*.%@' AND %@ > '%@')", NSFAttribute, NSFDatatype, NULLStringValue, aValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+            case NSFLessThan:
+                value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND %@ < '%@') OR (%@ GLOB '%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@.*' AND %@ < '%@') OR (%@ GLOB '*.%@' AND %@ < '%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
+                [segment appendString:value];
+                break;
+        }
     }
     
     return segment;
