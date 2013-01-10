@@ -905,4 +905,36 @@
     STAssertTrue ([[url2 absoluteString]isEqualToString:[retrievedURL2 absoluteString]], @"Expected to find bURL.");
 }
 
+- (void)testBagSearch
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    
+    NSArray *objects = [NSArray arrayWithObjects:
+                        [NSFNanoObject nanoObjectWithDictionary:@{@"FirstName" : @"Tito"}],
+                        [NSFNanoObject nanoObjectWithDictionary:@{@"FirstName" : @"Jane"}],
+                        nil];
+    
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    BOOL success = [bag addObjectsFromArray:objects error:nil];
+    STAssertTrue (YES == success, @"Expected the bag to hold the objects.");
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    [search setAttribute:@"FirstName"];
+    [search setMatch:NSFEqualTo];
+    [search setValue:@"Tito"];
+    [search setBag:bag];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    STAssertTrue ([searchResults count] == 1, @"Expected to find one object. while found %d",[searchResults count]);
+}
+
 @end
