@@ -85,6 +85,7 @@ NSString * NSFStringFromMatchType (NSFMatchType aMatchType)
         case NSFInsensitiveEndsWith: value = @"Ends with (case insensitive)"; break;
         case NSFGreaterThan: value = @"Greater than"; break;
         case NSFLessThan: value = @"Less than"; break;
+        case NSFNotEqualTo: value = @"Not Equal to"; break;
     }
     
     return value;
