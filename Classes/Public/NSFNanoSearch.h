@@ -213,7 +213,7 @@
  * @param theReturnType the type of object to be returned. Can be \link Globals::NSFReturnObjects NSFReturnObjects \endlink or \link Globals::NSFReturnKeys NSFReturnKeys \endlink.
  * @param outError is used if an error occurs. May be NULL.
  * @return An array is returned if: 1) the sort has been specified or 2) the return type is \link Globals::NSFReturnKeys NSFReturnKeys \endlink. Otherwise, a dictionary is returned.
- * @note The sort descriptor will be ignored when returning requesting NSFReturnKeys.
+ * @note The sort descriptor will be ignored when the return type is NSFReturnKeys.
  * @see \link searchObjectsAdded:date:returnType:error: - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
  */
 
@@ -225,7 +225,7 @@
  * @param theReturnType the type of object to be returned. Can be \link Globals::NSFReturnObjects NSFReturnObjects \endlink or \link Globals::NSFReturnKeys NSFReturnKeys \endlink.
  * @param outError is used if an error occurs. May be NULL.
  * @return If theReturnType is \link Globals::NSFReturnObjects NSFReturnObjects \endlink, a dictionary is returned. Otherwise, an array is returned.
- * @note The sort descriptor will be ignored when returning requesting NSFReturnKeys.
+ * @note The sort descriptor will be ignored when the return type is NSFReturnKeys.
  * @see \link searchObjectsWithReturnType:error: - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
  */
 

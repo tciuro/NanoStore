@@ -872,15 +872,14 @@
     id theResults = results;
     
     if ([_sort count] > 0) {
-        NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
-        
-        for (NSFNanoSortDescriptor *descriptor in _sort) {
-            NSString *targetKeyPath = [[NSString alloc]initWithFormat:@"rootObject.%@", descriptor.attribute];
-            NSSortDescriptor *cocoaSort = [[NSSortDescriptor alloc]initWithKey:targetKeyPath ascending:descriptor.isAscending];
-            [cocoaSortDescriptors addObject:cocoaSort];
-        }
-        
         if (NSFReturnObjects == theReturnType) {
+            NSMutableArray *cocoaSortDescriptors = [NSMutableArray new];
+            
+            for (NSFNanoSortDescriptor *descriptor in _sort) {
+                NSString *targetKeyPath = [[NSString alloc]initWithFormat:@"rootObject.%@", descriptor.attribute];
+                NSSortDescriptor *cocoaSort = [[NSSortDescriptor alloc]initWithKey:targetKeyPath ascending:descriptor.isAscending];
+                [cocoaSortDescriptors addObject:cocoaSort];
+            }
             theResults = [[results allValues]sortedArrayUsingDescriptors:cocoaSortDescriptors];
         } else {
             theResults = [results allKeys];
