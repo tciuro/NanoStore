@@ -8,15 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "NSFNanoObjectProtocol.h"
+#import "NSFNanoObject.h"
 
 extern NSString *NanoPersonFirst;
 extern NSString *NanoPersonLast;
 
-@interface NanoPersonTestClass : NSObject <NSFNanoObjectProtocol>
+@interface NanoPersonTestClass : NSFNanoObject
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *last;
-@property (nonatomic, strong) NSString *key;
 
 @end

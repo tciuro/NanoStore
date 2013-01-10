@@ -169,6 +169,35 @@
     STAssertTrue ([retrievedValue isEqualToArray:value] == YES, @"Expected accessor to return the proper value.");
 }
 
+- (void)testSearchUsingNanoObjectSubclass
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *person = [NanoPersonTestClass new];
+    person.name = @"Mercedes";
+    person.last = @"Doe";
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = NanoPersonFirst;
+    search.match = NSFEqualTo;
+    search.value = @"Mercedes";
+    search.filterClass = NSStringFromClass([person class]);
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    NanoPersonTestClass *retrievedPerson = [[searchResults allValues]lastObject];
+
+    STAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
+    STAssertTrue ([retrievedPerson isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
+    STAssertTrue (nil != [retrievedPerson key], @"Expected the object to contain a valid key.");
+    STAssertTrue ([[retrievedPerson key]isEqualToString:[person key]], @"Expected to find the object that was saved originally.");
+}
+
 - (void)testSearchReset
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createStoreWithType:NSFMemoryStoreType path:nil];
@@ -547,7 +576,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -598,7 +626,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -651,7 +678,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -706,7 +732,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -897,7 +922,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
 
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -926,7 +950,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -955,7 +978,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
         
@@ -988,7 +1010,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Mercedes";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
     
@@ -1213,7 +1234,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Leo'd";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
     
@@ -1239,7 +1259,6 @@
     NanoPersonTestClass *person = [NanoPersonTestClass new];
     person.name = @"Leo'd";
     person.last = @"Doe";
-    person.key = [NSFNanoEngine stringWithUUID];
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
     
@@ -1271,7 +1290,6 @@
     NanoPersonTestClass *personA = [NanoPersonTestClass new];
     personA.name = @"Leo'd";
     personA.last = @"Doe";
-    personA.key = [NSFNanoEngine stringWithUUID];
     
     NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
@@ -1297,7 +1315,6 @@
     NanoPersonTestClass *personA = [NanoPersonTestClass new];
     personA.name = @"Leo'd";
     personA.last = @"Doe";
-    personA.key = [NSFNanoEngine stringWithUUID];
     
     NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
@@ -1324,7 +1341,6 @@
     NanoPersonTestClass *personA = [NanoPersonTestClass new];
     personA.name = @"Leo'd";
     personA.last = @"Doe";
-    personA.key = [NSFNanoEngine stringWithUUID];
     
     NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];

@@ -13,16 +13,11 @@ NSString *NanoPersonLast  = @"NanoPersonLast";
 
 @implementation NanoPersonTestClass
 
-@synthesize name;
-@synthesize last;
-@synthesize key;
-
 - (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore
 {
-    if (self = [self init]) {
-        self.name = [theDictionary objectForKey:NanoPersonFirst];
-        self.last = [theDictionary objectForKey:NanoPersonLast];
-        self.key = aKey;
+    if (self = [super initNanoObjectFromDictionaryRepresentation:nil forKey:aKey store:nil]) {
+        _name = [theDictionary objectForKey:NanoPersonFirst];
+        _last = [theDictionary objectForKey:NanoPersonLast];
     }
     
     return self;
@@ -30,8 +25,8 @@ NSString *NanoPersonLast  = @"NanoPersonLast";
 
 - (NSDictionary *)nanoObjectDictionaryRepresentation
 {
-    return [NSDictionary dictionaryWithObjectsAndKeys:self.name, NanoPersonFirst,
-            self.last, NanoPersonLast,
+    return [NSDictionary dictionaryWithObjectsAndKeys:_name, NanoPersonFirst,
+            _last, NanoPersonLast,
             nil];
 }
 
