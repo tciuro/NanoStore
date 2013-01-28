@@ -923,7 +923,7 @@
 
 - (void)testBagSearch
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
