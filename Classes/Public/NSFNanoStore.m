@@ -276,7 +276,6 @@
     
     BOOL success = [self _addObjectsFromArray:nonBagObjects forceSave:NO error:outError];
     
-    
     return success;
 }
 
@@ -559,7 +558,7 @@
 - (BOOL)saveStoreAndReturnError:(out NSError **)outError
 {
     // We are really not saving anything new, just indicating that we should commit the unsaved changes.
-    if (NO == _hasUnsavedChanges) {
+    if (NO == self.hasUnsavedChanges) {
         return YES;
     }
     

@@ -199,6 +199,22 @@
     STAssertTrue (([keys1 count] + [keys2 count] == 2), @"Expected to find two stored objects.");
 }
 
+- (void)testSaveObjectsInBatch
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];//createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    [nanoStore setSaveInterval:1000];
+    NSError *error = nil;
+    [nanoStore addObject:[NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}] error:&error];
+    STAssertTrue(nil == error, @"expected to add the object without complications.");
+    [nanoStore addObject:[NSFNanoObject nanoObjectWithDictionary:@{@"foo2" : @"bar2"}] error:&error];
+    STAssertTrue(nil == error, @"expected to add the object without complications.");
+    BOOL success = [nanoStore saveStoreAndReturnError:&error];
+    STAssertTrue((YES == success) && (nil == error), @"expected to save the objects.");
+    STAssertTrue(2 == [nanoStore countOfObjectsOfClassNamed:@"NSFNanoObject"], @"should save 2 objects in a batch");
+    [nanoStore closeWithError:nil];
+}
+
 - (void)testStoreMultipleObjectsWithSameKey
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
