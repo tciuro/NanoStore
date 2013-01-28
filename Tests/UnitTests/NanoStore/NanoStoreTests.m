@@ -201,7 +201,7 @@
 
 - (void)testSaveObjectsInBatch
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];//createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore setSaveInterval:1000];
     NSError *error = nil;
