@@ -48,7 +48,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 @interface NSFNanoEngine ()
 
 /** \cond */
-@property (nonatomic, weak) sqlite3 *sqlite;
+@property (nonatomic, assign) sqlite3 *sqlite;
 @property (nonatomic, copy, readwrite) NSString *path;
 @property (nonatomic) NSMutableDictionary *schema;
 @property (nonatomic) BOOL willCommitChangeSchema;
