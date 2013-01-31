@@ -3,17 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* iPhoneTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPhoneTestAppDelegate.m */; };
-		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D3623260D0F684500981E51 /* iPhoneTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPhoneTestAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
-		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; };
+		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		28F335F11007B36200424DE2 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* RootViewController.xib */; };
 		7470B3EA122837F7007DB471 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7470B3E9122837F7007DB471 /* libsqlite3.dylib */; };
 		74B63E50129F26AA00B3B2A7 /* NSFNanoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63E31129F26AA00B3B2A7 /* NSFNanoEngine.m */; };
@@ -25,6 +25,7 @@
 		74B63E56129F26AA00B3B2A7 /* NSFNanoPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63E4B129F26AA00B3B2A7 /* NSFNanoPredicate.m */; };
 		74B63E57129F26AA00B3B2A7 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63E4D129F26AA00B3B2A7 /* NSFNanoSearch.m */; };
 		74B63E58129F26AA00B3B2A7 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63E4F129F26AA00B3B2A7 /* NSFNanoStore.m */; };
+		DC57E78516BAE5FF00E4D4B0 /* NSFOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57E78416BAE5FF00E4D4B0 /* NSFOrderedDictionary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,8 @@
 		74B63E4E129F26AA00B3B2A7 /* NSFNanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoStore.h; sourceTree = "<group>"; };
 		74B63E4F129F26AA00B3B2A7 /* NSFNanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoStore.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* iPhoneTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iPhoneTest-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DC57E78316BAE5FF00E4D4B0 /* NSFOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFOrderedDictionary.h; sourceTree = "<group>"; };
+		DC57E78416BAE5FF00E4D4B0 /* NSFOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFOrderedDictionary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +172,8 @@
 				74B63E31129F26AA00B3B2A7 /* NSFNanoEngine.m */,
 				74B63E32129F26AA00B3B2A7 /* NSFNanoResult.h */,
 				74B63E33129F26AA00B3B2A7 /* NSFNanoResult.m */,
+				DC57E78316BAE5FF00E4D4B0 /* NSFOrderedDictionary.h */,
+				DC57E78416BAE5FF00E4D4B0 /* NSFOrderedDictionary.m */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -238,8 +243,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iPhoneTest" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -287,6 +295,7 @@
 				74B63E56129F26AA00B3B2A7 /* NSFNanoPredicate.m in Sources */,
 				74B63E57129F26AA00B3B2A7 /* NSFNanoSearch.m in Sources */,
 				74B63E58129F26AA00B3B2A7 /* NSFNanoStore.m in Sources */,
+				DC57E78516BAE5FF00E4D4B0 /* NSFOrderedDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -311,6 +321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPhoneTest_Prefix.pch;
@@ -328,8 +339,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -342,8 +352,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
