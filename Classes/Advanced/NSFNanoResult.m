@@ -63,7 +63,7 @@
     NSMutableString *description = [NSMutableString string];
     [description appendString:@"\n"];
     [description appendString:[NSString stringWithFormat:@"Result address     : %p\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Number of columns  : %ld\n", numberOfColumns]];
+    [description appendString:[NSString stringWithFormat:@"Number of columns  : %lu\n", (unsigned long)numberOfColumns]];
     if (nil == _error)
         if ([[self columns]count] > 0)
             [description appendString:[NSString stringWithFormat:@"Columns            : %@\n", [[self columns]componentsJoinedByString:@", "]]];
@@ -71,7 +71,7 @@
             [description appendString:[NSString stringWithFormat:@"Columns            : %@\n", @"()"]];
         else
             [description appendString:[NSString stringWithFormat:@"Columns            : %@\n", @"<column info not available>"]];
-    [description appendString:[NSString stringWithFormat:@"Number of rows     : %ld\n", _numberOfRows]];
+    [description appendString:[NSString stringWithFormat:@"Number of rows     : %lu\n", (unsigned long)_numberOfRows]];
     if (nil == _error)
         [description appendString:[NSString stringWithFormat:@"Error              : %@\n", @"<no error>"]];
     else
@@ -115,7 +115,7 @@
             }
             
             for (i = 0; i < numberOfRowsToPrint; i++) {
-                [description appendString:[NSString stringWithFormat:@"%-15ld | ", i]];
+                [description appendString:[NSString stringWithFormat:@"%-15lu | ", (unsigned long)i]];
                 for (j = 0; j < numberOfColumns; j++) {
                     NSString *columnName = [columns objectAtIndex:j];
                     const char *value = "<plist data>    ";
@@ -208,7 +208,7 @@
             [contentString setString:@""];
 
             for (i = 0; i < numberOfRowsToPrint; i++) {
-                [contentString appendString:[NSString stringWithFormat:@"%-15ld | ", i]];
+                [contentString appendString:[NSString stringWithFormat:@"%-15lu | ", (unsigned long)i]];
                 for (j = 0; j < numberOfColumns; j++) {
                     NSString *columnName = [columns objectAtIndex:j];
                     const char *value = "<plist data>    ";
