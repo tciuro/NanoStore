@@ -752,7 +752,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     if (numberOfPages < 1000)
         numberOfPages = 1000;
     
-    [self executeSQL:[NSString stringWithFormat:@"PRAGMA cache_size = %ld", numberOfPages]];
+    [self executeSQL:[NSString stringWithFormat:@"PRAGMA cache_size = %lu", (unsigned long)numberOfPages]];
     NSUInteger cacheSize = [self cacheSize];
     return (cacheSize == numberOfPages);
 }
@@ -766,7 +766,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 - (BOOL)setPageSize:(NSUInteger)numberOfBytes
 {
-    [self executeSQL:[NSString stringWithFormat:@"PRAGMA page_size = %ld", numberOfBytes]];
+    [self executeSQL:[NSString stringWithFormat:@"PRAGMA page_size = %lu", (unsigned long)numberOfBytes]];
     NSUInteger pageSize = [self pageSize];
     return (pageSize == numberOfBytes);
 }
