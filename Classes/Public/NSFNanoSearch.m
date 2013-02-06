@@ -481,12 +481,12 @@
     
     // Add the limit clause if required
     if (_limit > 0) {
-        aSQLQuery = [NSString stringWithFormat:@"%@ LIMIT %li", aSQLQuery, _limit];
+        aSQLQuery = [NSString stringWithFormat:@"%@ LIMIT %lu", aSQLQuery, (unsigned long)_limit];
     }
     
     // Add the offset clause if required
     if (_offset > 0) {
-        aSQLQuery = [NSString stringWithFormat:@"%@ OFFSET %li", aSQLQuery, _offset];
+        aSQLQuery = [NSString stringWithFormat:@"%@ OFFSET %lu", aSQLQuery, (unsigned long)_offset];
     }
     
     return aSQLQuery;
