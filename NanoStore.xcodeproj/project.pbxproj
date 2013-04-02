@@ -1018,7 +1018,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7 i386";
+				VALID_ARCHS = "armv6 armv7 armv7s i386";
 			};
 			name = Debug;
 		};
@@ -1036,7 +1036,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7 i386";
+				VALID_ARCHS = "armv6 armv7 armv7s i386";
 			};
 			name = Release;
 		};
