@@ -19,7 +19,7 @@ Relational databases tend to have a rich understanding of the structure of your 
 * Full index support, inner-objects, embedded arrays and dictionaries
 * Convenience methods to access, manipulate and maintain SQLite databases
 * Full SQLite access available
-* Mac OS X Lion 10.7 and iOS 5 ready
+* Mac OS X Mountain Lion 10.8 and iOS 6 ready
 * iOS library runs on the device and simulator
 * ARC compliant
 
