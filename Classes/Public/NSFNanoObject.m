@@ -256,7 +256,7 @@
         return JSONInfo;
     }
     
-    if (*error) {
+    if (error != NULL) {
         *error = tempError;
     }
     
