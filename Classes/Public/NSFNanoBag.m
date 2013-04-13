@@ -217,7 +217,7 @@
     }
     
     NSString *objectKey = [(id)object nanoObjectKey];
-    NSDictionary *info = [(id)object dictionaryRepresentation];
+    NSDictionary *info = [object nanoObjectDictionaryRepresentation];
     
     if (objectKey && info) {
         [_savedObjects removeObjectForKey:objectKey];
