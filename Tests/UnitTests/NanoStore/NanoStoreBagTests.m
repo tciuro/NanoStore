@@ -11,6 +11,7 @@
 #import "NSFNanoBag.h"
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoStore_Private.h"
+#import "NanoCarTestClass.h"
 
 @implementation NanoStoreBagTests
 
@@ -381,6 +382,28 @@
     
     STAssertTrue ((YES == hasUnsavedChanges) && (YES == success) && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Adding a conforming object list to a bag should have succeded.");
 }
+
+- (void) testBagAddTwoNSObjectsConformingToProtocol
+{
+    id car1 = [[NanoCarTestClass alloc] initNanoObjectFromDictionaryRepresentation:@{@"kName" : @"XJ-7"} forKey:[NSFNanoEngine stringWithUUID] store:nil];
+    id car2 = [[NanoCarTestClass alloc] initNanoObjectFromDictionaryRepresentation:@{@"kName" : @"Jupiter 8"} forKey:[NSFNanoEngine stringWithUUID] store:nil];
+    
+    NSArray *objects = @[car1, car2];
+    
+    NSFNanoBag *bag = [NSFNanoBag bag];
+    NSError *outError = nil;
+    BOOL success = [bag addObjectsFromArray:objects error:&outError];
+    BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
+    
+    NSDictionary *info = [bag nanoObjectDictionaryRepresentation];
+    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    
+    STAssertTrue (success, @"expected bag to have saved");
+    STAssertTrue (hasUnsavedChanges, @"expected bag to have no unsaved changes");
+    STAssertNil (outError, @"expect bag to return no error on save");
+    STAssertEquals ([returnedKeys count], [objects count], @"expected saved bag to return %d object keys", [objects count]);
+}
+
 
 - (void)testBagAddPartiallyConformingObjects
 {
