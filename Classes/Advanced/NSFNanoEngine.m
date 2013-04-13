@@ -1194,11 +1194,10 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         if (nil == datatype) datatype = NSFStringFromNanoDataType(NSFNanoTypeUnknown);
 
         NSMutableDictionary *tempSchema = [_schema objectForKey:table];
-        if (nil != tempSchema)
+        if (nil == tempSchema) {
             tempSchema = [[NSMutableDictionary alloc]init];
-        else
-            ;
-        
+        }
+    
         [tempSchema setObject:datatype forKey:column];
         [_schema setObject:tempSchema forKey:table];
         
