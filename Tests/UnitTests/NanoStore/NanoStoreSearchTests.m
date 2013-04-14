@@ -887,7 +887,7 @@
     BOOL isClassCorrect = [[searchResults objectForKey:obj1.key]isKindOfClass:[NSFNanoObject class]];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2) && (YES == isClassCorrect), @"Expected to find two objects of type NSFNanoObject.");
+    STAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
 }
 
 - (void)testSearchReturningObjectsWithCalendarDateOfClassNSFNanoObject
@@ -907,7 +907,7 @@
     BOOL isClassCorrect = [[searchResults objectForKey:obj1.key]isKindOfClass:[NSFNanoObject class]];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2) && (YES == isClassCorrect), @"Expected to find two objects of type NSFNanoObject.");
+    STAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
 }
 
 - (void)testSearchFilteringResultsByClassReturnObjects
@@ -935,7 +935,7 @@
     BOOL isClassCorrect = [[searchResults objectForKey:car.key]isKindOfClass:[NanoCarTestClass class]];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1) && (YES == isClassCorrect), @"Expected to find one object of type NanoCarTestClass.");
+    STAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
 }
 
 - (void)testSearchFilteringResultsByClassReturnKeys
@@ -963,7 +963,7 @@
     BOOL isClassCorrect = [[searchResults lastObject]isEqualToString:car.key];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1) && (YES == isClassCorrect), @"Expected to find one object of type NanoCarTestClass.");
+    STAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
 }
 
 - (void)testSearchWithExpressionAndFilteringObjectResultsByClass

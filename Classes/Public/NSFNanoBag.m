@@ -465,10 +465,10 @@
     // Save the unsaved bag...
     BOOL success = [someStore _addObjectsFromArray:[NSArray arrayWithObject:self] forceSave:YES error:outError];
     
-    if (YES == success) {
+    if (success) {
         [_unsavedObjects removeAllObjects];
         success = [self reloadBagWithError:outError];
-        if (YES == success) {
+        if (success) {
             _hasUnsavedChanges = NO;
         }
         return success;

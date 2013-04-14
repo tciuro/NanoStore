@@ -99,7 +99,7 @@
         [nanoStore closeWithError:nil];
     }
     
-    STAssertTrue (YES == success, @"Expected the store description to be available outside the autoreleasepool.");
+    STAssertTrue (success, @"Expected the store description to be available outside the autoreleasepool.");
 }
 
 - (void)testNanoEngineProcessingModeAccessor
@@ -152,7 +152,7 @@
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObject:object error:nil];
     
-    STAssertTrue (YES == [nanoStore hasUnsavedChanges], @"Expected unsaved changes.");
+    STAssertTrue ([nanoStore hasUnsavedChanges], @"Expected unsaved changes.");
     
     // Close the document store
     [nanoStore closeWithError:nil];
@@ -210,7 +210,7 @@
     [nanoStore addObject:[NSFNanoObject nanoObjectWithDictionary:@{@"foo2" : @"bar2"}] error:&error];
     STAssertTrue(nil == error, @"expected to add the object without complications.");
     BOOL success = [nanoStore saveStoreAndReturnError:&error];
-    STAssertTrue((YES == success) && (nil == error), @"expected to save the objects.");
+    STAssertTrue(success && (nil == error), @"expected to save the objects.");
     STAssertTrue(2 == [nanoStore countOfObjectsOfClassNamed:@"NSFNanoObject"], @"should save 2 objects in a batch");
     [nanoStore closeWithError:nil];
 }
@@ -727,7 +727,7 @@
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
     
     NSArray *classNames = [nanoStore objectsOfClassNamed:@"NSFNanoBag"];
-    STAssertTrue (YES == [classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
+    STAssertTrue ([classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
 }
 
 - (void)testObjectsOfClassNamedSortedVerifyReturnType
@@ -745,7 +745,7 @@
     NSFNanoSortDescriptor *sortDescriptor = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"name" ascending:YES];
     NSArray *classNames = [nanoStore objectsOfClassNamed:@"NSFNanoBag" usingSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
-    STAssertTrue (YES == [classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
+    STAssertTrue ([classNames isKindOfClass:[NSArray class]], @"Expected the results to be of type array.");
 }
 
 - (void)testCountOfObjectsOfClassNamed
@@ -938,7 +938,7 @@
     
     NSFNanoBag *bag = [NSFNanoBag bag];
     BOOL success = [bag addObjectsFromArray:objects error:nil];
-    STAssertTrue (YES == success, @"Expected the bag to hold the objects.");
+    STAssertTrue (success, @"Expected the bag to hold the objects.");
     
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
     

@@ -127,7 +127,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     BOOL success = [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
-    STAssertTrue (YES == success, @"Expected to store the object.");
+    STAssertTrue (success, @"Expected to store the object.");
 
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFBeginsWith value:@"First"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];

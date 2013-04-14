@@ -42,7 +42,7 @@
 {
     NSFSetIsDebugOn (YES);
     BOOL isDebugOn = NSFIsDebugOn();
-    STAssertTrue (YES == isDebugOn, @"Expected isDebugOn to be YES.");
+    STAssertTrue (isDebugOn, @"Expected isDebugOn to be YES.");
 }
 
 - (void)testCheckDebugOff

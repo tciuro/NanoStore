@@ -173,7 +173,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     } else {
         
         // Set FastMode accordingly...
-        if (YES == useFastMode) {
+        if (useFastMode) {
             sqlite3_exec(self.sqlite, "PRAGMA fullfsync = OFF;", NULL, NULL, NULL);
             sqlite3_exec(self.sqlite, "PRAGMA synchronous = OFF;", NULL, NULL, NULL);
             sqlite3_exec(self.sqlite, "PRAGMA journal_mode = MEMORY;", NULL, NULL, NULL);
@@ -207,7 +207,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         return NO;
     }
     
-    if (YES == [self isTransactionActive]) {
+    if ([self isTransactionActive]) {
         [self rollbackTransaction];
     }
     
@@ -245,7 +245,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 - (BOOL)beginTransaction
 {
-    if (YES == [self isTransactionActive])
+    if ([self isTransactionActive])
         return NO;
     
     _willCommitChangeSchema = NO;
@@ -255,7 +255,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 - (BOOL)beginDeferredTransaction
 {
-    if (YES == [self isTransactionActive])
+    if ([self isTransactionActive])
         return NO;
     
     _willCommitChangeSchema = NO;
@@ -806,9 +806,9 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 {
     NSFEncodingType convertedValue = NSFEncodingUnknown;
     
-    if (YES == [value isEqualToString:@"UTF-8"]) {
+    if ([value isEqualToString:@"UTF-8"]) {
         convertedValue = NSFEncodingUTF8;
-    } else if (YES == [value isEqualToString:@"UTF-16"]) {
+    } else if ([value isEqualToString:@"UTF-16"]) {
         convertedValue = NSFEncodingUTF16;
     }
     
@@ -892,7 +892,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 - (BOOL)setJournalMode:(NSFJournalModeMode)theMode
 {
-    if (YES == [self isTransactionActive]) {
+    if ([self isTransactionActive]) {
         return NO;
     }
     
@@ -1224,7 +1224,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     while ((database = [enumerator nextObject])) {
         NSArray *databaseTables = [allTables objectForKey:database];
         
-        if ((YES == addPrefix) && ([database hasPrefix:@"main"] == NO)) {
+        if (addPrefix && ([database hasPrefix:@"main"] == NO)) {
             for (NSString *table in databaseTables) {
                 [flattenedTables addObject:[NSString stringWithFormat:@"%@.%@", database, table]];
             }
@@ -1373,14 +1373,14 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     BOOL everythingIsFine = YES;
     
     NSMutableString* theSQLStatement;
-    if (YES == isTemporaryFlag)
+    if (isTemporaryFlag)
         theSQLStatement = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"CREATE TEMPORARY TABLE %@(", table]];
     else
         theSQLStatement = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"CREATE TABLE %@(", table]];
     
     NSMutableArray *tableCreationDatatypes = [NSMutableArray arrayWithArray:revisedDatatypes];
     
-    if (YES == [self NSFP_sqlString:theSQLStatement forTable:table withColumns:revisedColumns datatypes:tableCreationDatatypes]) {
+    if ([self NSFP_sqlString:theSQLStatement forTable:table withColumns:revisedColumns datatypes:tableCreationDatatypes]) {
         [theSQLStatement appendString:@");"];
         
         everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);

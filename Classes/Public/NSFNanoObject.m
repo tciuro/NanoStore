@@ -176,7 +176,7 @@
         }
     }
     
-    if (YES == success) {
+    if (success) {
         success = [_info isEqualToDictionary:otherNanoObject.info];
     }
     

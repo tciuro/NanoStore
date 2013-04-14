@@ -41,7 +41,7 @@
 {
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Foo" ascending:YES];
     STAssertTrue ([[sort attribute]isEqualToString:@"Foo"], @"Expected the key to be the same.");
-    STAssertTrue (YES == sort.isAscending, @"Expected the sort order to be the same.");
+    STAssertTrue (sort.isAscending, @"Expected the sort order to be the same.");
 }
 
 - (void)testSortParametersDescending
@@ -105,7 +105,7 @@
     
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     STAssertTrue ([searchResults count] == 4, @"Expected to find four objects.");
-    STAssertTrue (YES == [[[searchResults objectAtIndex:0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+    STAssertTrue ([[[searchResults objectAtIndex:0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
     

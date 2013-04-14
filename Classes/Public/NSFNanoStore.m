@@ -239,11 +239,11 @@
     
     for (id object in someObjects) {
         // If it's a bag, make sure the name is unique
-        if (YES == [object isKindOfClass:[NSFNanoBag class]]) {
+        if ([object isKindOfClass:[NSFNanoBag class]]) {
             NSFNanoBag *bag = (NSFNanoBag *)object;
             
             // If it's a bag, process it first by gathering. If it's not dirty, there's no need to save...
-            if (YES == [bag hasUnsavedChanges]) {
+            if ([bag hasUnsavedChanges]) {
                 NSError *error = nil;
                 
                 // Associate the bag to this store
@@ -944,7 +944,7 @@
         }
     }
     
-    if (YES == success) {
+    if (success) {
         NSData *dictBinData = [NSKeyedArchiver archivedDataWithRootObject:someInfo];
         {
             int status = sqlite3_reset (_storeKeysStatement);
@@ -1128,7 +1128,7 @@
         return YES;
     }
     
-    if ((YES == forceSave) || (0 == unsavedObjectsCount % saveInterval)) {
+    if (forceSave || (0 == unsavedObjectsCount % saveInterval)) {
         NSDate *startStoringDate = [NSDate date];
         
         NSDate *startRemovingDate = [NSDate date];
@@ -1185,7 +1185,7 @@
             @autoreleasepool {
                 // If the object was originally created by storing a class not recognized by this process, honor it and store it with the right class string.
                 NSString *className = nil;
-                if (YES == [object respondsToSelector:@selector(originalClassString)]) {
+                if ([object respondsToSelector:@selector(originalClassString)]) {
                     className = [object originalClassString];
                 }
                 
@@ -1201,7 +1201,7 @@
                                            userInfo:nil]raise];
                 } else {
                     SEL setStoreSelector = @selector(setStore:);
-                    if (YES == [object respondsToSelector:setStoreSelector]) {
+                    if ([object respondsToSelector:setStoreSelector]) {
                         #pragma clang diagnostic push
                         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                         [object performSelector:setStoreSelector withObject:self];
@@ -1220,7 +1220,7 @@
                                                userInfo:nil]raise];
                     }
                     
-                    if (YES == transactionStartedHere) {
+                    if (transactionStartedHere) {
                         transactionStartedHere = [self beginTransactionAndReturnError:outError];
                         if (NO == transactionStartedHere) {
                             if (nil != outError) errorMessage = [*outError localizedDescription];
@@ -1289,7 +1289,7 @@
         backupPath = [NSString stringWithFormat:@"%@.%@", backupPath, anExtension];
     
     // Make sure we the destination path is not the same as the source!
-    if (YES == [filePath isEqualToString:backupPath]) {
+    if ([filePath isEqualToString:backupPath]) {
         if (nil != outError)
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
@@ -1301,7 +1301,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL destinationLocationIsClear = YES;
     
-    if (YES == [fm fileExistsAtPath:backupPath]) {
+    if ([fm fileExistsAtPath:backupPath]) {
         destinationLocationIsClear = [fm removeItemAtPath:backupPath error:nil];
         if (NO == destinationLocationIsClear) {
             if (nil != outError)
@@ -1340,7 +1340,7 @@
     }
     
     // Make sure we the destination path is not the same as the source!
-    if (YES == [filePath isEqualToString:backupPath]) {
+    if ([filePath isEqualToString:backupPath]) {
         if (nil != outError)
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
@@ -1357,7 +1357,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL destinationLocationIsClear = YES;
     
-    if (YES == [fm fileExistsAtPath:backupPath]) {
+    if ([fm fileExistsAtPath:backupPath]) {
         destinationLocationIsClear = [fm removeItemAtPath:backupPath error:nil];
         if (NO == destinationLocationIsClear) {
             if (nil != outError)

@@ -247,7 +247,7 @@
 
 - (NSDictionary *)_retrieveDataWithError:(out NSError **)outError
 {
-    if (YES == [_nanoStore isClosed]) {
+    if ([_nanoStore isClosed]) {
         return nil;
     }
     
@@ -362,7 +362,7 @@
                     
                     // If this process does not have knowledge of the original class as was saved in the store, keep a reference
                     // so that we can later on restore the object properly (otherwise it would be stored as a NanoObject.)
-                    if (YES == saveOriginalClassReference) {
+                    if (saveOriginalClassReference) {
                         [nanoObject _setOriginalClassString:objectClass];
                     }
                     
@@ -455,7 +455,7 @@
                         
                         // If this process does not have knowledge of the original class as was saved in the store, keep a reference
                         // so that we can later on restore the object properly (otherwise it would be stored as a NanoObject.)
-                        if (YES == saveOriginalClassReference) {
+                        if (saveOriginalClassReference) {
                             [nanoObject _setOriginalClassString:className];
                         }
                         
@@ -498,7 +498,7 @@
     NSString *attributes = nil;
     
     // Make sure we escape quotes if present and the value is a string
-    if (YES == [aValue isKindOfClass:[NSString class]]) {
+    if ([aValue isKindOfClass:[NSString class]]) {
         aValue = [aValue stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
     }
     
@@ -553,7 +553,7 @@
     }
     
     if (nil != anAttribute) {
-        if (YES == querySegmentWasAdded) {
+        if (querySegmentWasAdded) {
             [theSQLStatement appendString:@" AND "];
         }
         
@@ -580,7 +580,7 @@
         }
     } else {
         if (nil != aValue) {
-            if (YES == querySegmentWasAdded)
+            if (querySegmentWasAdded)
                 [theSQLStatement appendString:@" AND "];
             segment = [NSFNanoSearch _querySegmentForColumn:NSFValue value:aValue matching:aMatch];
             [theSQLStatement appendString:segment];
@@ -591,7 +591,7 @@
         [theSQLStatement appendString:@" ORDER BY ROWID"];
     }
     
-    if (YES == _groupValues) {
+    if (_groupValues) {
         [theSQLStatement appendString:@" GROUP BY NSFValue"];
     }
     
@@ -689,7 +689,7 @@
     NSInteger mutatedStringLength = 0;
     unichar sentinelChar;
     
-    if (YES == [aValue isKindOfClass:[NSString class]]) {
+    if ([aValue isKindOfClass:[NSString class]]) {
         switch (match) {
             case NSFEqualTo:
                 value = [[NSMutableString alloc]initWithFormat:@"%@ = '%@'", aColumn, aValue];
@@ -741,7 +741,7 @@
                 [segment appendString:value];
                 break;
         }
-    } else if (YES == [aValue isKindOfClass:[NSArray class]]) {
+    } else if ([aValue isKindOfClass:[NSArray class]]) {
         // Quote the parameters
         NSMutableArray *quotedParameters = [[NSMutableArray alloc]initWithCapacity:[aValue count]];
         value = [[NSMutableString alloc]initWithFormat:@"%@ IN (", aColumn];
@@ -757,7 +757,7 @@
         [segment appendString:value];
         
         // Free allocated resources
-    } else if (YES == [aValue isKindOfClass:[NSNull class]]){
+    } else if ([aValue isKindOfClass:[NSNull class]]){
         switch (match) {
             case NSFEqualTo:
                 value = [[NSMutableString alloc]initWithFormat:@"%@ IS NULL", aColumn];
@@ -780,7 +780,7 @@
     NSMutableString *segment = [NSMutableString string];
     NSMutableString *value = nil;
 
-    if ((YES == [aValue isKindOfClass:[NSString class]]) || (nil == aValue)) {
+    if (([aValue isKindOfClass:[NSString class]]) || (nil == aValue)) {
         if (nil == aValue) {
             value = [[NSMutableString alloc]initWithFormat:@"((%@ = '%@') OR (%@ GLOB '%@.*') OR (%@ GLOB '*.%@.*') OR (%@ GLOB '*.%@'))", NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue];
             [segment appendString:value];
@@ -835,7 +835,7 @@
                     break;
             }
         }
-    } else if (YES == [aValue isKindOfClass:[NSArray class]]) {
+    } else if ([aValue isKindOfClass:[NSArray class]]) {
         // Quote the parameters
         NSMutableArray *quotedParameters = [[NSMutableArray alloc]initWithCapacity:[aValue count]];
         value = [[NSMutableString alloc]initWithFormat:@"%@ IN (", NSFAttribute];
@@ -851,7 +851,7 @@
         [segment appendString:value];
         
         // Free allocated resources
-    } else if (YES == [aValue isKindOfClass:[NSNull class]]) {
+    } else if ([aValue isKindOfClass:[NSNull class]]) {
         NSString *NULLStringValue = NSFStringFromNanoDataType (NSFNanoTypeNULL);
         switch (match) {
             case NSFEqualTo:

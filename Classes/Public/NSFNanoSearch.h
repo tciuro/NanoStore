@@ -100,7 +100,7 @@
  
  // Remove the NanoObjects matching the selected UUIDs
  NSError *outError = nil;
- if (YES == [nanoStore removeObjectsWithKeysInArray:matchingKeys error:&outError]) {
+ if ([nanoStore removeObjectsWithKeysInArray:matchingKeys error:&outError]) {
  NSLog(@"The matching objects have been removed.");
  } else {
  NSLog(@"An error has occurred while removing the matching objects. Reason: %@", [outError localizedDescription]);

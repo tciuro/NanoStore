@@ -89,7 +89,7 @@
     }
     
     // Make sure we escape quotes if present and the value is a string
-    if (YES == [_value isKindOfClass:[NSString class]]) {
+    if ([_value isKindOfClass:[NSString class]]) {
         _value = [_value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
     } else {
         _value = NSFStringFromNanoDataType(NSFNanoTypeNULL);

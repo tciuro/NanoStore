@@ -171,7 +171,7 @@
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *copiedObject = [object copy];
     
-    STAssertTrue ((YES == [object isEqualToNanoObject:copiedObject]), @"Equality test should have succeeded.");
+    STAssertTrue (([object isEqualToNanoObject:copiedObject]), @"Equality test should have succeeded.");
 }
 
 - (void)testSaveObject
@@ -195,10 +195,10 @@
     [foundObject setObject:now forKey:@"Date"];
     NSError *error = nil;
     BOOL success = [foundObject saveStoreAndReturnError:&error];
-    STAssertTrue ((YES == success) && (nil == error), @"Expected to save the object.");
+    STAssertTrue (success && (nil == error), @"Expected to save the object.");
 
     foundObject = [[[search searchObjectsWithReturnType:NSFReturnObjects error:nil]allValues]lastObject];
-    STAssertTrue (YES == [[foundObject objectForKey:@"Date"]isEqualToDate:now], @"Expected to find the right object.");
+    STAssertTrue ([[foundObject objectForKey:@"Date"]isEqualToDate:now], @"Expected to find the right object.");
 
     [nanoStore closeWithError:nil];
 }

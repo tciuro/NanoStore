@@ -41,7 +41,7 @@
     NSString *key = bag.key;
     NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
+    STAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
 
 - (void)testBagDescription
@@ -84,7 +84,7 @@
     NSFNanoBag *bag = [NSFNanoBag bag];
     STAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
     bag.name = @"FooBar";
-    STAssertTrue (YES == [bag hasUnsavedChanges], @"Expected the bag to have unsaved changes.");
+    STAssertTrue ([bag hasUnsavedChanges], @"Expected the bag to have unsaved changes.");
     STAssertTrue (nil != [bag name], @"Expected the name of the bag to be hold a value.");
     bag.name = nil;
     STAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
@@ -152,7 +152,7 @@
     NSString *key = bag.key;
     NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
+    STAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
 
 - (void)testBagInitTwoConformingObjects
@@ -167,7 +167,7 @@
     NSString *key = bag.key;
     NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Expected the bag to contain two returnedKeys.");
+    STAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Expected the bag to contain two returnedKeys.");
 }
 
 - (void)testBagInitPartiallyConformingObjects
@@ -336,7 +336,7 @@
     NSDictionary *info = [bag dictionaryRepresentation];
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (YES == success) && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 1), @"Adding a conforming object to a bag should have succeeded.");
+    STAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 1), @"Adding a conforming object to a bag should have succeeded.");
 }
 
 - (void)testBagAddNilObjectList
@@ -349,7 +349,7 @@
     NSDictionary *info = [bag dictionaryRepresentation];
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (NO == success) && (nil != outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding a nil object list to a bag should have failed.");
+    STAssertTrue (hasUnsavedChanges && (NO == success) && (nil != outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding a nil object list to a bag should have failed.");
 }
 
 - (void)testBagAddWithEmptyObjectList
@@ -362,7 +362,7 @@
     NSDictionary *info = [bag dictionaryRepresentation];
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (YES == success) && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding an empty object list to a bag should have failed.");
+    STAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding an empty object list to a bag should have failed.");
 }
 
 - (void)testBagAddTwoConformingObjects
@@ -380,7 +380,7 @@
     NSDictionary *info = [bag dictionaryRepresentation];
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (YES == success) && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Adding a conforming object list to a bag should have succeded.");
+    STAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Adding a conforming object list to a bag should have succeded.");
 }
 
 - (void) testBagAddTwoNSObjectsConformingToProtocol
@@ -464,7 +464,7 @@
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     NSString *returnedKey = [returnedKeys lastObject];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
+    STAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
 }
 
 - (void)restBagRemoveWithEmptyListOfObjects
@@ -481,7 +481,7 @@
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     NSString *returnedKey = [returnedKeys lastObject];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
+    STAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
 }
 
 - (void)testBagRemoveTwoConformingObjects
@@ -498,7 +498,7 @@
     NSDictionary *info = [bag dictionaryRepresentation];
     NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
     
-    STAssertTrue ((YES == hasUnsavedChanges) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Removing conforming objects from a bag should have succeded.");
+    STAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Removing conforming objects from a bag should have succeded.");
 }
 
 #pragma mark -
@@ -677,7 +677,7 @@
     // Remove an object from savedBagA and save it
     [savedBagA removeObjectWithKey:obj1.key];
     BOOL success = [savedBagA saveAndReturnError:&outError];
-    STAssertTrue ((YES == success) && (nil == outError), @"Saving the bag should have succeded.");
+    STAssertTrue (success && (nil == outError), @"Saving the bag should have succeded.");
     STAssertTrue (([[savedBagA savedObjects]count] == 2) && ([[savedBagA unsavedObjects]count] == 0) && ([[savedBagA removedObjects]count] == 0), @"Removing an object from a bag should have succeded.");
 
     bags = [nanoStore bags];
@@ -687,7 +687,7 @@
     [editedObject setObject:@"fooValue" forKey:@"fooKey"];
     [savedBagB addObject:editedObject error:&outError];
     success = [savedBagB reloadBagWithError:&outError];
-    STAssertTrue ((YES == success), @"The bad reload should have succeeded.");
+    STAssertTrue (success, @"The bad reload should have succeeded.");
 
     success = YES;
     NSArray *sortedArrayA = [[[savedBagA savedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
@@ -813,7 +813,7 @@
     
     NSFNanoBag *copiedBag = [bag copy];
     
-    STAssertTrue ((YES == [bag isEqualToNanoBag:copiedBag]), @"Equality test should have succeeded.");
+    STAssertTrue (([bag isEqualToNanoBag:copiedBag]), @"Equality test should have succeeded.");
 }
 
 - (void)testBagIsEqualToNanoBag
@@ -834,7 +834,7 @@
     bags = [nanoStore bags];
     NSFNanoBag *savedBagB = [bags lastObject];
     
-    STAssertTrue ((YES == [savedBagA isEqualToNanoBag:savedBagB]), @"Equality test should have succeeded.");
+    STAssertTrue (([savedBagA isEqualToNanoBag:savedBagB]), @"Equality test should have succeeded.");
     
     NSError *outError = nil;
     NSFNanoObject *editedObject = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"fooObject" forKey:@"fooKey"]];
@@ -875,7 +875,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (YES == deflated, @"Expected the bag to be deflated.");
+    STAssertTrue (deflated, @"Expected the bag to be deflated.");
 }
 
 - (void)testBagInflate
@@ -907,7 +907,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (YES == inflated, @"Expected the bag to be inflated.");
+    STAssertTrue (inflated, @"Expected the bag to be inflated.");
 }
 
 @end
