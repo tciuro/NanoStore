@@ -34,15 +34,15 @@
 + (NSFNanoStore *)_createAndOpenDebugDatabase;
 - (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement;
 - (NSString*)_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
-- (BOOL)_initializePreparedStatementsWithError:(out NSError **)outError;
+- (BOOL)_initializePreparedStatementsWithError:(NSError * __autoreleasing *)outError;
 - (void)_releasePreparedStatements;
 - (void)_setIsOurTransaction:(BOOL)value;
 - (BOOL)_isOurTransaction;
 - (BOOL)_setupCachingSchema;
-- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType error:(out NSError **)outError;
-- (BOOL)__storeDictionaries:(NSArray *)someObjects forKeys:(NSArray *)someKeys error:(out NSError **)outError;
+- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType error:(NSError * __autoreleasing *)outError;
+- (BOOL)__storeDictionaries:(NSArray *)someObjects forKeys:(NSArray *)someKeys error:(NSError * __autoreleasing *)outError;
 - (BOOL)_bindValue:(id)aValue forAttribute:(NSString *)anAttribute parameterNumber:(NSInteger)aParamNumber usingSQLite3Statement:(sqlite3_stmt *)aStatement;
-- (BOOL)_checkNanoStoreIsReadyAndReturnError:(out NSError **)outError;
+- (BOOL)_checkNanoStoreIsReadyAndReturnError:(NSError * __autoreleasing *)outError;
 - (NSFNanoDatatype)_NSFDatatypeOfObject:(id)value;
 - (NSString *)_stringFromValue:(id)aValue;
 + (NSString *)_calendarDateToString:(NSDate *)aDate;
@@ -50,10 +50,10 @@
 - (void)_flattenCollection:(id)someObject keyPath:(NSMutableArray **)aKeyPath keys:(NSMutableArray **)someKeys values:(NSMutableArray **)someValues;
 - (BOOL)_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString *)aSQLQuery;
 - (void)_executeSQLite3StepUsingSQLite3Statement:(sqlite3_stmt *)aStatement;
-- (BOOL)_addObjectsFromArray:(NSArray *)someObjects forceSave:(BOOL)forceSave error:(out NSError **)outError;
+- (BOOL)_addObjectsFromArray:(NSArray *)someObjects forceSave:(BOOL)forceSave error:(NSError * __autoreleasing *)outError;
 + (NSDictionary *)_defaultTestData;
-- (BOOL)_backupFileStoreToDirectoryAtPath:(NSString *)aPath extension:(NSString *)anExtension compact:(BOOL)flag error:(out NSError **)outError;
-- (BOOL)_backupMemoryStoreToDirectoryAtPath:(NSString *)aPath extension:(NSString *)anExtension compact:(BOOL)flag error:(out NSError **)outError;
+- (BOOL)_backupFileStoreToDirectoryAtPath:(NSString *)aPath extension:(NSString *)anExtension compact:(BOOL)flag error:(NSError * __autoreleasing *)outError;
+- (BOOL)_backupMemoryStoreToDirectoryAtPath:(NSString *)aPath extension:(NSString *)anExtension compact:(BOOL)flag error:(NSError * __autoreleasing *)outError;
 @end
 
 /** \endcond */

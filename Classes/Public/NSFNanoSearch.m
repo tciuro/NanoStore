@@ -85,7 +85,7 @@
 
 #pragma mark -
 
-- (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
+- (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -168,7 +168,7 @@
 
 #pragma mark -
 
-- (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError
+- (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError
 {
     _returnedObjectType = theReturnType;
     
@@ -180,7 +180,7 @@
     return [self _sortResultsIfApplicable:results returnType:theReturnType];
 }
 
-- (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
+- (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError
 {
     _returnedObjectType = theReturnType;
     
@@ -245,7 +245,7 @@
 
 /** \cond */
 
-- (NSDictionary *)_retrieveDataWithError:(out NSError **)outError
+- (NSDictionary *)_retrieveDataWithError:(NSError * __autoreleasing *)outError
 {
     if ([_nanoStore isClosed]) {
         return nil;
@@ -388,7 +388,7 @@
     return searchResults;
 }
 
-- (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(out NSError **)outError
+- (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(NSError * __autoreleasing *)outError
 {
     if ([_nanoStore isClosed] == YES) {
         return nil;

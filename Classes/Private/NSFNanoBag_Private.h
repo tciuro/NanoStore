@@ -30,7 +30,7 @@
 
 @interface NSFNanoBag (Private)
 - (void)_setStore:(NSFNanoStore *)aStore;
-- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(out NSError **)outError;
+- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(NSError * __autoreleasing *)outError;
 - (void)_inflateObjectsWithKeys:(NSArray *)someKeys;
 @end
 

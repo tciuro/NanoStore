@@ -146,10 +146,10 @@
  * @return YES upon success, NO otherwise.
  * @warning This value cannot be nil and it must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
  * @throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
- * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
+ * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError;
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError;
 
 /** * Adds a series of \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant objects to the bag.
  * @param theObjects is an array of objects to be added to the bag. The objects must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
@@ -157,10 +157,10 @@
  * @return YES upon success, NO otherwise.
  * @warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
  * @throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
- * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
+ * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError;
+- (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError;
 
 /** * Removes the specified object from the bag.
  * @param theObject the object to be removed from the bag.
@@ -226,31 +226,31 @@
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @note Check property hasUnsavedChanges to find out whether the bag has unsaved contents.
- * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(out NSError **)outError \endlink
- * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink
+ * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)saveAndReturnError:(out NSError **)outError;
+- (BOOL)saveAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Refreshes the bag to match the contents stored in the document store. The unsaved contents are preserved.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link saveAndReturnError: - (BOOL)saveAndReturnError:(out NSError **)outError \endlink
- * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink
+ * @see \link saveAndReturnError: - (BOOL)saveAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)reloadBagWithError:(out NSError **)outError;
+- (BOOL)reloadBagWithError:(NSError * __autoreleasing *)outError;
 
 /** * Discards the changes made in the bag.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link saveAndReturnError: - (BOOL)saveAndReturnError:(out NSError **)outError \endlink
- * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(out NSError **)outError \endlink
+ * @see \link saveAndReturnError: - (BOOL)saveAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)undoChangesWithError:(out NSError **)outError;
+- (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError;
 
 //@}
 

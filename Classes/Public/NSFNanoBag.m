@@ -208,7 +208,7 @@
 
 #pragma mark -
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:(out NSError **)outError
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:(NSError * __autoreleasing *)outError
 {
     if (NO == [(id)object conformsToProtocol:@protocol(NSFNanoObjectProtocol)]) {
         [[NSException exceptionWithName:NSFNonConformingNanoObjectProtocolException
@@ -237,7 +237,7 @@
     return YES;
 }
 
-- (BOOL)addObjectsFromArray:(NSArray *)someObjects error:(out NSError **)outError
+- (BOOL)addObjectsFromArray:(NSArray *)someObjects error:(NSError * __autoreleasing *)outError
 {
     if (nil == someObjects) {
         if (nil != outError) {
@@ -331,7 +331,7 @@
     }
 }
 
-- (BOOL)saveAndReturnError:(out NSError **)outError
+- (BOOL)saveAndReturnError:(NSError * __autoreleasing *)outError
 {
     if (NO == self.hasUnsavedChanges) {
         return YES;
@@ -368,7 +368,7 @@
     [self _inflateObjectsWithKeys:objectKeys];
 }
 
-- (BOOL)reloadBagWithError:(out NSError **)outError
+- (BOOL)reloadBagWithError:(NSError * __autoreleasing *)outError
 {
     // If the bag is not associated to a document store, there is no need to continue
     if (nil == _store) {
@@ -397,7 +397,7 @@
     return YES;
 }
 
-- (BOOL)undoChangesWithError:(out NSError **)outError
+- (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError
 {
     [_savedObjects removeAllObjects];
     [_unsavedObjects removeAllObjects];
@@ -449,7 +449,7 @@
     _store = aStore;
 }
 
-- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(out NSError **)outError
+- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(NSError * __autoreleasing *)outError
 {
     // Save the unsaved objects first...
     NSArray *contentsToBeSaved = [_unsavedObjects allValues];

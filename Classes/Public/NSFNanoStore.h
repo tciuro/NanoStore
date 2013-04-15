@@ -92,7 +92,7 @@
  - PRAGMA temp_store = MEMORY;
  
  @note Set this property before you open the document store.
- @see - (BOOL)openWithError:(out NSError **)outError;
+ @see - (BOOL)openWithError:(NSError * __autoreleasing *)outError;
  */
 @property (nonatomic, assign, readwrite) NSFEngineProcessingMode nanoEngineProcessingMode;
 /** * Number of iterations that will trigger an automatic save. */
@@ -111,12 +111,12 @@
  * @return A document store upon success, nil otherwise.
  * @note
  * To manipulate the document store, you must first open it. If you don't need to configure settings for the document store, you can use
- * \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError \endlink instead.
+ * \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink instead.
  * @warning
  * The path is only meaningful for document stores of type \link NSFGlobals::NSFPersistentStoreType NSFPersistentStoreType \endlink. It must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the file path is nil or empty and the type is set to @ref NSFPersistentStoreType "NSFPersistentStoreType".
- * @see \link openWithError: - (BOOL)openWithError:(out NSError **)outError \endlink
- * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError \endlink
+ * @see \link openWithError: - (BOOL)openWithError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink
  */
 
 + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath;
@@ -131,11 +131,11 @@
  * @warning
  * The path is only meaningful for document stores of type @ref NSFPersistentStoreType "NSFPersistentStoreType". It must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the file path is nil or empty and the type is set to @ref NSFPersistentStoreType "NSFPersistentStoreType".
- * @see \link openWithError: - (BOOL)openWithError:(out NSError **)outError \endlink
+ * @see \link openWithError: - (BOOL)openWithError:(NSError * __autoreleasing *)outError \endlink
  * @see \link createStoreWithType:path: + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath \endlink
  */
 
-+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError;
++ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError;
 
 /** * Initializes a newly allocated document store of a specific type at a given file path.
  * @param theType the type of document store that will be created.
@@ -143,12 +143,12 @@
  * @return A document store upon success, nil otherwise.
  * @note
  * To manipulate the document store, you must first open it. If you don't need to configure settings for the document store, you can use
- * \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError \endlink instead.
+ * \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink instead.
  * @warning
  * The path is only meaningful for document stores of type @ref NSFPersistentStoreType "NSFPersistentStoreType". It must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the file path is nil and the type is set to @ref NSFPersistentStoreType "NSFPersistentStoreType".
- * @see \link openWithError: - (BOOL)openWithError:(out NSError **)outError \endlink
- * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError \endlink
+ * @see \link openWithError: - (BOOL)openWithError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink
  */
 
 - (id)initStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath;
@@ -169,14 +169,14 @@
  * @see \link createStoreWithType:path: + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath \endlink
  */
 
-- (BOOL)openWithError:(out NSError **)outError;
+- (BOOL)openWithError:(NSError * __autoreleasing *)outError;
 
 /** * Closes the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @see \link isClosed - (BOOL)isClosed \endlink
  */
 
-- (BOOL)closeWithError:(out NSError **)outError;
+- (BOOL)closeWithError:(NSError * __autoreleasing *)outError;
 
 //@}
 
@@ -210,10 +210,10 @@
  * @return YES upon success, NO otherwise.
  * @warning This value cannot be nil and it must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
  * @throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
- * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
+ * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError;
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError;
 
 /** * Adds a series of \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant objects to the document store.
  * @param theObjects is an array of objects to be added to the document store. The objects must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
@@ -221,58 +221,58 @@
  * @return YES upon success, NO otherwise.
  * @warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
  * @throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
- * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
+ * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError;
+- (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError;
 
 /** * Removes an object from the document store.
  * @param theObject the object to be removed from the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
- * @see \link removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError \endlink
- * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
- * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(out NSError **)outError \endlink
+ * @see \link removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError;
+- (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError;
 
 /** * Removes the list of objects with the specified keys from the document store.
  * @param theKeys the list of keys to be removed from the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
- * @see \link removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
- * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
- * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(out NSError **)outError \endlink
+ * @see \link removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError;
+- (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError;
 
 /** * Removes the list of objects from the document store.
  * @param theObjects the list of objects to be removed from the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
- * @see \link removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
- * @see \link removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError \endlink
- * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(out NSError **)outError \endlink
+ * @see \link removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError;
+- (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError;
 
 /** * Removes all objects from the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
- * @note Please note that the unoccupied space will not be reclaimed, so after clearing the cache use \link compactStoreAndReturnError: - (BOOL)compactStoreAndReturnError:(out NSError **)outError \endlink
+ * @note Please note that the unoccupied space will not be reclaimed, so after clearing the cache use \link compactStoreAndReturnError: - (BOOL)compactStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  * if you want to decrease the database file size.
- * @see \link removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
- * @see \link removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError \endlink
- * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
+ * @see \link removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError \endlink
+ * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeAllObjectsFromStoreAndReturnError:(out NSError **)outError;
+- (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError;
 
 //@}
 
@@ -376,14 +376,14 @@
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @note After storing several objects and depending on the save interval, some objects could be left in the cache in an unsaved state.
- * Therefore, it's always a good idea to call \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(out NSError **)outError \endlink
+ * Therefore, it's always a good idea to call \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  * @see \link discardUnsavedChanges - (void)discardUnsavedChanges \endlink
  */
 
-- (BOOL)saveStoreAndReturnError:(out NSError **)outError;
+- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Discards the uncommitted changes that were added to the document store.
- * @see \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(out NSError **)outError \endlink
+ * @see \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
 - (void)discardUnsavedChanges;
@@ -393,25 +393,25 @@
  * @return YES upon success, NO otherwise.
  */
 
-- (BOOL)compactStoreAndReturnError:(out NSError **)outError;
+- (BOOL)compactStoreAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Remove all indexes from the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @note Clearing the indexes could speed up document store manipulations (insertions, updates and deletions).
- * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(out NSError **)outError \endlink
+ * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)clearIndexesAndReturnError:(out NSError **)outError;
+- (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Recreate all indexes from the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
- * @note Rebuilding the indexes recreates the indexes previously removed with \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(out NSError **)outError \endlink.
- * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(out NSError **)outError \endlink
+ * @note Rebuilding the indexes recreates the indexes previously removed with \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink.
+ * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)rebuildIndexesAndReturnError:(out NSError **)outError;
+- (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Makes a copy of the document store to a different location and optionally compacts it to its minimum size.
  * @param thePath is the location where the document store should be copied to.
@@ -419,10 +419,10 @@
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @note Works with both, file-based and memory-backed document stores.
- * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(out NSError **)outError \endlink
+ * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)saveStoreToDirectoryAtPath:(NSString *)thePath compactDatabase:(BOOL)shouldCompact error:(out NSError **)outError;
+- (BOOL)saveStoreToDirectoryAtPath:(NSString *)thePath compactDatabase:(BOOL)shouldCompact error:(NSError * __autoreleasing *)outError;
 
 //@}
 
@@ -435,34 +435,34 @@
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @attention Use this method instead of the ones provided by NSFNanoEngine.
- * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(out NSError **)outError \endlink
- * @see \link commitTransactionAndReturnError: - (BOOL)commitTransactionAndReturnError:(out NSError **)outError \endlink
- * @see \link rollbackTransactionAndReturnError: - (BOOL)rollbackTransactionAndReturnError:(out NSError **)outError \endlink
+ * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link commitTransactionAndReturnError: - (BOOL)commitTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link rollbackTransactionAndReturnError: - (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)beginTransactionAndReturnError:(out NSError **)outError;
+- (BOOL)beginTransactionAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Commit a transaction.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @attention Use this method instead of the ones provided by NSFNanoEngine.
- * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(out NSError **)outError \endlink
- * @see \link beginTransactionAndReturnError: - (BOOL)beginTransactionAndReturnError:(out NSError **)outError \endlink
- * @see \link rollbackTransactionAndReturnError: - (BOOL)rollbackTransactionAndReturnError:(out NSError **)outError \endlink
+ * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link beginTransactionAndReturnError: - (BOOL)beginTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link rollbackTransactionAndReturnError: - (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)commitTransactionAndReturnError:(out NSError **)outError;
+- (BOOL)commitTransactionAndReturnError:(NSError * __autoreleasing *)outError;
 
 /** * Rollback a transaction.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  * @attention Use this method instead of the ones provided by NSFNanoEngine.
- * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(out NSError **)outError \endlink
- * @see \link beginTransactionAndReturnError: - (BOOL)beginTransactionAndReturnError:(out NSError **)outError \endlink
- * @see \link commitTransactionAndReturnError: - (BOOL)commitTransactionAndReturnError:(out NSError **)outError \endlink
+ * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link beginTransactionAndReturnError: - (BOOL)beginTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
+ * @see \link commitTransactionAndReturnError: - (BOOL)commitTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)rollbackTransactionAndReturnError:(out NSError **)outError;
+- (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing *)outError;
 
 //@}
 

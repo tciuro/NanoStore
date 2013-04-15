@@ -29,10 +29,10 @@
 /** \cond */
 
 @interface NSFNanoSearch (Private)
-- (NSDictionary *)_retrieveDataWithError:(out NSError **)outError;
+- (NSDictionary *)_retrieveDataWithError:(NSError * __autoreleasing *)outError;
 - (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match;
 - (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match returning:(NSFReturnType)returnedObjectType;
-- (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(out NSError **)outError;
+- (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(NSError * __autoreleasing *)outError;
 - (NSString *)_preparedSQL;
 - (NSString *)_prepareSQLQueryStringWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(id)aValue matching:(NSFMatchType)match;
 - (NSString *)_prepareSQLQueryStringWithExpressions:(NSArray *)someExpressions;

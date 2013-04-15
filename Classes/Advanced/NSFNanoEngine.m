@@ -871,7 +871,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
 }
 
-- (NSFJournalModeMode)journalModeAndReturnError:(out NSError **)outError
+- (NSFJournalModeMode)journalModeAndReturnError:(NSError * __autoreleasing *)outError
 {
     NSFNanoResult *result = [self executeSQL:@"PRAGMA journal_mode; "];
     if (nil != [result error]) {

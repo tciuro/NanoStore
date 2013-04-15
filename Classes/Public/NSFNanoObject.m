@@ -183,7 +183,7 @@
     return success;
 }
 
-- (BOOL)saveStoreAndReturnError:(out NSError **)outError
+- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError
 {
     [_store addObject:self error:outError];
     
