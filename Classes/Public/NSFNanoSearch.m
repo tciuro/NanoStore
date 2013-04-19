@@ -399,22 +399,22 @@
     
     switch (aDateMatch) {
         case NSFBeforeDate:
-            if (self.filterClass.length > 0) {
-                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ < '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, self.filterClass, NSFCalendarDate, normalizedDateString];
+            if (_filterClass.length > 0) {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ < '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, _filterClass, NSFCalendarDate, normalizedDateString];
             } else {
                 theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ < '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
             }
             break;
         case NSFOnDate:
-            if (self.filterClass.length > 0) {
-                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ = '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, self.filterClass, NSFCalendarDate, normalizedDateString];
+            if (_filterClass.length > 0) {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ = '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, _filterClass, NSFCalendarDate, normalizedDateString];
             } else {
                 theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ = '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
             }
             break;
         case NSFAfterDate:
-            if (self.filterClass.length > 0) {
-                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ > '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, self.filterClass, NSFCalendarDate, normalizedDateString];
+            if (_filterClass.length > 0) {
+                theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE (NSFObjectClass = '%@') AND %@ > '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, _filterClass, NSFCalendarDate, normalizedDateString];
             } else {
                 theSQLStatement = [[NSString alloc]initWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ > '%@'", NSFKey, NSFKeyedArchive, NSFObjectClass, NSFKeys, NSFCalendarDate, normalizedDateString];
             }
@@ -519,10 +519,18 @@
     if ((nil == aKey) && (nil == anAttribute) && (nil == aValue)) {
         switch (returnType) {
             case NSFReturnKeys:
-                return @"SELECT NSFKEY FROM NSFKeys";
+                if (_filterClass.length > 0) {
+                    return [NSString stringWithFormat:@"SELECT NSFKey FROM NSFKeys WHERE (NSFObjectClass = '%@')", _filterClass];
+                } else {
+                    return @"SELECT NSFKEY FROM NSFKeys";
+                }
                 break;
             default:
-                return @"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys";
+                if (_filterClass.length > 0) {
+                    return [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@')", _filterClass];
+                } else {
+                    return @"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys";
+                }
                 break;
         }
     } else {
@@ -596,14 +604,14 @@
     }
     
     if (NSFReturnObjects == returnType) {
-        if (self.filterClass.length > 0) {
-            theSQLStatement = [NSMutableString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFKeyedArchive,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theSQLStatement];
+        if (_filterClass.length > 0) {
+            theSQLStatement = [NSMutableString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFKeyedArchive,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", _filterClass, theSQLStatement];
         } else {
             theSQLStatement = [NSMutableString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFKeyedArchive,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theSQLStatement];
         }
     } else {
-        if (self.filterClass.length > 0) {
-            theSQLStatement = [NSMutableString stringWithFormat:@"SELECT (NSFKEY) FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKEY IN (%@)", self.filterClass, theSQLStatement];
+        if (_filterClass.length > 0) {
+            theSQLStatement = [NSMutableString stringWithFormat:@"SELECT (NSFKEY) FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKEY IN (%@)", _filterClass, theSQLStatement];
         }
     }
     
@@ -649,14 +657,14 @@
     NSString *theValue = [sqlComponents componentsJoinedByString:@""];
     
     if (NSFReturnObjects == returnType) {
-        if (self.filterClass.length > 0) {
-            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFKeyedArchive,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theValue];
+        if (_filterClass.length > 0) {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFKeyedArchive,NSFObjectClass FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", _filterClass, theValue];
         } else {
             theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey),NSFKeyedArchive,NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", theValue];
         }
     } else {
-        if (self.filterClass.length > 0) {
-            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey) FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", self.filterClass, theValue];
+        if (_filterClass.length > 0) {
+            theValue = [NSString stringWithFormat:@"SELECT DISTINCT (NSFKey) FROM NSFKeys WHERE (NSFObjectClass = '%@') AND NSFKey IN (%@)", _filterClass, theValue];
         }
     }
     
