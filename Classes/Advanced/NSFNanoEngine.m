@@ -145,7 +145,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode
 {
     int status = sqlite3_open_v2( [_path UTF8String], &_sqlite,
-                                 SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_AUTOPROXY | SQLITE_OPEN_FULLMUTEX, NULL);
+                                 SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, NULL);
     
     // Set NanoStoreEngine's page size to match the system current page size
     if (0 == [[self tables]count]) {
