@@ -460,7 +460,7 @@
 {
     NSFNanoResult *results = [self _executeSQL:@"SELECT DISTINCT(NSFObjectClass) FROM NSFKeys"];
     
-    return [results valuesForColumn:@"NSFKeys.NSFObjectClass"];
+    return [results valuesForColumn:NSFObjectClass];
 }
 
 - (NSArray *)objectsOfClassNamed:(NSString *)theClassName

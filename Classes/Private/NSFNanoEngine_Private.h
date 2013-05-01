@@ -42,7 +42,6 @@
 + (NSDictionary *)_plistToDictionary:(NSString *)aPlist;
 - (NSFNanoDatatype)NSFP_datatypeForTable:(NSString *)table column:(NSString *)column;
 + (void)NSFP_decodeQuantum:(unsigned char *)dest andSource:(const char *)src;
-- (void)NSFP_setFullColumnNamesEnabled;
 - (NSArray *)NSFP_flattenAllTables;
 - (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString *)aSQLQuery;
 - (NSFNanoDatatype)NSFP_datatypeForColumn:(NSString *)tableAndColumn;

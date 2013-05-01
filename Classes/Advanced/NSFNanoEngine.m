@@ -475,9 +475,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 {
     NSMutableDictionary *allTables = [NSMutableDictionary dictionary];
     
-    // Make sure we obtain full column names
-    [self NSFP_setFullColumnNamesEnabled];
-    
     NSFNanoResult *databasesResult = [self executeSQL:@"PRAGMA database_list"];
     NSArray *databases = [databasesResult valuesForColumn:@"name"];
     
@@ -486,7 +483,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         NSFNanoResult* result = [self executeSQL:theSQLStatement];
         if (nil == [result error]) {
             // Get all tables in the database
-            NSArray *databaseTables = [result valuesForColumn:@"sqlite_master.tbl_name"];
+            NSArray *databaseTables = [result valuesForColumn:@"tbl_name"];
             NSSet *tablesPerDatabase = [NSSet setWithArray:databaseTables];
             [allTables setObject: [tablesPerDatabase allObjects] forKey: database];
         }
@@ -545,7 +542,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 {
     NSFNanoResult* result = [self executeSQL:@"SELECT name FROM sqlite_master WHERE type='index' ORDER BY name"];
     
-    return [result valuesForColumn:@"sqlite_master.name"];
+    return [result valuesForColumn:@"name"];
 }
 
 - (NSArray *)indexedColumnsForTable:(NSString *)table
@@ -558,16 +555,16 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     NSFNanoResult* result = [self executeSQL:[NSString stringWithFormat:@"SELECT sqlite_master.name FROM sqlite_master WHERE type = 'index' AND sqlite_master.tbl_name = '%@';", table]];
     if ([result numberOfRows] == 0) {
         result = [self executeSQL:[NSString stringWithFormat:@"SELECT sqlite_temp_master.name FROM sqlite_temp_master WHERE type = 'index' AND sqlite_temp_master.tbl_name = '%@';", table]];
-        return [result valuesForColumn:@"sqlite_temp_master.name"];
+        return [result valuesForColumn:@"name"];
     }
     
-    return [result valuesForColumn:@"sqlite_master.name"];
+    return [result valuesForColumn:@"name"];
 }
 
 - (NSArray *)temporaryTables
 {
     NSFNanoResult* result = [self executeSQL:@"SELECT * FROM sqlite_temp_master"]; 
-    return [[NSSet setWithArray:[result valuesForColumn:@"sqlite_temp_master.tbl_name"]]allObjects];
+    return [[NSSet setWithArray:[result valuesForColumn:@"tbl_name"]]allObjects];
 }
 
 - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement
@@ -618,7 +615,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     NSString *column = [[NSString alloc]initWithUTF8String:columnUTF8];
 
                     // Sanity check: some queries return NULL, which would cause a crash below.
-                    if ([column isEqualToString:@"NSFKeys.NSFKeyedArchive"]) {
+                    if ([column isEqualToString:NSFKeyedArchive]) {
                         //KeyedArchive is a blob
                         NSData *dictBinData = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
                         
@@ -1205,12 +1202,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
 
     return NSFNanoDatatypeFromString(datatype);
-}
-
-- (void)NSFP_setFullColumnNamesEnabled
-{
-    [self executeSQL:@"PRAGMA short_column_names = OFF;"];
-    [self executeSQL:@"PRAGMA full_column_names = ON;"];
 }
 
 - (NSArray *)NSFP_flattenAllTables
