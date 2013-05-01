@@ -606,6 +606,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
             int columnIndex, numColumns = sqlite3_column_count (theSQLiteStatement);
             
             while (SQLITE_ROW == sqlite3_step (theSQLiteStatement)) {
+                
+                id value = nil;
                 for (columnIndex = 0; columnIndex < numColumns; columnIndex++) {
                     // Safety check: obtain the column and value. If the column is NULL, skip the iteration.
                     char *columnUTF8 = (char *)sqlite3_column_name (theSQLiteStatement, columnIndex);
@@ -617,34 +619,35 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     // Sanity check: some queries return NULL, which would cause a crash below.
                     if ([column isEqualToString:NSFKeyedArchive]) {
                         //KeyedArchive is a blob
-                        NSData *dictBinData = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
-                        
-                        // Obtain the array to collect the values. If the array doesn't exist, create it.
-                        NSMutableArray *values = [info objectForKey:column];
-                        if (nil == values) {
-                            values = [NSMutableArray new];
-                        }
-                        [values addObject:dictBinData];
-                        [info setObject:values forKey:column];
+                        value = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
                     }else
                     {
                         char *valueUTF8 = (char *)sqlite3_column_text (theSQLiteStatement, columnIndex);
-                        NSString *value = nil;
                         if (NULL != valueUTF8) {
                             value = [[NSString alloc]initWithUTF8String:valueUTF8];
                         } else {
                             value = [[NSNull null]description];
                         }
-                        
-                        // Obtain the array to collect the values. If the array doesn't exist, create it.
-                        NSMutableArray *values = [info objectForKey:column];
-                        if (nil == values) {
-                            values = [NSMutableArray new];
-                        }
-                        [values addObject:value];
-                        [info setObject:values forKey:column];
                     }
 
+                    // Obtain the array to collect the values. If the array doesn't exist, create it.
+                    NSMutableArray *values = [info objectForKey:column];
+                    if (nil == values) {
+                        values = [NSMutableArray new];
+                        [info setObject:values forKey:column];
+                    }
+                    
+                    /* Do the safety dance: don't attempt to add a nil object to the values array... */
+                    
+                    if (value == nil) {
+                        id exceptionInfo = @{
+                                             @"SQL statement" : theSQLStatement,
+                                             @"requested column" : column,
+                                             };
+                        [NSException exceptionWithName:NSInternalInconsistencyException reason:@"failed to get object value for column" userInfo:exceptionInfo];
+                    }
+                    
+                    [values addObject:value];
                     
                     // Let's cleanup. This will keep the memory footprint low...
                 }
