@@ -427,14 +427,14 @@
     
     if (result.numberOfRows > 0) {
         if (NSFReturnKeys == _returnedObjectType) {
-            NSArray *resultsKeys = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFKey]];
+            NSArray *resultsKeys = [result valuesForColumn:NSFKey];
             for (NSString *resultKey in resultsKeys)
                 [searchResults setObject:[NSNull null] forKey:resultKey];
             return searchResults;
         } else {
-                NSArray *resultsObjectClass = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFObjectClass]];
-                NSArray *resultsObjects = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFKeyedArchive]];
-                NSArray *resultsKeys = [result valuesForColumn:[NSString stringWithFormat:@"%@.%@", NSFKeys, NSFKey]];
+                NSArray *resultsObjectClass = [result valuesForColumn:NSFObjectClass];
+                NSArray *resultsObjects = [result valuesForColumn:NSFKeyedArchive];
+                NSArray *resultsKeys = [result valuesForColumn:NSFKey];
                 NSUInteger i, count = [resultsKeys count];
                 
             for (i = 0; i < count; i++) {
