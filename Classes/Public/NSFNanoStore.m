@@ -798,38 +798,25 @@
     NSString *theSQLStatement;
     BOOL success;
     NSArray *tables = [[self nanoStoreEngine]tables];
-    NSString *rowUIDDatatype = NSFStringFromNanoDataType(NSFNanoTypeRowUID);
-    NSString *stringDatatype = NSFStringFromNanoDataType(NSFNanoTypeString);
-    NSString *dateDatatype = NSFStringFromNanoDataType(NSFNanoTypeDate);
 
     // Setup the Values table
     if ([tables containsObject:NSFValues] == NO) {
         theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ TEXT, %@ NONE, %@ TEXT);", NSFValues, NSFKey, NSFAttribute, NSFValue, NSFDatatype];
         success = (nil == [[[self nanoStoreEngine]executeSQL:theSQLStatement]error]);
-        if (NO == success)
+        if (NO == success) {
             return NO;
-        
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFValues, NSFRowIDColumnName, rowUIDDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFValues, NSFKey, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFValues, NSFAttribute, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFValues, NSFValue, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFValues, NSFDatatype, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-    }
+        }
+}
     
     // Setup the Plist table
     if ([tables containsObject:NSFKeys] == NO) {
         theSQLStatement = [NSString stringWithFormat:@"CREATE TABLE %@(ROWID INTEGER PRIMARY KEY, %@ TEXT, %@ BLOB, %@ TEXT, %@ TEXT);", NSFKeys, NSFKey, NSFKeyedArchive, NSFCalendarDate, NSFObjectClass];
 
         success = (nil == [[[self nanoStoreEngine]executeSQL:theSQLStatement]error]);
-        if (NO == success)
+        if (NO == success) {
             return NO;
-        
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFRowIDColumnName, rowUIDDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFKey, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFKeyedArchive, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, dateDatatype, dateDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];        
-        [[self nanoStoreEngine]NSFP_insertStringValues:[NSArray arrayWithObjects:NSFKeys, NSFObjectClass, stringDatatype, nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable];
-    }
+        }
+}
     
     return YES;
 }

@@ -141,9 +141,6 @@ NSInteger const NSFNanoStoreErrorKey                               = -10002;
 
 #pragma mark Private section
 
-NSString * const NSFP_SchemaTable                    = @"NSFP_SchemaTable";
 NSString * const NSFP_TableIdentifier                = @"NSFP_TableIdentifier";
 NSString * const NSFP_ColumnIdentifier               = @"NSFP_ColumnIdentifier";
 NSString * const NSFP_DatatypeIdentifier             = @"NSFP_DatatypeIdentifier";
-
-NSString * const NSFP_FullDatatypeIdentifier                = @"NSFP_SchemaTable.NSFP_DatatypeIdentifier";

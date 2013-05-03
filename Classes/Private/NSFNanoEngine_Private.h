@@ -40,11 +40,9 @@
 - (NSString *)NSFP_cacheMethodToString;
 - (NSString*)NSFP_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
 + (NSDictionary *)_plistToDictionary:(NSString *)aPlist;
-- (NSFNanoDatatype)NSFP_datatypeForTable:(NSString *)table column:(NSString *)column;
 + (void)NSFP_decodeQuantum:(unsigned char *)dest andSource:(const char *)src;
 - (NSArray *)NSFP_flattenAllTables;
 - (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString *)aSQLQuery;
-- (NSFNanoDatatype)NSFP_datatypeForColumn:(NSString *)tableAndColumn;
 + (int)NSFP_stripBitsFromExtendedResultCode:(int)extendedResult;
 
 - (BOOL)NSFP_beginTransactionMode:(NSString *)theSQLStatement;
@@ -58,7 +56,6 @@
 - (BOOL)NSFP_sqlString:(NSMutableString*)theSQLStatement forTable:(NSString *)table withColumns:(NSArray *)columns datatypes:(NSArray *)datatypes;
 
 - (NSInteger)NSFP_ROWIDPresenceLocation:(NSArray *)tableColumns datatypes:(NSArray *)datatypes;
-- (BOOL)NSFP_isColumnROWIDAlias:(NSString *)column forTable:(NSString *)table;
 
 - (NSString *)NSFP_prefixWithDotDelimiter:(NSString *)tableAndColumn;
 - (NSString *)NSFP_suffixWithDotDelimiter:(NSString *)tableAndColumn;

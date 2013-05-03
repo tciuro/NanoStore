@@ -94,10 +94,7 @@ extern NSInteger const NSF_Private_MacOSXErrorCodeKey;
 extern NSString * const NSFP_TableIdentifier;
 extern NSString * const NSFP_ColumnIdentifier;
 extern NSString * const NSFP_DatatypeIdentifier;
-extern NSString * const NSFP_FullDatatypeIdentifier;
 
 extern NSString * const NSFRowIDColumnName;         // SQLite's standard UID property
-
-extern NSString * const NSFP_SchemaTable;           // Private, reserved NSF table name to store datatypes
 
 /** \endcond */

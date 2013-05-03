@@ -399,11 +399,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     NSString *theSQLStatement = [[NSString alloc]initWithFormat:@"DROP TABLE %@;", table];
     BOOL everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);
     
-    if (everythingIsFine) {
-        theSQLStatement = [[NSString alloc]initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@';", NSFP_SchemaTable, NSFP_TableIdentifier, table];
-        everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);
-    }
-    
     if (transactionSetHere) {
         if (everythingIsFine)
             [self commitTransaction];
@@ -454,15 +449,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 - (NSArray *)tables
 {
-    NSArray *allTables = [self NSFP_flattenAllTables];
-    if ([allTables count] == 0)
-        return allTables;
-    
-    // Remove NSF's private table
-    NSMutableArray *tempTables = [NSMutableArray arrayWithArray:allTables];
-    [tempTables removeObject:NSFP_SchemaTable];
-    
-    return tempTables;
+    return [self NSFP_flattenAllTables];
 }
 
 - (NSDictionary *)allTables
@@ -1147,60 +1134,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     dest[0] = (unsigned char)(x & 255);
 }
 
-- (NSFNanoDatatype)NSFP_datatypeForColumn:(NSString *)tableAndColumn
-{
-    if (nil == tableAndColumn)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableAndColumn is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
-    NSString  *table = [self NSFP_prefixWithDotDelimiter:tableAndColumn];
-    NSString  *column = [self NSFP_suffixWithDotDelimiter:tableAndColumn];
-    
-    return [self NSFP_datatypeForTable:(NSString *)table column:(NSString *)column];
-}
-
-- (NSFNanoDatatype)NSFP_datatypeForTable:(NSString *)table column:(NSString *)column
-{
-    if (nil == table)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
-    if (nil == column)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: column is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
-    NSString  *datatype = nil;
-    
-    // Check to see if the schema has been cached; take advantage of it if possible...
-    if (nil != _schema) {
-        datatype = [[_schema objectForKey:table]objectForKey:column];
-        if (nil == datatype) datatype = NSFStringFromNanoDataType(NSFNanoTypeUnknown);
-    } else {
-        NSString  *theSQLStatement = [NSString stringWithFormat:@"SELECT %@ from %@ WHERE %@ = '%@' AND %@ = '%@';", NSFP_DatatypeIdentifier, NSFP_SchemaTable, NSFP_TableIdentifier, table, NSFP_ColumnIdentifier, column];
-        
-        NSFNanoResult* result = [self executeSQL:theSQLStatement];
-        
-        datatype = [[result valuesForColumn:NSFP_FullDatatypeIdentifier]lastObject];
-                    
-        if (nil == datatype) datatype = NSFStringFromNanoDataType(NSFNanoTypeUnknown);
-
-        NSMutableDictionary *tempSchema = [_schema objectForKey:table];
-        if (nil == tempSchema) {
-            tempSchema = [[NSMutableDictionary alloc]init];
-        }
-    
-        [tempSchema setObject:datatype forKey:column];
-        [_schema setObject:tempSchema forKey:table];
-        
-        tempSchema = nil;
-    }
-
-    return NSFNanoDatatypeFromString(datatype);
-}
-
 - (NSArray *)NSFP_flattenAllTables
 {
     NSMutableSet *flattenedTables = [[NSMutableSet alloc]init];
@@ -1372,18 +1305,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         [theSQLStatement appendString:@");"];
         
         everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);
-        
-        if (everythingIsFine) {
-            // Now add the entries to NSFP_SchemaTable
-            NSInteger i, count = [revisedDatatypes count];
-            
-            for (i = 0; i < count; i++) {
-                if (NO == [self NSFP_insertStringValues:[NSArray arrayWithObjects:table, [revisedColumns objectAtIndex:i], [revisedDatatypes objectAtIndex:i], nil] forColumns:[NSArray arrayWithObjects:NSFP_TableIdentifier, NSFP_ColumnIdentifier, NSFP_DatatypeIdentifier, nil]table:NSFP_SchemaTable]) {
-                    everythingIsFine = NO;
-                    break;
-                }
-            }
-        }
     } else {
         everythingIsFine = NO;
     }
@@ -1545,10 +1466,11 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         NSString  *column = [revisedColumns objectAtIndex:i];
         NSString  *value = [values objectAtIndex:i];
         NSString  *escapedValue = nil;
-        if (NO == [self NSFP_isColumnROWIDAlias:column forTable:table])
-            escapedValue = [[NSString alloc]initWithFormat:@"'%@'", value];
-        else
+        if ([column isEqualToString:@"ROWID"]) {
             escapedValue = [[NSString alloc]initWithFormat:@"%@", value];
+        } else {
+            escapedValue = [[NSString alloc]initWithFormat:@"'%@'", value];
+        }
         [escapedValues addObject:escapedValue];
     }
     
@@ -1700,32 +1622,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
     
     return ROWIDIndex;
-}
-
-- (BOOL)NSFP_isColumnROWIDAlias:(NSString *)column forTable:(NSString *)table
-{
-    if (nil == column)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: column is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
-    if (nil == table)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
-    NSString *rowUIDDatatype = NSFStringFromNanoDataType(NSFNanoTypeRowUID);
-    
-    if (nil != _schema)
-        return [[[_schema objectForKey:table]objectForKey:column]isEqualToString:rowUIDDatatype];
-    
-    NSString  *theSQLStatement = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@' AND %@ = '%@';", NSFP_DatatypeIdentifier, NSFP_SchemaTable, NSFP_TableIdentifier, table, NSFP_ColumnIdentifier, column];
-    NSFNanoResult* result = [self executeSQL:theSQLStatement];
-    
-    NSString  *columnFound = [[result valuesForColumn:NSFP_FullDatatypeIdentifier]lastObject];
-    BOOL isROWIDAlias = [columnFound isEqualToString:rowUIDDatatype];
-    
-    return isROWIDAlias;
 }
 
 - (NSString *)NSFP_prefixWithDotDelimiter:(NSString *)tableAndColumn
