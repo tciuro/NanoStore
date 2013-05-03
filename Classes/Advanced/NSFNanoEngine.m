@@ -303,12 +303,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     int status = sqlite3_get_autocommit(myDB);
     
-    // Since we're operating with extended result code support, extract the bits
-    // and obtain the regular result code
-    // For more info check: http://www.sqlite.org/c3ref/c_ioerr_access.html
-    
-    status = [NSFNanoEngine NSFP_stripBitsFromExtendedResultCode:status];
-    
     return (0 == status);
 }
 
