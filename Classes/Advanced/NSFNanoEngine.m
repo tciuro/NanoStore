@@ -625,7 +625,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                                              @"SQL statement" : theSQLStatement,
                                              @"requested column" : column,
                                              };
-                        [NSException exceptionWithName:NSInternalInconsistencyException reason:@"failed to get object value for column" userInfo:exceptionInfo];
+                        [[NSException exceptionWithName:NSInternalInconsistencyException reason:@"failed to get object value for column" userInfo:exceptionInfo]raise];
                     }
                     
                     [values addObject:value];
