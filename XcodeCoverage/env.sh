@@ -1,0 +1,5 @@
+export BUILT_PRODUCTS_DIR="/Users/tciuro/Desktop/Builds/NanoStore-atruhiraqcwfgdcingxhhbainuyw/Build/Products/Debug"
+export CURRENT_ARCH="x86_64"
+export OBJECT_FILE_DIR_normal="/Users/tciuro/Desktop/Builds/NanoStore-atruhiraqcwfgdcingxhhbainuyw/Build/Intermediates/NanoStore.build/Debug/UnitTestMac.build/Objects-normal"
+export OBJROOT="/Users/tciuro/Desktop/Builds/NanoStore-atruhiraqcwfgdcingxhhbainuyw/Build/Intermediates"
+export SRCROOT="/Users/tciuro/CloudStation/Dropbox/NanoStoreWorld/NanoStore 2"

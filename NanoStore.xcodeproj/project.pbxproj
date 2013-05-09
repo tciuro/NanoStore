@@ -666,6 +666,7 @@
 				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
+				74C90118173B65B6006A22FE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -762,7 +763,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\nXcodeCoverage/exportenv.sh";
 		};
 		74C1FABC1538E14B0077DAD1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -776,6 +777,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		74C90118173B65B6006A22FE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Running target script...\"\nXcodeCoverage/exportenv.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -978,6 +992,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = "";
+				"WARNING_CFLAGS[arch=*]" = "-Wall";
 			};
 			name = Debug;
 		};
@@ -998,6 +1013,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = "";
+				"WARNING_CFLAGS[arch=*]" = "-Wall";
 			};
 			name = Release;
 		};
