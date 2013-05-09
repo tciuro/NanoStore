@@ -553,7 +553,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:60 * 60];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
@@ -585,7 +585,7 @@
     search.value = @"Mercedes";
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
-    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:60 * 60];
     
     NSDictionary *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnObjects error:nil];
     
@@ -603,7 +603,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:-(60 * 60)];
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -635,7 +635,7 @@
     search.value = @"Mercedes";
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
-    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:-(60 * 60)];
 
     NSDictionary *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnObjects error:nil];
     
@@ -653,7 +653,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:60 * 60];
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
@@ -687,7 +687,7 @@
     search.value = @"Mercedes";
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
-    NSDate *date = [[NSDate date]addTimeInterval:60 * 60];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:60 * 60];
     
     NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
     
@@ -707,7 +707,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:-(60 * 60)];
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
@@ -741,7 +741,7 @@
     search.value = @"Mercedes";
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
-    NSDate *date = [[NSDate date]addTimeInterval:-(60 * 60)];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:-(60 * 60)];
     
     NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
     
@@ -899,7 +899,7 @@
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
     
-    NSDate *date = [[NSDate date]addTimeInterval:5];
+    NSDate *date = [[NSDate date]dateByAddingTimeInterval:5];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
