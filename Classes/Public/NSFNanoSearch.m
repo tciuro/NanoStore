@@ -495,7 +495,6 @@
 - (NSString *)_prepareSQLQueryStringWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(id)aValue matching:(NSFMatchType)aMatch
 {    
     NSMutableString *theSQLStatement = nil;
-    NSString *attributes = nil;
     
     // Make sure we escape quotes if present and the value is a string
     if ([aValue isKindOfClass:[NSString class]]) {
@@ -511,7 +510,6 @@
             NSString *theValue = [[NSString alloc]initWithFormat:@"'%@'", object];
             [quotedObjects addObject:theValue];
         }
-        attributes = [quotedObjects componentsJoinedByString:@","];
     }
     
     NSFReturnType returnType = _returnedObjectType;
@@ -883,12 +881,10 @@
                 [segment appendString:value];
                 break;
             case NSFInsensitiveEqualTo:
-                aValue = [aValue uppercaseString];
                 value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) = '%@') OR (%@ GLOB '%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@.*' AND upper(%@) = '%@') OR (%@ GLOB '*.%@' AND upper(%@) = '%@')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
                 [segment appendString:value];
                 break;
             case NSFInsensitiveBeginsWith:
-                aValue = [aValue uppercaseString];
                 value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@' AND upper(%@) GLOB '%@*') OR (%@ GLOB '%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@.*' AND upper(%@) GLOB '%@*') OR (%@ GLOB '*.%@' AND upper(%@) GLOB '%@*')", NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue, NSFAttribute, anAttributeValue, NSFDatatype, NULLStringValue];
                 [segment appendString:value];
                 break;
