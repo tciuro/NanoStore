@@ -279,7 +279,7 @@
 
 - (void)testSearchBetweenDatesSQLOne
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
@@ -294,7 +294,7 @@
 
 - (void)testSearchBetweenDatesSQLTwo
 {
-    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
