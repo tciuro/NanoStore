@@ -277,4 +277,34 @@
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
+- (void)testSearchBetweenDatesSQLOne
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    
+    NSError *error = nil;
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKeys WHERE NSFKey IN (SELECT t1.NSFKey FROM NSFValues t1 INNER JOIN NSFValues t2 ON t1.NSFKey = t2.NSFKey WHERE t1.NSFAttribute = 'CreatedAt' AND t2.NSFAttribute = 'UpdatedAt' AND t1.NSFValue < t2.NSFValue)" returnType:NSFReturnObjects error:&error];
+    STAssertNil(error, @"Did not expect an error. Got: %@", error);
+    STAssertTrue ([result count] == 1, @"Expected to find one object.");
+    
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testSearchBetweenDatesSQLTwo
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore _createAndOpenDebugDatabase];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    
+    NSError *error = nil;
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKeys WHERE NSFKey IN (SELECT o1.NSFKey FROM NSFValues o1 JOIN NSFValues o2 ON o1.NSFKey = o2.NSFKey WHERE o1.NSFAttribute = 'UpdatedAt' AND o2.NSFAttribute = 'CreatedAt' AND o1.NSFValue > o2.NSFValue)" returnType:NSFReturnObjects error:&error];
+    STAssertNil(error, @"Did not expect an error. Got: %@", error);
+    STAssertTrue ([result count] == 1, @"Expected to find one object.");
+    
+    [nanoStore closeWithError:nil];
+}
+
 @end
