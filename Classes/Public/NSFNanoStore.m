@@ -1187,11 +1187,11 @@
                                              reason:[NSString stringWithFormat:@"*** -[%@ %@]: %@", [self class], NSStringFromSelector(_cmd), errorMessage]
                                            userInfo:nil]raise];
                 } else {
-                    SEL setStoreSelector = @selector(setStore:);
-                    if ([object respondsToSelector:setStoreSelector]) {
+                    SEL setErrorSelector = sel_registerName("setStore:");
+                    if ([object respondsToSelector:setErrorSelector]) {
                         #pragma clang diagnostic push
                         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                        [object performSelector:setStoreSelector withObject:self];
+                        [object performSelector:setErrorSelector withObject:self];
                         #pragma clang diagnostic pop
                     }
                 }
