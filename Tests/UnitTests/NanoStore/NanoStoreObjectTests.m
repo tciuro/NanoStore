@@ -129,7 +129,7 @@
     [object setObject:@"bar" forKey:@"foo"];
     NSDictionary *info = object.info;
 
-    STAssertTrue ((nil != info) && ([info count] == 6) && ([[info objectForKey:@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
+    STAssertTrue ((nil != info) && ([info count] == 8) && ([[info objectForKey:@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
 }
 
 - (void)testObjectSetObjectForKeyEmptyObject
@@ -148,7 +148,7 @@
     [object removeObjectForKey:@"foo"];
     NSDictionary *info = object.info;
     
-    STAssertTrue ((nil != info) && ([info count] == 5) && (nil == [info objectForKey:@"foo"]), @"Expected removeObjectForKey: to work.");
+    STAssertTrue ((nil != info) && ([info count] == 7) && (nil == [info objectForKey:@"foo"]), @"Expected removeObjectForKey: to work.");
 }
 
 - (void)testObjectRemoveObjectForKeyEmptyObject
