@@ -1260,6 +1260,8 @@
                           countriesInfo, @"Countries",
                           [NSNumber numberWithUnsignedInt:(arc4random() % 32767) + 1], @"SomeNumber",
                           @"To be decided", @"Rating",
+                          [NSDate date], @"CreatedAt",
+                          [NSDate dateWithTimeIntervalSinceNow:60 * 60], @"UpdatedAt",
                           nil, nil];
     
     return info;
