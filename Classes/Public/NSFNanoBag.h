@@ -81,7 +81,7 @@
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
 @property (nonatomic, readonly) NSDictionary *removedObjects;
 /** * To determine whether the bag has uncommited changes.  */
-@property (nonatomic, assign, readonly) BOOL hasUnsavedChanges;
+@property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
 /** @name Creating and Initializing Bags
  */

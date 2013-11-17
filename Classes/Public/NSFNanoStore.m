@@ -29,6 +29,7 @@
 #import "NanoStore_Private.h"
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoEngine_Private.h"
+#import "NSFNanoObject_Private.h"
 #import "NSFOrderedDictionary.h"
 
 #include <stdlib.h>
@@ -558,7 +559,7 @@
 - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError
 {
     // We are really not saving anything new, just indicating that we should commit the unsaved changes.
-    if (NO == self.hasUnsavedChanges) {
+    if (NO == _hasUnsavedChanges) {
         return YES;
     }
     
@@ -1115,6 +1116,8 @@
         return YES;
     }
     
+    self.hasUnsavedChanges = YES;
+    
     if (forceSave || (0 == unsavedObjectsCount % saveInterval)) {
         NSDate *startStoringDate = [NSDate date];
         
@@ -1193,6 +1196,12 @@
                         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                         [object performSelector:setErrorSelector withObject:self];
                         #pragma clang diagnostic pop
+                    }
+                    
+                    // Set the 'hasUnsavedChangesSelector' property to NO
+                    SEL setHasUnsavedChangesSelector = @selector(setHasUnsavedChanges:);
+                    if ([object respondsToSelector:setHasUnsavedChangesSelector]) {
+                        ((NSFNanoObject *)object).hasUnsavedChanges = NO;
                     }
                 }
                 

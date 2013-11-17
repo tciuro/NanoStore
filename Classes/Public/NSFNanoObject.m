@@ -30,13 +30,6 @@
 #import "NSFNanoGlobals_Private.h"
 #import "NSFOrderedDictionary.h"
 
-@interface NSFNanoObject ()
-/** \cond */
-@property (nonatomic, weak, readwrite) NSFNanoStore *store;
-@property (nonatomic, copy, readwrite) NSString *key;
-/** \endcond */
-@end
-
 @implementation NSFNanoObject
 {
     NSMutableDictionary *_info;
@@ -81,6 +74,7 @@
         if (nil != aDictionary) {
             _info = [NSMutableDictionary new];
             [_info addEntriesFromDictionary:aDictionary];
+            _hasUnsavedChanges = YES;
         }
         
         _store = aStore;
@@ -130,6 +124,8 @@
     }
     
     [_info addEntriesFromDictionary:otherDictionary];
+    
+    _hasUnsavedChanges = YES;
 }
 
 - (void)setObject:(id)anObject forKey:(NSString *)aKey
@@ -140,6 +136,8 @@
     }
     
     [_info setObject:anObject forKey:aKey];
+    
+    _hasUnsavedChanges = YES;
 }
 
 - (id)objectForKey:(NSString *)aKey
@@ -150,16 +148,22 @@
 - (void)removeObjectForKey:(NSString *)aKey
 {
     [_info removeObjectForKey:aKey];
+    
+    _hasUnsavedChanges = YES;
 }
 
 - (void)removeAllObjects
 {
     [_info removeAllObjects];
+    
+    _hasUnsavedChanges = YES;
 }
 
 - (void)removeObjectsForKeys:(NSArray *)keyArray
 {
     [_info removeObjectsForKeys:keyArray];
+    
+    _hasUnsavedChanges = YES;
 }
 
 - (BOOL)isEqualToNanoObject:(NSFNanoObject *)otherNanoObject
@@ -187,7 +191,9 @@
 {
     [_store addObject:self error:outError];
     
-    return [_store saveStoreAndReturnError:outError];
+    BOOL result = [_store saveStoreAndReturnError:outError];
+    
+    return result;
 }
 
 - (NSDictionary *)dictionaryRepresentation
@@ -204,6 +210,7 @@
         _info = nil;
         _originalClassString = nil;
         _store = nil;
+        _hasUnsavedChanges = NO;
     }
     
     return self;

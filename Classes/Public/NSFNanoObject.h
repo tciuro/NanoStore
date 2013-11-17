@@ -189,6 +189,8 @@
 @property (nonatomic, copy, readonly) NSDictionary *info;
 /** * The class name used to store the NanoObject.  */
 @property (nonatomic, copy, readonly) NSString *originalClassString;
+/** * To determine whether the object has uncommited changes.  */
+@property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
 /** @name Creating and Initializing a NanoObject
  */

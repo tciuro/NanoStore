@@ -28,7 +28,11 @@
 
 /** \cond */
 
-@interface NSFNanoObject (Private)
+@interface NSFNanoObject ()
+@property (nonatomic, weak, readwrite) NSFNanoStore *store;
+@property (nonatomic, copy, readwrite) NSString *key;
+@property (nonatomic, readwrite) BOOL hasUnsavedChanges;
+
 - (void)_setOriginalClassString:(NSString *)theClassString;
 + (NSString *)_NSObjectToJSONString:(id)object error:(NSError **)error;
 + (NSDictionary *)_safeDictionaryFromDictionary:(NSDictionary *)dictionary;

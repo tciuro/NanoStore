@@ -203,4 +203,87 @@
     [nanoStore closeWithError:nil];
 }
 
+#pragma mark -
+
+- (void)testHasUnsavedChangesInit
+{
+    NSFNanoObject *object = [NSFNanoObject new];
+    STAssertTrue (NO == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be NO.");
+}
+
+- (void)testHasUnsavedChangesNanoObjectWithDictionary
+{
+    NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be YES.");
+}
+
+- (void)testHasUnsavedChangesAddEntriesFromDictionary
+{
+    NSFNanoObject *object = [NSFNanoObject new];
+    [object addEntriesFromDictionary:@{@"foo" : @"bar"}];
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be YES.");
+}
+
+- (void)testHasUnsavedChangesSetObjectForKey
+{
+    NSFNanoObject *object = [NSFNanoObject new];
+    [object setObject:@"bar" forKey:@"foo"];
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be YES.");
+}
+
+- (void)testHasUnsavedChangesRemoveObjectForKey
+{
+    NSFNanoObject *object = [NSFNanoObject new];
+    [object setObject:@"bar" forKey:@"foo"];
+    [object removeObjectForKey:@"foo"];
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be YES.");
+}
+
+- (void)testHasUnsavedChangesRemoveAllObjects
+{
+    NSFNanoObject *object = [NSFNanoObject new];
+    [object removeAllObjects];
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be YES.");
+}
+
+- (void)testHasUnsavedChangesRemoveObjectsForKeys
+{
+    NSFNanoObject *object = [NSFNanoObject new];
+    [object removeObjectsForKeys:@[@"foo"]];
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be YES.");
+}
+
+- (void)testHasUnsavedChangesSaveStoreIntervalOne
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:object, nil] error:nil];
+    
+    NSError *error = nil;
+    BOOL success = [object saveStoreAndReturnError:&error];
+    STAssertTrue (success && (nil == error), @"Expected to save the object.");
+    STAssertTrue (NO == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be NO.");
+    
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testHasUnsavedChangesSaveStoreIntervalFive
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore setSaveInterval:5];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:object, nil] error:nil];
+    
+    NSError *error = nil;
+    BOOL success = [object saveStoreAndReturnError:&error];
+    STAssertTrue (!success && (nil == error), @"Expected to not save the object.");
+    STAssertTrue (YES == object.hasUnsavedChanges, @"Expected hasUnsavedChangesto be NO.");
+    
+    [nanoStore closeWithError:nil];
+}
+
 @end
