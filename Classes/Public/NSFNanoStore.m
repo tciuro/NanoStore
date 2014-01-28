@@ -54,6 +54,8 @@
 @synthesize nanoEngineProcessingMode;
 @synthesize saveInterval;
 
+//@dynamic hasUnsavedChanges;
+
 // ----------------------------------------------
 // Initialization / Cleanup
 // ----------------------------------------------
