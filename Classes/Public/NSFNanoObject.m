@@ -140,9 +140,19 @@
     _hasUnsavedChanges = YES;
 }
 
+- (void)setObject:(id)anObject forKeyedSubscript:(NSString *)aKey
+{
+    [self setObject:anObject forKey:aKey];
+}
+
 - (id)objectForKey:(NSString *)aKey
 {
     return [_info objectForKey:aKey];
+}
+
+- (id)objectForKeyedSubscript:(NSString *)aKey
+{
+    return [self objectForKey:aKey];
 }
 
 - (void)removeObjectForKey:(NSString *)aKey
