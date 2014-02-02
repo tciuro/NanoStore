@@ -70,6 +70,7 @@
 #import "NSFNanoGlobals.h"
 
 @class NSFNanoEngine, NSFNanoResult, NSFNanoBag, NSFNanoSortDescriptor;
+@protocol NSFNanoObjectProtocol;
 
 @interface NSFNanoStore : NSObject
 
