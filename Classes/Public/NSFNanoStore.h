@@ -67,6 +67,8 @@
 
 #import <sqlite3.h>
 
+#import "NSFNanoGlobals.h"
+
 @class NSFNanoEngine, NSFNanoResult, NSFNanoBag, NSFNanoSortDescriptor;
 
 @interface NSFNanoStore : NSObject
