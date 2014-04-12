@@ -132,11 +132,22 @@
     // Instantiate a NanoStore and open it
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     
+    STAssertTrue (NO == [nanoStore hasUnsavedChanges], @"Did not expect unsaved changes.");
+    
+    // Close the document store
+    [nanoStore closeWithError:nil];
+}
+
+- (void)testHasUnsavedChangesOneChange
+{
+    // Instantiate a NanoStore and open it
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    
     // Add some data to the document store
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObject:object error:nil];
     
-    STAssertTrue (NO == [nanoStore hasUnsavedChanges], @"Did not expect unsaved changes.");
+    STAssertTrue (YES == [nanoStore hasUnsavedChanges], @"Expected unsaved changes.");
     
     // Close the document store
     [nanoStore closeWithError:nil];

@@ -54,8 +54,6 @@
 @synthesize nanoEngineProcessingMode;
 @synthesize saveInterval;
 
-//@dynamic hasUnsavedChanges;
-
 // ----------------------------------------------
 // Initialization / Cleanup
 // ----------------------------------------------
@@ -110,6 +108,8 @@
         _storeKeysStatement = NULL;
         
         _addedObjects = [[NSMutableArray alloc]initWithCapacity:saveInterval];
+        
+        _hasUnsavedChanges = NO;
     }
     
     return self;
@@ -203,11 +203,6 @@
     NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
-}
-
-- (BOOL)hasUnsavedChanges
-{
-    return ([_addedObjects count] > 0);
 }
 
 #pragma mark -
@@ -561,7 +556,7 @@
 - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError
 {
     // We are really not saving anything new, just indicating that we should commit the unsaved changes.
-    if (NO == _hasUnsavedChanges) {
+    if (NO == self.hasUnsavedChanges) {
         return YES;
     }
     
@@ -571,6 +566,8 @@
 - (void)discardUnsavedChanges
 {
     [_addedObjects removeAllObjects];
+    
+    self.hasUnsavedChanges = NO;
 }
 
 // ----------------------------------------------
