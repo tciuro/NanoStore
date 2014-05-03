@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface NanoEngineTests : SenTestCase
+@interface NanoEngineTests : XCTestCase
 {
     NSDictionary *_defaultTestInfo;
 }

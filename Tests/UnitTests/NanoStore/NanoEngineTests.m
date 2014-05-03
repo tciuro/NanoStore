@@ -45,7 +45,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (maxRowUID == 2, @"Expected to find the max RowUID for the given table.");
+    XCTAssertTrue (maxRowUID == 2, @"Expected to find the max RowUID for the given table.");
 }
 
 @end

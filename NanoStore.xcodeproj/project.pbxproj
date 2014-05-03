@@ -92,7 +92,6 @@
 		74B63E0B129F25C400B3B2A7 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */; };
 		74B63E0C129F25C400B3B2A7 /* NSFNanoStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */; };
 		74B63E0D129F25C400B3B2A7 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */; };
-		74C1FA8E1538DDD60077DAD1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */; };
 		74C1FA901538DDD60077DAD1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FA8F1538DDD60077DAD1 /* Cocoa.framework */; };
 		74C1FAA21538DDDE0077DAD1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7400C1C812244E820066D2B5 /* libsqlite3.dylib */; };
 		74C1FAA31538DDF20077DAD1 /* NSFNanoBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */; };
@@ -113,7 +112,6 @@
 		74C1FAB31538DDF20077DAD1 /* NanoStoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098B122B280C0079E2FF /* NanoStoreSearchTests.m */; };
 		74C1FAB41538DDF20077DAD1 /* NanoStoreSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */; };
 		74C1FAB51538DDF20077DAD1 /* NanoStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B2098D122B280C0079E2FF /* NanoStoreTests.m */; };
-		74C1FABF1538E14B0077DAD1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */; };
 		74C1FAC11538E14B0077DAD1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C1FAC01538E14B0077DAD1 /* UIKit.framework */; };
 		74C1FAC21538E14B0077DAD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748D3453139772B600FD5565 /* Foundation.framework */; };
 		74C1FAD01538E1740077DAD1 /* NSFNanoBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */; };
@@ -241,8 +239,7 @@
 		74B63DED129F25C400B3B2A7 /* NSFNanoSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoSearch.m; sourceTree = "<group>"; };
 		74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoStore.h; sourceTree = "<group>"; };
 		74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoStore.m; sourceTree = "<group>"; };
-		74C1FA8C1538DDD60077DAD1 /* UnitTestMac.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestMac.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		74C1FA8C1538DDD60077DAD1 /* UnitTestMac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestMac.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C1FA8F1538DDD60077DAD1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		74C1FA921538DDD60077DAD1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		74C1FA931538DDD60077DAD1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -270,7 +267,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74C1FA8E1538DDD60077DAD1 /* SenTestingKit.framework in Frameworks */,
 				74C1FA901538DDD60077DAD1 /* Cocoa.framework in Frameworks */,
 				74C1FAA21538DDDE0077DAD1 /* libsqlite3.dylib in Frameworks */,
 			);
@@ -281,7 +277,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				74C1FAE41538E2570077DAD1 /* libsqlite3.dylib in Frameworks */,
-				74C1FABF1538E14B0077DAD1 /* SenTestingKit.framework in Frameworks */,
 				74C1FAC11538E14B0077DAD1 /* UIKit.framework in Frameworks */,
 				74C1FAC21538E14B0077DAD1 /* Foundation.framework in Frameworks */,
 			);
@@ -304,7 +299,7 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* NanoStore.framework */,
 				748D3451139772B600FD5565 /* libnanostore2.a */,
-				74C1FA8C1538DDD60077DAD1 /* UnitTestMac.octest */,
+				74C1FA8C1538DDD60077DAD1 /* UnitTestMac.xctest */,
 				74C1FABE1538E14B0077DAD1 /* UnitTestiOS.octest */,
 			);
 			name = Products;
@@ -395,7 +390,6 @@
 			isa = PBXGroup;
 			children = (
 				748D3453139772B600FD5565 /* Foundation.framework */,
-				74C1FA8D1538DDD60077DAD1 /* SenTestingKit.framework */,
 				74C1FA8F1538DDD60077DAD1 /* Cocoa.framework */,
 				74C1FAC01538E14B0077DAD1 /* UIKit.framework */,
 				74C1FAE31538E2570077DAD1 /* libsqlite3.dylib */,
@@ -637,8 +631,8 @@
 			);
 			name = UnitTestMac;
 			productName = UnitTestMac;
-			productReference = 74C1FA8C1538DDD60077DAD1 /* UnitTestMac.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 74C1FA8C1538DDD60077DAD1 /* UnitTestMac.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		74C1FABD1538E14B0077DAD1 /* UnitTestiOS */ = {
 			isa = PBXNativeTarget;
@@ -656,7 +650,7 @@
 			name = UnitTestiOS;
 			productName = UnitTestiOS;
 			productReference = 74C1FABE1538E14B0077DAD1 /* UnitTestiOS.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		8DC2EF4F0486A6940098B216 /* NanoStore */ = {
 			isa = PBXNativeTarget;
@@ -1083,7 +1077,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -1101,7 +1098,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -1113,7 +1109,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1124,7 +1123,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

@@ -43,7 +43,7 @@
     NSFNanoResult *result = [nanoStore _executeSQL:@"SELECT NSFValue from NSFValues WHERE NSFAttribute = 'SomeNumber'"];
     BOOL success = (nil == [result error]);
     
-    STAssertTrue (success == YES, @"Expected to find values without an error.");
+    XCTAssertTrue (success == YES, @"Expected to find values without an error.");
 }
 
 @end

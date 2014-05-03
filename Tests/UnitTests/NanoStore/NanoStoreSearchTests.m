@@ -55,7 +55,7 @@
     @try {
         search = [NSFNanoSearch searchWithStore:nil];
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -64,7 +64,7 @@
     NSFNanoStore *nanoStore = [NSFNanoStore createStoreWithType:NSFMemoryStoreType path:nil];
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
-    STAssertTrue ([search nanoStore] != nil, @"Expected default Search object to have a NanoStore object assigned.");
+    XCTAssertTrue ([search nanoStore] != nil, @"Expected default Search object to have a NanoStore object assigned.");
 }
 
 - (void)testSearchDefaultValues
@@ -80,7 +80,7 @@
     
     BOOL success = (nil == key) && (nil == attribute) && (nil == value) && (match == NSFContains) && ([attributesReturned count] == 0);
 
-    STAssertTrue (success == YES, @"Expected default Search object to be properly initialized.");
+    XCTAssertTrue (success == YES, @"Expected default Search object to be properly initialized.");
 }
 
 - (void)testSearchKeyAccessor
@@ -93,7 +93,7 @@
     
     NSString *retrievedValue = [search key];
     
-    STAssertTrue ([retrievedValue isEqualToString:value] == YES, @"Expected accessor to return the proper value.");
+    XCTAssertTrue ([retrievedValue isEqualToString:value] == YES, @"Expected accessor to return the proper value.");
 }
 
 - (void)testSearchAttributeAccessor
@@ -106,7 +106,7 @@
     
     NSString *retrievedValue = [search attribute];
     
-    STAssertTrue ([retrievedValue isEqualToString:value] == YES, @"Expected accessor to return the proper value.");
+    XCTAssertTrue ([retrievedValue isEqualToString:value] == YES, @"Expected accessor to return the proper value.");
 }
 
 - (void)testSearchValueAccessor
@@ -119,7 +119,7 @@
     
     NSString *retrievedValue = [search value];
     
-    STAssertTrue ([retrievedValue isEqualToString:value] == YES, @"Expected accessor to return the proper value.");
+    XCTAssertTrue ([retrievedValue isEqualToString:value] == YES, @"Expected accessor to return the proper value.");
 }
 
 - (void)testSearchMatchAccessor
@@ -132,7 +132,7 @@
     
     NSFMatchType retrievedValue = [search match];
     
-    STAssertTrue (retrievedValue == value == YES, @"Expected accessor to return the proper value.");
+    XCTAssertTrue (retrievedValue == value == YES, @"Expected accessor to return the proper value.");
 }
 
 - (void)testSearchExpressionsAccessor
@@ -153,7 +153,7 @@
     
     NSArray *expressions = [search expressions];
     
-    STAssertTrue ([expressions count] == 2, @"Expected accessor to return two expressions.");
+    XCTAssertTrue ([expressions count] == 2, @"Expected accessor to return two expressions.");
 }
 
 - (void)testSearchAttributesAccessor
@@ -166,7 +166,7 @@
     
     NSArray *retrievedValue = search.attributesToBeReturned;
     
-    STAssertTrue ([retrievedValue isEqualToArray:value] == YES, @"Expected accessor to return the proper value.");
+    XCTAssertTrue ([retrievedValue isEqualToArray:value] == YES, @"Expected accessor to return the proper value.");
 }
 
 - (void)testSearchUsingNanoObjectSubclass
@@ -192,10 +192,10 @@
     
     NanoPersonTestClass *retrievedPerson = [[searchResults allValues]lastObject];
 
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one person object.");
-    STAssertTrue ([retrievedPerson isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
-    STAssertTrue (nil != [retrievedPerson key], @"Expected the object to contain a valid key.");
-    STAssertTrue ([[retrievedPerson key]isEqualToString:[person key]], @"Expected to find the object that was saved originally.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one person object.");
+    XCTAssertTrue ([retrievedPerson isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
+    XCTAssertTrue (nil != [retrievedPerson key], @"Expected the object to contain a valid key.");
+    XCTAssertTrue ([[retrievedPerson key]isEqualToString:[person key]], @"Expected to find the object that was saved originally.");
 }
 
 - (void)testSearchReset
@@ -215,7 +215,7 @@
     
     BOOL success = (nil == key) && (nil == attribute) && (nil == value) && (match == NSFContains) && ([attributesReturned count] == 0);
     
-    STAssertTrue (success == YES, @"Expected default Search object to be properly reset.");
+    XCTAssertTrue (success == YES, @"Expected default Search object to be properly reset.");
 }
 
 #pragma mark -
@@ -237,60 +237,60 @@
     search.attribute = @"Rating";
     [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     search.match = NSFEqualTo;
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     
     search.match = NSFBeginsWith;
     search.value = @"good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
     search.match = NSFContains;
     search.value = @"good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
     search.match = NSFEndsWith;
     search.value = @"good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
     
     search.match = NSFBeginsWith;
     search.value = @"Good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     search.match = NSFContains;
     search.value = @"Good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     search.match = NSFEndsWith;
     search.value = @"Good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     
     search.match = NSFInsensitiveBeginsWith;
     search.value = @"good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     search.match = NSFInsensitiveContains;
     search.value = @"good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     search.match = NSFInsensitiveEndsWith;
     search.value = @"good";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     
     search.match = NSFGreaterThan;
     search.value = @"g";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
     search.match = NSFGreaterThan;
     search.value = @"G";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     
     search.match = NSFLessThan;
     search.value = @"vd";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     search.match = NSFLessThan;
     search.value = @"Very";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
     
     search.match = NSFGreaterThan;
     search.value = @"vd";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 0, @"Expected to find zero objects.");
     search.match = NSFGreaterThan;
     search.value = @"Very";
-    STAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
+    XCTAssertTrue ([[search searchObjectsWithReturnType:NSFReturnObjects error:nil]count] == 3, @"Expected to find three objects.");
 }
 
 - (void)testSearchObjectsReturningKeys
@@ -306,8 +306,8 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults isKindOfClass:[NSArray class]], @"Incorrect class returned. Expected NSArray.");
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults isKindOfClass:[NSArray class]], @"Incorrect class returned. Expected NSArray.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchObjectsReturningObjects
@@ -323,8 +323,8 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults isKindOfClass:[NSDictionary class]], @"Incorrect class returned. Expected NSDictionary.");
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults isKindOfClass:[NSDictionary class]], @"Incorrect class returned. Expected NSDictionary.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchObjectsReturningObjectsWithGivenKey
@@ -343,7 +343,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testSearchObjectsReturningKeyWithGivenKey
@@ -363,7 +363,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testSearchWithAttributeContainingPeriodAndValue
@@ -398,7 +398,7 @@
 
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testSearchWithAttributeContainingPeriodNoValue
@@ -418,7 +418,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchObjectsWithOffsetAndLimit
@@ -443,7 +443,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+    XCTAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
 }
 
 - (void)testSearchObjectsWithOffsetAndLimitWithExpressions
@@ -478,7 +478,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+    XCTAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
 }
 
 - (void)testSearchTwoExpressions
@@ -506,7 +506,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testSearchThreeExpressions
@@ -539,7 +539,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 #pragma mark -
@@ -561,7 +561,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
+    XCTAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
 }
 
 - (void)testSearchObjectsAddedBeforeCalendarDateFilterByClass
@@ -591,7 +591,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
 }
 
 - (void)testSearchObjectsAddedAfterCalendarDate
@@ -611,7 +611,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
+    XCTAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
 }
 
 - (void)testSearchObjectsAddedAfterCalendarDateFilterByClass
@@ -641,7 +641,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one car object.");
 }
 
 - (void)testSearchKeysAddedBeforeCalendarDate
@@ -659,11 +659,11 @@
 
     NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    XCTAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
 
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
+    XCTAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
 }
 
 - (void)testSearchKeysAddedBeforeCalendarDateFilterByClass
@@ -691,11 +691,11 @@
     
     NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    XCTAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
 - (void)testSearchKeysAddedAfterCalendarDate
@@ -713,11 +713,11 @@
 
     NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    XCTAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
+    XCTAssertTrue (([searchResults count] == 2), @"Expected to find two objects.");
 }
 
 - (void)testSearchKeysAddedAfterCalendarDateFilterByClass
@@ -745,11 +745,11 @@
     
     NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    XCTAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
 #pragma mark -
@@ -762,7 +762,7 @@
     @try {
         [search executeSQL:nil returnType:NSFReturnObjects error:nil];
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -774,7 +774,7 @@
     @try {
         [search executeSQL:@"" returnType:NSFReturnObjects error:nil];
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -790,7 +790,7 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *results = [search executeSQL:@"SELECT Blah, Foo, Bar FROM NSFKeys" returnType:NSFReturnObjects error:nil];
     
-    STAssertTrue ([results count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([results count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchExecuteSQL
@@ -805,7 +805,7 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnObjects error:nil];
     
-    STAssertTrue ([result count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([result count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchExecuteSQLCountKeys
@@ -819,9 +819,9 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSFNanoResult *result = [search executeSQL:@"SELECT COUNT(*) FROM NSFKEYS"];
-    STAssertTrue ([result error] == nil, @"We didn't expect an error.");
+    XCTAssertTrue ([result error] == nil, @"We didn't expect an error.");
 
-    STAssertTrue (([result numberOfRows] == 1) && ([[result firstValue]isEqualToString:@"2"]), @"Expected to find one object containing the value '2'.");
+    XCTAssertTrue (([result numberOfRows] == 1) && ([[result firstValue]isEqualToString:@"2"]), @"Expected to find one object containing the value '2'.");
 }
 
 - (void)testSearchExecuteBadSQLCountKeys
@@ -837,7 +837,7 @@
     
     BOOL containsErrorInfo = ([result error] != nil);
     
-    STAssertTrue (containsErrorInfo == YES, @"Expected to find error information.");
+    XCTAssertTrue (containsErrorInfo == YES, @"Expected to find error information.");
 }
 
 - (void)testSearchExecuteSQLReturningKeys
@@ -852,8 +852,8 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSArray *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue ([result isKindOfClass:[NSArray class]], @"Incorrect class returned. Expected NSArray.");
-    STAssertTrue ([result count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([result isKindOfClass:[NSArray class]], @"Incorrect class returned. Expected NSArray.");
+    XCTAssertTrue ([result count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchExecuteSQLReturningObjects
@@ -868,8 +868,8 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnObjects error:nil];
     
-    STAssertTrue ([result isKindOfClass:[NSDictionary class]], @"Incorrect class returned. Expected NSArray.");
-    STAssertTrue ([result count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([result isKindOfClass:[NSDictionary class]], @"Incorrect class returned. Expected NSArray.");
+    XCTAssertTrue ([result count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchReturningObjectsOfClassNSFNanoObject
@@ -887,7 +887,7 @@
     BOOL isClassCorrect = [[searchResults objectForKey:obj1.key]isKindOfClass:[NSFNanoObject class]];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
+    XCTAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
 }
 
 - (void)testSearchReturningObjectsWithCalendarDateOfClassNSFNanoObject
@@ -907,7 +907,7 @@
     BOOL isClassCorrect = [[searchResults objectForKey:obj1.key]isKindOfClass:[NSFNanoObject class]];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
+    XCTAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
 }
 
 - (void)testSearchFilteringResultsByClassReturnObjects
@@ -935,7 +935,7 @@
     BOOL isClassCorrect = [[searchResults objectForKey:car.key]isKindOfClass:[NanoCarTestClass class]];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
+    XCTAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
 }
 
 - (void)testSearchFilteringResultsByClassReturnKeys
@@ -963,7 +963,7 @@
     BOOL isClassCorrect = [[searchResults lastObject]isEqualToString:car.key];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
+    XCTAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
 }
 
 - (void)testSearchWithExpressionAndFilteringObjectResultsByClass
@@ -991,11 +991,11 @@
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object");
     
     BOOL isClassCorrect = [[searchResults objectForKey:car.key] isKindOfClass:[NanoCarTestClass class]];
     [nanoStore closeWithError:nil];
-    STAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
+    XCTAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
 }
 
 - (void)testSearchWithExpressionAndFilteringKeyResultsByClass
@@ -1023,11 +1023,11 @@
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object");
     
     BOOL isClassCorrect = [[searchResults lastObject]isEqualToString:car.key];
     [nanoStore closeWithError:nil];
-    STAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
+    XCTAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
 }
 
 #pragma mark -
@@ -1043,13 +1043,13 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 
     id objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && (nil == [objectReturned originalClassString]), @"Expected to retrieve a pure NanoObject.");
+    XCTAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && (nil == [objectReturned originalClassString]), @"Expected to retrieve a pure NanoObject.");
 }
 
 - (void)testSearchObjectNotKnownInThisProcess
@@ -1069,13 +1069,13 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
     
     id objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
 
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName]), @"Expected to retrieve a NanoObject which an original class name of type 'foobar'.");
+    XCTAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName]), @"Expected to retrieve a NanoObject which an original class name of type 'foobar'.");
 }
 
 - (void)testSearchObjectNotKnownInThisProcessEditAndSave
@@ -1095,11 +1095,11 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
     
     // Make sure we have a NanoObject of class foobar
     NSFNanoObject *objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
-    STAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName1]), @"Expected to retrieve a NanoObject which an original class name of type 'foobar'.");
+    XCTAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName1]), @"Expected to retrieve a NanoObject which an original class name of type 'foobar'.");
 
     // Now, let's manipulate the original class name to make sure it gets honored and saved properly
     NSString *bogusClassName2 = @"superduper";
@@ -1109,11 +1109,11 @@
     [nanoStore addObject:objectReturned error:nil];
     
     searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
     
     // Make sure the saving process honored the foobar class and didn't overwrite it with NSFNanoObject
     objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
-    STAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName2]), @"Expected to retrieve a NanoObject which an original class name of type 'superduper'.");
+    XCTAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName2]), @"Expected to retrieve a NanoObject which an original class name of type 'superduper'.");
 
     [nanoStore closeWithError:nil];
 }
@@ -1135,11 +1135,11 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
-    STAssertTrue ([[search aggregateOperation:NSFAverage onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFAverage to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFCount onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFCount to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFMax onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMax to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFMin onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMin to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFTotal onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFTotal to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFAverage onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFAverage to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFCount onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFCount to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFMax onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMax to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFMin onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMin to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFTotal onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFTotal to return a valid number.");
 }
 
 - (void)testAggregateFunctionsWithFilters
@@ -1160,11 +1160,11 @@
     search.match = NSFEqualTo;
     search.value = @"Ciuro";
     
-    STAssertTrue ([[search aggregateOperation:NSFAverage onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFAverage to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFCount onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFCount to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFMax onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMax to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFMin onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMin to return a valid number.");
-    STAssertTrue ([[search aggregateOperation:NSFTotal onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFTotal to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFAverage onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFAverage to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFCount onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFCount to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFMax onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMax to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFMin onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFMin to return a valid number.");
+    XCTAssertTrue ([[search aggregateOperation:NSFTotal onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFTotal to return a valid number.");
 }
 
 #pragma mark -
@@ -1178,7 +1178,7 @@
     @try {
         [search explainSQL:nil];
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -1191,7 +1191,7 @@
     @try {
         [search explainSQL:@""];
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -1201,7 +1201,7 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSFNanoResult *results = [search explainSQL:@"foo bar"];
-    STAssertTrue (([results error] != nil) && ([results numberOfRows] == 0), @"Expected an error and no rows back.");
+    XCTAssertTrue (([results error] != nil) && ([results numberOfRows] == 0), @"Expected an error and no rows back.");
 }
 
 - (void)testExplainSQL
@@ -1210,7 +1210,7 @@
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSFNanoResult *results = [search explainSQL:@"SELECT * FROM NSFKeys WHERE NSFKey = 'ABC'"];
-    STAssertTrue (([results error] == nil) && ([results numberOfRows] > 0), @"Expected some rows back.");
+    XCTAssertTrue (([results error] == nil) && ([results numberOfRows] > 0), @"Expected some rows back.");
 }
 
 - (void)testSearchTestFTS3
@@ -1223,7 +1223,7 @@
     
     BOOL isLioniOS5OrLater = ((_systemVersion >= 10.7f) || (_systemVersion >= 5.1f));
     
-    STAssertTrue (isLioniOS5OrLater && ([results error] == nil), @"Wasn't expecting an error.");
+    XCTAssertTrue (isLioniOS5OrLater && ([results error] == nil), @"Wasn't expecting an error.");
 }
 
 - (void)testSearchObjectsQuotes
@@ -1238,7 +1238,7 @@
     [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
     
     NSArray* allPeople = [nanoStore objectsOfClassNamed:NSStringFromClass([NanoPersonTestClass class])];
-    STAssertTrue(([allPeople count] == 1), @"Should have one person");
+    XCTAssertTrue(([allPeople count] == 1), @"Should have one person");
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = NanoPersonFirst;
@@ -1248,7 +1248,7 @@
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one person object, found %d", [searchResults count]);
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one person object, found %d", [searchResults count]);
 }
 
 - (void)testSearchObjectsQuotesUsingExpression
@@ -1277,7 +1277,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 #pragma mark -
@@ -1303,8 +1303,8 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
-    STAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
 }
 
 - (void)testSearchWithAttributeHasNullValue
@@ -1329,8 +1329,8 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
-    STAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
 }
 
 - (void)testSearchWithAttributeDoesNotHaveNullValue
@@ -1357,9 +1357,9 @@
     
     NanoPersonTestClass *retrievedObject = [[searchResults allValues]lastObject];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
-    STAssertTrue ([retrievedObject isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
-    STAssertTrue ([[retrievedObject last]isEqualToString:@"Doe"], @"Expected to find the non-NSNull object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([retrievedObject isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
+    XCTAssertTrue ([[retrievedObject last]isEqualToString:@"Doe"], @"Expected to find the non-NSNull object.");
 }
 
 - (void)testSearchWithNullValuePredicate
@@ -1387,8 +1387,8 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
-    STAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([personB objectForKey:@"last"] == [NSNull null], @"Expected to find the NSNull object.");
 }
 
 - (void)testSearchDoesNotHaveNullValuePredicate
@@ -1418,9 +1418,9 @@
     
     NanoPersonTestClass *retrievedObject = [[searchResults allValues]lastObject];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
-    STAssertTrue ([retrievedObject isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
-    STAssertTrue ([[retrievedObject last]isEqualToString:@"Doe"], @"Expected to find the non-NSNull object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([retrievedObject isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
+    XCTAssertTrue ([[retrievedObject last]isEqualToString:@"Doe"], @"Expected to find the non-NSNull object.");
 }
 
 - (void)testSearchFilterClassWithLimitReturnObjects
@@ -1449,7 +1449,7 @@
     NSError *error = nil;
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:&error];
     
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchFilterClassWithNoLimitReturnObjects
@@ -1477,7 +1477,7 @@
     NSError *error = nil;
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:&error];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testSearchFilterClassWithLimitReturnKeys
@@ -1506,7 +1506,7 @@
     NSError *error = nil;
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:&error];
     
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
 }
 
 - (void)testSearchFilterClassNoLimitReturnKeys
@@ -1534,7 +1534,7 @@
     NSError *error = nil;
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:&error];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 @end
