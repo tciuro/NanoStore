@@ -17,7 +17,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "74C1FA8B1538DDD60077DAD1"
-               BuildableName = "UnitTestMac.octest"
+               BuildableName = "UnitTestMac.xctest"
                BlueprintName = "UnitTestMac"
                ReferencedContainer = "container:NanoStore.xcodeproj">
             </BuildableReference>

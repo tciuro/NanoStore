@@ -401,7 +401,7 @@
     XCTAssertTrue (success, @"expected bag to have saved");
     XCTAssertTrue (hasUnsavedChanges, @"expected bag to have no unsaved changes");
     XCTAssertNil (outError, @"expect bag to return no error on save");
-    XCTAssertEqual ([returnedKeys count], [objects count], @"expected saved bag to return %d object keys", [objects count]);
+    XCTAssertTrue ([returnedKeys count]== [objects count], @"expected saved bag to return %lu object keys", [objects count]);
 }
 
 

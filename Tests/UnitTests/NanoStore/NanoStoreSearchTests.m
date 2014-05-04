@@ -1248,7 +1248,7 @@
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
     [nanoStore closeWithError:nil];
     
-    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one person object, found %d", [searchResults count]);
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one person object, found %lu",[searchResults count]);
 }
 
 - (void)testSearchObjectsQuotesUsingExpression
