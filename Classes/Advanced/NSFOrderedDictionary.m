@@ -52,7 +52,14 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 
 - (id)init
 {
-	return [self initWithCapacity:0];
+    self = [super init];
+    
+    if (self) {
+        _dictionary = [NSMutableDictionary new];
+        _array = [NSMutableArray new];
+    }
+    
+    return self;
 }
 
 - (id)initWithCapacity:(NSUInteger)capacity
