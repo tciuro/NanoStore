@@ -1537,4 +1537,70 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
+- (void)testSearchUsingNSFNotEqualToMatchOne
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *personA = [NanoPersonTestClass new];
+    personA.name = @"Leo'd";
+    personA.last = @"Doe";
+    
+    NanoPersonTestClass *personB = [NanoPersonTestClass new];
+    personB.name = @"Leonidas";
+    personB.last = @"Doe";
+    
+    NanoPersonTestClass *personC = [NanoPersonTestClass new];
+    personC.name = @"Joe";
+    personC.last = @"Schmuck";
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, personC, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = NanoPersonLast;
+    search.match = NSFNotEqualTo;
+    search.value = @"Doe";
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+    
+    NanoPersonTestClass *retrievedObject = [[searchResults allValues]lastObject];
+    
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([retrievedObject isKindOfClass:[NanoPersonTestClass class]], @"Expected to find a NanoPersonTestClass object.");
+    XCTAssertTrue ([[retrievedObject last]isEqualToString:@"Schmuck"], @"Expected to find Schmuck.");
+}
+
+- (void)testSearchUsingNSFNotEqualToMatchNone
+{
+    NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+    [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
+    
+    NanoPersonTestClass *personA = [NanoPersonTestClass new];
+    personA.name = @"Leo'd";
+    personA.last = @"Doe";
+    
+    NanoPersonTestClass *personB = [NanoPersonTestClass new];
+    personB.name = @"Leonidas";
+    personB.last = @"Doe";
+    
+    NanoPersonTestClass *personC = [NanoPersonTestClass new];
+    personC.name = @"Joe";
+    personC.last = @"Schmuck";
+    
+    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, personC, nil] error:nil];
+    
+    NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+    search.attribute = NanoPersonLast;
+    search.match = NSFNotEqualTo;
+    search.value = [NSNull null];
+    
+    NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+    
+    [nanoStore closeWithError:nil];
+        
+    XCTAssertTrue ([searchResults count] == 3, @"Expected to find three matching objects.");
+}
+
 @end
