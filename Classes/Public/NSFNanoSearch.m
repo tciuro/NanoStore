@@ -835,7 +835,7 @@
                     [segment appendString:value];
                     break;
                 case NSFNotEqualTo:
-                    value = [[NSMutableString alloc]initWithFormat:@"((%@ <> '%@' AND %@ <> '%@') OR (%@ GLOB '%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@' AND %@ <> '%@'))", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
+                    value = [[NSMutableString alloc]initWithFormat:@"((%@ == '%@' AND %@ <> '%@') OR (%@ GLOB '%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@.*' AND %@ <> '%@') OR (%@ GLOB '*.%@' AND %@ <> '%@'))", NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue, NSFAttribute, anAttributeValue, NSFValue, aValue];
                     [segment appendString:value];
 
                     break;
