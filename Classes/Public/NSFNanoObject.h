@@ -261,6 +261,7 @@
  */
 
 - (void)setObject:(id)anObject forKey:(NSString *)aKey;
+- (void)setObject:(id)anObject forKeyedSubscript:(NSString *)aKey;
 
 /** * Returns the value associated with a given key.
  * @param aKey the key for value. Must not be nil.
@@ -269,6 +270,7 @@
  */
 
 - (id)objectForKey:(NSString *)aKey;
+- (id)objectForKeyedSubscript:(NSString *)aKey;
 
 /** * Removes a given key and its associated value from the NanoObject.
  * @param aKey the key to remove. Must not be nil.
