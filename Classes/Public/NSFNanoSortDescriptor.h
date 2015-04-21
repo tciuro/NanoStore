@@ -57,8 +57,8 @@
  
  // Perform the search
  NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
- STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
- STAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+ XCTAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+ XCTAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
  
  for (NSFNanoObject *object in searchResults) {
  NSLog(@"%@", [[object info]objectForKey:@"City"]);
