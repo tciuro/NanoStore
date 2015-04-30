@@ -1599,7 +1599,7 @@
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
-        
+    
     XCTAssertTrue ([searchResults count] == 3, @"Expected to find three matching objects.");
 }
 
