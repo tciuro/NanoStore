@@ -141,6 +141,17 @@
     XCTAssertTrue ((nil != info) && ([info count] == 1) && ([[info objectForKey:@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
 }
 
+- (void)testObjectWithSubscriptAccessor
+{
+    NSFNanoObject *object = [NSFNanoObject nanoObject];
+    object[@"foo"] = @"bar";
+    NSDictionary *info = object.info;
+    
+    XCTAssertTrue ((nil != info) && ([info count] == 1) && ([[info objectForKey:@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
+
+    XCTAssertEqualObjects(object[@"foo"], @"bar", @"Can access with keyed subscript");
+}
+
 - (void)testObjectRemoveObjectForKeyNonEmptyObject
 {
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
