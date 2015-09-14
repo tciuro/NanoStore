@@ -1031,13 +1031,11 @@
 				GCC_PREFIX_HEADER = "libnanostore2/libnanostore2-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7 armv7s i386";
 			};
 			name = Debug;
 		};
@@ -1049,12 +1047,10 @@
 				DSTROOT = /tmp/libnanostore2.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libnanostore2/libnanostore2-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7 armv7s i386";
 			};
 			name = Release;
 		};
