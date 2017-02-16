@@ -71,7 +71,7 @@
  * @see - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode;
  */
 
-- (id)initWithPath:(NSString *)thePath;
+- (instancetype)initWithPath:(NSString *)thePath;
 
 //@}
 
@@ -102,7 +102,7 @@
  * @return YES upon success, NO otherwise.
  */
 
-- (BOOL)close;
+@property (nonatomic, readonly) BOOL close;
 
 //@}
 
@@ -115,13 +115,13 @@
  * @see - (void)close;
  */
 
-- (BOOL)isDatabaseOpen;
+@property (nonatomic, getter=isDatabaseOpen, readonly) BOOL databaseOpen;
 
 /** Checks whether a transaction is currently active.
  * @return YES if a transaction is currently active, NO otherwise.
  */
 
-- (BOOL)isTransactionActive;
+@property (nonatomic, getter=isTransactionActive, readonly) BOOL transactionActive;
 
 /** Sets the busy timeout.
  * @param theTimeout is number of milliseconds that SQLite will wait to retry a busy operation.
@@ -129,13 +129,12 @@
  * @see - (unsigned int)busyTimeout;
  */
 
-- (void)setBusyTimeout:(unsigned int)theTimeout;
 
 /** Returns the current busy timeout.
  * @see - (void)setBusyTimeout:(unsigned int)theTimeout;
  */
 
-- (unsigned int)busyTimeout;
+@property (nonatomic, readonly) unsigned int busyTimeout;
 
 /** Returns the recommended cache size based on the system resources available.
  * @return The recommended cache size in number of pages.
@@ -195,7 +194,7 @@
  * @see - (BOOL)setEncodingType:(NSFEncodingType)theEncodingType;
  */
 
-- (NSFEncodingType)encoding;
+@property (nonatomic, readonly) NSFEncodingType encoding;
 
 /** Returns the encoding type from its string equivalent.
  * @return The encoding type if successful, NSFEncodingUnknown otherwise.
@@ -216,28 +215,26 @@
  * @see - (NSFSynchronousMode)synchronousMode;
  */
 
-- (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
 
 /** Returns the synchronous mode.
  * @return The current synchronous mode.
  * @see - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
  */
 
-- (NSFSynchronousMode)synchronousMode;
+@property (nonatomic) NSFSynchronousMode synchronousMode;
 
 /** Sets the temporary storage mode.
  * @param theTempStoreMode is the temporary storage mode. Can be TempStoreModeDefault, TempStoreModeFile or TempStoreModeMemory.
  * @see - (NSFTempStoreMode)tempStoreMode;
  */
 
-- (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
 
 /** Returns the temporary storage mode.
  * @return The current temporary storage mode.
  * @see - (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
  */
 
-- (NSFTempStoreMode)tempStoreMode;
+@property (nonatomic) NSFTempStoreMode tempStoreMode;
 
 /** * Journal mode.
  * These values represent the options used by SQLite to the the journal mode for databases associated with the current database connection.
@@ -323,7 +320,7 @@
  * @see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)beginTransaction;
+@property (nonatomic, readonly) BOOL beginTransaction;
 
 /** Starts a deferred transaction.
  * @return YES upon success, NO otherwise.
@@ -333,7 +330,7 @@
  * @see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)beginDeferredTransaction;
+@property (nonatomic, readonly) BOOL beginDeferredTransaction;
 
 /** Commits a transaction.
  * @return YES upon success, NO otherwise.
@@ -343,7 +340,7 @@
  * @see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)commitTransaction;
+@property (nonatomic, readonly) BOOL commitTransaction;
 
 /** Rolls back a transaction.
  * @return YES upon success, NO otherwise.
@@ -353,7 +350,7 @@
  * @see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)rollbackTransaction;
+@property (nonatomic, readonly) BOOL rollbackTransaction;
 
 //@}
 
@@ -382,7 +379,7 @@
  * @see - (NSArray *)temporaryTables;
  */
 
-- (NSArray *)tables;
+@property (nonatomic, readonly, copy) NSArray *tables;
 
 /** Returns a new array containing the tables found in the main and attached document stores.
  * @return A new array containing the tables in the main and attached document stores, or an empty array if none is found.
@@ -392,7 +389,7 @@
  * @see - (NSArray *)temporaryTables;
  */
 
-- (NSDictionary *)allTables;
+@property (nonatomic, readonly, copy) NSDictionary *allTables;
 
 /** Returns a new array containing the columns for a given table.
  * @param theTable is the name of the table.
@@ -407,7 +404,7 @@
  * @see - (NSDictionary *)allTables;
  */
 
-- (NSArray *)temporaryTables;
+@property (nonatomic, readonly, copy) NSArray *temporaryTables;
 
 /** Returns a new array containing the datatypes for a given table.
  * @param theTable is the name of the table.
@@ -445,7 +442,7 @@
  * @return A new array containing the indexes in the main document store, or an empty array if none is found.
  */
 
-- (NSArray *)indexes;
+@property (nonatomic, readonly, copy) NSArray *indexes;
 
 /** Returns a new array containing the indexes found for a given table.
  * @return A new array containing the indexes for a given table, or an empty array if none is found.
@@ -472,14 +469,14 @@
  * @note If a transaction is open, the operation will not proceed and NO will be returned instead.
  */
 
-- (BOOL)compact;
+@property (nonatomic, readonly) BOOL compact;
 
 /** Performs an integrity check on the database.
  * @return YES upon success, NO otherwise.
  * @note If a transaction is open, the operation will not proceed and NO will be returned instead.
  */
 
-- (BOOL)integrityCheck;
+@property (nonatomic, readonly) BOOL integrityCheck;
 
 //@}
 
@@ -535,12 +532,12 @@
 /** Returns a string representation of the engine.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the engine.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

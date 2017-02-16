@@ -108,7 +108,7 @@
     XCTAssertTrue([description length] > 0, @"Expected NSFNanoObject's JSONDescription value to be valid.");
     
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     description = [search JSONDescription];

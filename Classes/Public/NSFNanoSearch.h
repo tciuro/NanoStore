@@ -202,7 +202,7 @@
  * @see \link searchWithStore: + (NSFNanoSearch *)searchWithStore:(NSFNanoStore *)theNanoStore \endlink
  */
 
-- (id)initWithStore:(NSFNanoStore *)theNanoStore;
+- (instancetype)initWithStore:(NSFNanoStore *)theNanoStore;
 
 //@}
 
@@ -389,11 +389,11 @@
 /** Returns a string representation of the search.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the search.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 @end

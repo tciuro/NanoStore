@@ -37,8 +37,8 @@
 - (BOOL)_initializePreparedStatementsWithError:(NSError * __autoreleasing *)outError;
 - (void)_releasePreparedStatements;
 - (void)_setIsOurTransaction:(BOOL)value;
-- (BOOL)_isOurTransaction;
-- (BOOL)_setupCachingSchema;
+@property (nonatomic, readonly) BOOL _isOurTransaction;
+@property (nonatomic, readonly) BOOL _setupCachingSchema;
 - (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType error:(NSError * __autoreleasing *)outError;
 - (BOOL)__storeDictionaries:(NSArray *)someObjects forKeys:(NSArray *)someKeys error:(NSError * __autoreleasing *)outError;
 - (BOOL)_bindValue:(id)aValue forAttribute:(NSString *)anAttribute parameterNumber:(NSInteger)aParamNumber usingSQLite3Statement:(sqlite3_stmt *)aStatement;

@@ -944,7 +944,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = "";
+				SDKROOT = macosx;
 				"WARNING_CFLAGS[arch=*]" = "-Wall";
 			};
 			name = Debug;
@@ -975,7 +975,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = "";
+				SDKROOT = macosx;
 				"WARNING_CFLAGS[arch=*]" = "-Wall";
 			};
 			name = Release;

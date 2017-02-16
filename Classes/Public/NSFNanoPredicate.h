@@ -102,7 +102,7 @@
  * @see \link predicateWithColumn:matching:value: + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
  */
 
-- (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue;
+- (instancetype)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -115,13 +115,13 @@
  * @note Check properties column, match and value to find out the current state of the predicate.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** * Returns a JSON representation of the predicate.
  * @note Check properties column, match and value to find out the current state of the predicate.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

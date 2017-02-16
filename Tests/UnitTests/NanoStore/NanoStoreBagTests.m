@@ -39,7 +39,7 @@
     NSFNanoBag *bag = [NSFNanoBag bag];
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
     NSString *key = bag.key;
-    NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = [bag dictionaryRepresentation][NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
@@ -99,7 +99,7 @@
     XCTAssertTrue (nil != [bag name], @"Expected the name of the bag to not be nil.");
     
     NSError *error = nil;
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:&error];
+    [nanoStore addObjectsFromArray:@[bag] error:&error];
     XCTAssertTrue (nil == error, @"Saving bag A should have succeded.");
     
     NSFNanoBag *retrievedBag = [nanoStore bagWithName:bag.name];
@@ -113,15 +113,13 @@
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     NSFNanoBag *bag = [NSFNanoBag bagWithName:@"FooBar" andObjects:objects];
     XCTAssertTrue (nil != [bag name], @"Expected the name of the bag to be nil.");
     
     NSError *error = nil;
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:&error];
+    [nanoStore addObjectsFromArray:@[bag] error:&error];
     XCTAssertTrue (nil == error, @"Saving bag A should have succeded.");
     
     NSFNanoBag *retrievedBag = [nanoStore bagWithName:bag.name];
@@ -137,7 +135,7 @@
     
     NSFNanoBag *bag = [NSFNanoBag bag];
     bag.name = @"FooBar";
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
 
     NSFNanoBag *retrievedBag = [nanoStore bagWithName:bag.name];
     XCTAssertTrue ([[retrievedBag name]isEqualToString:bag.name] == YES, @"We should have found the bag by name.");
@@ -150,32 +148,28 @@
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:[NSArray array]];
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
     NSString *key = bag.key;
-    NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = [bag dictionaryRepresentation][NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
 
 - (void)testBagInitTwoConformingObjects
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
     NSString *key = bag.key;
-    NSArray *returnedKeys = [[bag dictionaryRepresentation]objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = [bag dictionaryRepresentation][NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Expected the bag to contain two returnedKeys.");
 }
 
 - (void)testBagInitPartiallyConformingObjects
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        @"foo",
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        @"foo"];
     
     @try {
         [NSFNanoBag bagWithObjects:objects];
@@ -188,23 +182,21 @@
 {
     NSFNanoBag *bag = [NSFNanoBag bag];
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSString *key = [info objectForKey:NSF_Private_NSFNanoBag_NSFKey];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSString *key = info[NSF_Private_NSFNanoBag_NSFKey];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue ((nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0) && (nil != info) && ([info count] == 2), @"Expected the bag to provide a properly formatted dictionary.");
 }
 
 - (void)testBagWithTwoConformingObjectsDictionaryRepresentation
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSString *key = [info objectForKey:NSF_Private_NSFNanoBag_NSFKey];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSString *key = info[NSF_Private_NSFNanoBag_NSFKey];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue ((nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2) && (nil != info) && ([info count] == 2), @"Expected the bag to provide a properly formatted dictionary.");
 }
@@ -217,10 +209,8 @@
 
 - (void)testBagCountTwo
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
     XCTAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
@@ -233,7 +223,7 @@
 
     NSFNanoBag *bag1 = [NSFNanoBag bagWithName:@"foo" andObjects:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]]];
     NSFNanoBag *bag2 = [NSFNanoBag bagWithName:@"foo" andObjects:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]]];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bag1, bag2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[bag1, bag2] error:nil];
     NSArray *bags = [nanoStore bagsWithName:@"foo"];
     XCTAssertTrue (2 == bags.count, @"Expected to find two bags.");
     
@@ -243,10 +233,8 @@
 - (void)testBagCountTwoDeleteOne
 {
     NSFNanoObject *objectOne = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    NSArray *objects = [NSArray arrayWithObjects:
-                        objectOne,
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[objectOne,
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
     XCTAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
@@ -260,7 +248,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithName:@"CountTest"];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     NSFNanoBag *receivedBag = [nanoStore bagWithName:@"CountTest"];
     XCTAssertTrue (0 == receivedBag.count, @"Expected the bag to have zero elements.");
 
@@ -273,13 +261,11 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *objectOne = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    NSArray *objects = [NSArray arrayWithObjects:
-                        objectOne,
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[objectOne,
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithName:@"CountTest" andObjects:objects];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     NSFNanoBag *receivedBag = [nanoStore bagWithName:@"CountTest"];
     XCTAssertTrue (2 == receivedBag.count, @"Expected the bag to have two elements.");
     [receivedBag removeObject:objectOne];
@@ -290,10 +276,8 @@
 
 - (void)testBagCountRemoveAll
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bagWithObjects:objects];
     XCTAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
@@ -334,7 +318,7 @@
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 1), @"Adding a conforming object to a bag should have succeeded.");
 }
@@ -347,7 +331,7 @@
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && (NO == success) && (nil != outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding a nil object list to a bag should have failed.");
 }
@@ -360,17 +344,15 @@
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding an empty object list to a bag should have failed.");
 }
 
 - (void)testBagAddTwoConformingObjects
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     
     NSFNanoBag *bag = [NSFNanoBag bag];
     NSError *outError = nil;
@@ -378,7 +360,7 @@
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Adding a conforming object list to a bag should have succeded.");
 }
@@ -396,7 +378,7 @@
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
     
     NSDictionary *info = [bag nanoObjectDictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (success, @"expected bag to have saved");
     XCTAssertTrue (hasUnsavedChanges, @"expected bag to have no unsaved changes");
@@ -407,10 +389,8 @@
 
 - (void)testBagAddPartiallyConformingObjects
 {
-    NSArray *objects = [NSArray arrayWithObjects:
-                        [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        @"foo",
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
+                        @"foo"];
     
     NSFNanoBag *bag = [NSFNanoBag bag];
     
@@ -456,13 +436,13 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2] error:nil];
     [bag removeObject:obj1];
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
-    NSString *returnedKey = [returnedKeys lastObject];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSString *returnedKey = returnedKeys.lastObject;
     
     XCTAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
 }
@@ -473,13 +453,13 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2] error:nil];
     [bag removeObject:obj1];
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
-    NSString *returnedKey = [returnedKeys lastObject];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSString *returnedKey = returnedKeys.lastObject;
     
     XCTAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
 }
@@ -490,13 +470,13 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    NSArray *objects = [NSArray arrayWithObjects:obj1, obj2, nil];
+    NSArray *objects = @[obj1, obj2];
     [bag addObjectsFromArray:objects error:nil];
     [bag removeObjectsInArray:objects];
     BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
 
     NSDictionary *info = [bag dictionaryRepresentation];
-    NSArray *returnedKeys = [info objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+    NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
     XCTAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Removing conforming objects from a bag should have succeded.");
 }
@@ -509,7 +489,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoBag *bag = [NSFNanoBag bag];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     NSArray *bags = [nanoStore bags];
     
     [nanoStore closeWithError:nil];
@@ -526,9 +506,9 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSArray *bags = [nanoStore bags];
     
@@ -546,9 +526,9 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSArray *bags = [nanoStore bags];
     
@@ -566,13 +546,13 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSArray *bags = [nanoStore bags];
-    NSFNanoBag *savedBag = [bags lastObject];
-    [savedBag removeObjectsWithKeysInArray:[NSArray arrayWithObjects:obj1.key, obj2.key, nil]];
+    NSFNanoBag *savedBag = bags.lastObject;
+    [savedBag removeObjectsWithKeysInArray:@[obj1.key, obj2.key]];
     
     XCTAssertTrue (([bags count] == 1) && ([[savedBag savedObjects]count] == 1) && ([[savedBag unsavedObjects]count] == 0) && ([[savedBag removedObjects]count] == 2), @"Removing objects from a bag should have succeded.");
 
@@ -580,7 +560,7 @@
     [savedBag saveAndReturnError:&outError];
     XCTAssertTrue (nil == outError, @"Saving the bag failed. Reason: %@.", [outError localizedDescription]);
 
-    savedBag = [[nanoStore bags]lastObject];
+    savedBag = [nanoStore bags].lastObject;
 
     [nanoStore closeWithError:nil];
     
@@ -596,31 +576,31 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
     [nanoStore addObject:bag error:nil];
     
     NSArray *bags = [nanoStore bags];
-    NSFNanoBag *savedBag = [bags lastObject];
+    NSFNanoBag *savedBag = bags.lastObject;
     
     NSError *outError = nil;
-    NSFNanoObject *editedObject = [[[savedBag savedObjects]allValues]lastObject];
+    NSFNanoObject *editedObject = savedBag.savedObjects.allValues.lastObject;
     NSString *editedKey = editedObject.key;
     NSUInteger originalCount = editedObject.info.count;
-    [editedObject setObject:@"fooValue" forKey:@"fooKey"];
+    editedObject[@"fooKey"] = @"fooValue";
     [savedBag addObject:editedObject error:&outError];
     XCTAssertTrue (([[savedBag savedObjects]count] == 2) && ([[savedBag unsavedObjects]count] == 1) && ([[savedBag removedObjects]count] == 0), @"Editing objects from a bag should have succeded.");
     
     [savedBag saveAndReturnError:&outError];
     XCTAssertTrue (nil == outError, @"Saving the bag failed. Reason: %@.", [outError localizedDescription]);
     
-    savedBag = [[nanoStore bags]lastObject];
+    savedBag = [nanoStore bags].lastObject;
     [nanoStore closeWithError:nil];
     
     XCTAssertTrue (([[savedBag savedObjects]count] == 3), @"Expected savedObjects to have 3 elements.");
     XCTAssertTrue (([[savedBag unsavedObjects]count] == 0), @"Expected unsavedObjects to have 0 elements.");
     XCTAssertTrue (([[savedBag removedObjects]count] == 0), @"Expected removedObjects to have 0 elements.");
-    XCTAssertTrue (([[[[savedBag savedObjects]objectForKey:editedKey]info]count] == originalCount + 1), @"Editing objects from a bag should have succeded.");
+    XCTAssertTrue (([[[savedBag savedObjects][editedKey]info]count] == originalCount + 1), @"Editing objects from a bag should have succeded.");
 }
 
 - (void)testBagDeleteBag
@@ -632,17 +612,17 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
     NSError *outError = nil;
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:&outError];
+    [nanoStore addObjectsFromArray:@[bag] error:&outError];
     XCTAssertTrue (nil == outError, @"Could not save the bag. Reason: %@", [outError localizedDescription]);
 
     NSArray *savedBags = [nanoStore bags];
     NSString *keyToBeRemoved = [[savedBags lastObject]key];
     XCTAssertTrue (nil != keyToBeRemoved, @"The key of the bag to be removed cannot be nil.");
 
-    [nanoStore removeObjectsWithKeysInArray:[NSArray arrayWithObject:keyToBeRemoved] error:nil];
+    [nanoStore removeObjectsWithKeysInArray:@[keyToBeRemoved] error:nil];
     
     NSArray *removedBags = [nanoStore bags];
 
@@ -660,17 +640,17 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSArray *bags = [nanoStore bags];
-    NSFNanoBag *savedBagA = [bags lastObject];
+    NSFNanoBag *savedBagA = bags.lastObject;
 
     // Edit an object, replace it in savedBagA
     NSError *outError = nil;
-    NSFNanoObject *editedObject = [[[savedBagA savedObjects]allValues]lastObject];
-    [editedObject setObject:@"fooValue" forKey:@"fooKey"];
+    NSFNanoObject *editedObject = savedBagA.savedObjects.allValues.lastObject;
+    editedObject[@"fooKey"] = @"fooValue";
     [savedBagA addObject:editedObject error:&outError];
     XCTAssertTrue (([[savedBagA savedObjects]count] == 2) && ([[savedBagA unsavedObjects]count] == 1) && ([[savedBagA removedObjects]count] == 0), @"Editing objects from a bag should have succeded.");
     
@@ -681,17 +661,17 @@
     XCTAssertTrue (([[savedBagA savedObjects]count] == 2) && ([[savedBagA unsavedObjects]count] == 0) && ([[savedBagA removedObjects]count] == 0), @"Removing an object from a bag should have succeded.");
 
     bags = [nanoStore bags];
-    NSFNanoBag *savedBagB = [bags lastObject];
+    NSFNanoBag *savedBagB = bags.lastObject;
 
-    editedObject = [[[savedBagB savedObjects]allValues]lastObject];
-    [editedObject setObject:@"fooValue" forKey:@"fooKey"];
+    editedObject = savedBagB.savedObjects.allValues.lastObject;
+    editedObject[@"fooKey"] = @"fooValue";
     [savedBagB addObject:editedObject error:&outError];
     success = [savedBagB reloadBagWithError:&outError];
     XCTAssertTrue (success, @"The bad reload should have succeeded.");
 
     success = YES;
-    NSArray *sortedArrayA = [[[savedBagA savedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    NSArray *sortedArrayB = [[[savedBagB savedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    NSArray *sortedArrayA = [[savedBagA.savedObjects allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    NSArray *sortedArrayB = [[savedBagB.savedObjects allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     if (NO == [sortedArrayA isEqualToArray:sortedArrayB]) {
         success = NO;
     }
@@ -711,7 +691,7 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
     NSError *outError = nil;
     [bag undoChangesWithError:&outError];
@@ -730,16 +710,16 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSArray *bags = [nanoStore bags];
-    NSFNanoBag *savedBag = [bags lastObject];
+    NSFNanoBag *savedBag = bags.lastObject;
 
     NSError *outError = nil;
-    NSFNanoObject *editedObject = [[[savedBag savedObjects]allValues]lastObject];
-    [editedObject setObject:@"fooValue" forKey:@"fooKey"];
+    NSFNanoObject *editedObject = savedBag.savedObjects.allValues.lastObject;
+    editedObject[@"fooKey"] = @"fooValue";
     [savedBag addObject:editedObject error:&outError];
     XCTAssertTrue (([[savedBag savedObjects]count] == 2) && ([[savedBag unsavedObjects]count] == 1) && ([[savedBag removedObjects]count] == 0), @"Editing objects from a bag should have succeded.");
     
@@ -758,19 +738,18 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:&outError];
     
     NSFNanoBag *bag1 = [NSFNanoBag bag];
-    NSArray *objects = [NSArray arrayWithObjects:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
-                        nil];
+    NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
     [bag1 addObjectsFromArray:objects error:nil];
     
     NSFNanoBag *bag2 = [NSFNanoBag bag];
     [bag2 addObjectsFromArray:objects error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bag1, bag2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[bag1, bag2] error:nil];
     
     NSArray *savedBags = [nanoStore bags];
     XCTAssertTrue ([savedBags count] == 2, @"Expected to find two bags.");
 
-    savedBags = [nanoStore bagsWithKeysInArray:[NSArray arrayWithObjects:bag1.key, bag2.key, nil]];
+    savedBags = [nanoStore bagsWithKeysInArray:@[bag1.key, bag2.key]];
 
     [nanoStore closeWithError:nil];
     
@@ -788,9 +767,9 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSArray *bags = [nanoStore bagsContainingObjectWithKey:obj3.key];
     
@@ -808,7 +787,7 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     [nanoStore addObject:bag error:nil];
     
     NSFNanoBag *copiedBag = [bag copy];
@@ -825,19 +804,19 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
     [nanoStore addObject:bag error:nil];
     
     NSArray *bags = [nanoStore bags];
-    NSFNanoBag *savedBagA = [bags lastObject];
+    NSFNanoBag *savedBagA = bags.lastObject;
     bags = [nanoStore bags];
-    NSFNanoBag *savedBagB = [bags lastObject];
+    NSFNanoBag *savedBagB = bags.lastObject;
     
     XCTAssertTrue (([savedBagA isEqualToNanoBag:savedBagB]), @"Equality test should have succeeded.");
     
     NSError *outError = nil;
-    NSFNanoObject *editedObject = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"fooObject" forKey:@"fooKey"]];
+    NSFNanoObject *editedObject = [NSFNanoObject nanoObjectWithDictionary:@{@"fooKey": @"fooObject"}];
     [savedBagB addObject:editedObject error:&outError];
     
     XCTAssertTrue ((NO == [savedBagA isEqualToNanoBag:savedBagB]), @"Equality test should have failed.");
@@ -856,18 +835,18 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
-    NSFNanoBag *resultBag = [[nanoStore bags]lastObject];
+    NSFNanoBag *resultBag = [nanoStore bags].lastObject;
     
     [resultBag deflateBag];
     
     NSDictionary *savedObjects = resultBag.savedObjects;
     BOOL deflated = YES;
     for (NSString *objectKey in savedObjects) {
-        if ([NSNull null] != [savedObjects objectForKey:objectKey]) {
+        if ([NSNull null] != savedObjects[objectKey]) {
             deflated = NO;
             break;
         }
@@ -887,11 +866,11 @@
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
-    NSFNanoBag *resultBag = [[nanoStore bags]lastObject];
+    NSFNanoBag *resultBag = [nanoStore bags].lastObject;
     
     [resultBag deflateBag];
     [resultBag inflateBag];
@@ -899,7 +878,7 @@
     NSDictionary *savedObjects = resultBag.savedObjects;
     BOOL inflated = YES;
     for (NSString *objectKey in savedObjects) {
-        if ([NSNull null] == [savedObjects objectForKey:objectKey]) {
+        if ([NSNull null] == savedObjects[objectKey]) {
             inflated = NO;
             break;
         }

@@ -229,7 +229,7 @@
  * @see \link nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary \endlink
  */
 
-- (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary;
+- (instancetype)initFromDictionaryRepresentation:(NSDictionary *)theDictionary;
 
 /** * Initializes a newly allocated NanoObject with the given dictionary and key.
  * @param theDictionary the information associated with the object. Must not be nil.
@@ -238,7 +238,7 @@
  * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
  */
 
-- (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary key:(NSString *)theKey;
+- (instancetype)initFromDictionaryRepresentation:(NSDictionary *)theDictionary key:(NSString *)theKey;
 
 //@}
 
@@ -327,12 +327,12 @@
 /** * Returns a string representation of the nano object.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the nano object.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

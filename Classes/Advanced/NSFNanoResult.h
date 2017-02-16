@@ -83,7 +83,7 @@
  * @returns An array with the columns retrieved from the result set.
  */
 
-- (NSArray *)columns;
+@property (nonatomic, readonly, copy) NSArray *columns;
 
 /** * Returns a new array containing the values for a given column.
  * @param theIndex is the index of the value in the result set.
@@ -105,7 +105,7 @@
  * @returns The value of the first element from the result set.
  */
 
-- (NSString *)firstValue;
+@property (nonatomic, readonly, copy) NSString *firstValue;
 
 //@}
 
@@ -130,12 +130,12 @@
 /** * Returns a string representation of the result.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the result.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

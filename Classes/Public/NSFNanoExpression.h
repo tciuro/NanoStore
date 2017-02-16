@@ -89,7 +89,7 @@
  * @see \link expressionWithPredicate: + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate \endlink
  */
 
-- (id)initWithPredicate:(NSFNanoPredicate *)thePredicate;
+- (instancetype)initWithPredicate:(NSFNanoPredicate *)thePredicate NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -118,13 +118,13 @@
  * @note Check properties predicates and operators to find out the current state of the expression.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the expression.
  * @note Check properties predicates and operators to find out the current state of the expression.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

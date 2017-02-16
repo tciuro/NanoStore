@@ -109,7 +109,7 @@
  * @return An empty bag upon success, nil otherwise.
  */
 
-+ bagWithName:(NSString *)theName;
++ (instancetype) bagWithName:(NSString *)theName;
 
 /** * Creates and returns a bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
@@ -120,7 +120,7 @@
  * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
  */
 
-+ bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
++ (instancetype) bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
 
 /** * Initializes a newly allocated bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
@@ -131,7 +131,7 @@
  * @see \link bagWithObjects: + (NSFNanoBag*)bagWithObjects:(NSArray *)theObjects \endlink
  */
 
-- (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects;
+- (instancetype)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects;
 
 //@}
 
@@ -284,7 +284,7 @@
  * @return The number of objects currently in the bag.
  */
 
-- (NSUInteger)count;
+@property (nonatomic, readonly) NSUInteger count;
 
 /** * Compares the receiving bag to another bag.
  * @param otherNanoBag is a bag.
@@ -304,13 +304,13 @@
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

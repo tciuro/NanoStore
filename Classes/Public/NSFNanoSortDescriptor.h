@@ -101,7 +101,7 @@
  * @see \link sortDescriptorWithKey:ascending: - (NSFNanoSortDescriptor *)sortDescriptorWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
  */
 
-- (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
+- (instancetype)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -114,13 +114,13 @@
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the sort.
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

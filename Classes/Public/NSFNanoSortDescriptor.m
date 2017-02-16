@@ -45,7 +45,12 @@
     return [[self alloc]initWithAttribute:theAttribute ascending:ascending];
 }
 
-- (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
+- (instancetype)init
+{
+    return [self initWithAttribute:nil ascending:NO];
+}
+
+- (instancetype)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
 {
     if (theAttribute.length == 0)
         [[NSException exceptionWithName:NSFUnexpectedParameterException

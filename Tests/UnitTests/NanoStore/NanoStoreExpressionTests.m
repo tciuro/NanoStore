@@ -87,11 +87,11 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"hello", @"name", nil]]] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"world", @"name", nil]]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:@{@"name": @"hello"}]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:@{@"name": @"world"}]] error:nil];
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray array]];
+    search.expressions = [NSArray array];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
@@ -106,13 +106,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"FirstName"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -125,7 +125,7 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    BOOL success = [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    BOOL success = [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     XCTAssertTrue (success, @"Expected to store the object.");
 
@@ -133,7 +133,7 @@
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -146,13 +146,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFContains value:@"irs"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -165,13 +165,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEndsWith value:@"Name"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -184,13 +184,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveEqualTo value:@"LASTNamE"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -203,13 +203,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveBeginsWith value:@"FIrsT"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -222,13 +222,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveContains value:@"IrsT"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -241,13 +241,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveEndsWith value:@"NaMe"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -260,7 +260,7 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateAttribute = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"FirstName"];
     NSFNanoPredicate *predicateValue = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:@"Tito"];
@@ -268,7 +268,7 @@
     [expression addPredicate:predicateValue withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -281,7 +281,7 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSError *error = nil;
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
@@ -296,7 +296,7 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSError *error = nil;
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];

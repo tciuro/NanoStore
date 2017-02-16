@@ -49,17 +49,17 @@ extern BOOL NSFIsDebugOn (void);
  * before continuing. This ensures that if the operating system crashes or if there is a power failure, the database will be uncorrupted after rebooting.
  * Deactivating FastMode is very safe, but it is also slower.
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFEngineProcessingMode) {
     /** * The default mode is slower but safer. */
     NSFEngineProcessingDefaultMode = 1,
     /** * The fast mode is very quick but unsafe. */
     NSFEngineProcessingFastMode
-} NSFEngineProcessingMode;
+};
 
 /** * Datatypes used by NanoStore.
  @note Additional information can be found on the SQLite website: http://www.sqlite.org/datatype3.html
  */
-typedef enum {
+typedef NS_ENUM(int, NSFNanoDatatype) {
     /** * Used when NanoStore doesn't know the datatype it has read back from the document store. Its string value equivalent is <b>UNKNOWN</b>.*/
     NSFNanoTypeUnknown = -1,
     /** * Used to define the <i>RowID</i> column type in SQLite tables. Only used if you create your own table via NSFNanoEngine. Its string equivalent is <b>INTEGER</b>. */
@@ -76,7 +76,7 @@ typedef enum {
     NSFNanoTypeNULL,
     /** * Used to store NSURL elements. Its string equivalent is <b>URL</b>. */
     NSFNanoTypeURL
-} NSFNanoDatatype;
+};
 
 /** * Returns the name of a NSFNanoDatatype datatype as a string. */
 extern  NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype);
@@ -88,14 +88,14 @@ extern  NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype);
  * These values represent the storage options available when generating a NanoStore.
  @see NSFNanoStore
 */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFNanoStoreType) {
     /** * Create the transient backing store in RAM. Its contents are lost when the process exits. Fastest, uses more RAM. */
     NSFMemoryStoreType = 1,
     /** * Create a transient temporary backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType. */
     NSFTemporaryStoreType,
     /** * Create a persistant backing store on disk. Its contents are lost when the process exits. Slower, uses less RAM than NSFMemoryStoreType. */
     NSFPersistentStoreType
-} NSFNanoStoreType;
+};
 
 /** * Aggregate functions.
  * These functions represent the options available to obtain aggregate results quickly and efficiently.
@@ -105,7 +105,7 @@ typedef enum {
  @see \link NSFNanoSearch::aggregateOperation:onAttribute: -(NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute \endlink
  */
 
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFAggregateFunctionType) {
     /** * It invokes the avg() function. */
     NSFAverage = 1,
     /** * It invokes the count() function. */
@@ -116,13 +116,13 @@ typedef enum {
     NSFMin,
     /** * It invokes the total() function. See note above for additional information. */
     NSFTotal
-} NSFAggregateFunctionType;
+};
 
 /** * Comparison options.
  * These values represent the options available to some of the classes’ search and comparison methods.
  @see NSFNanoPredicate, NSFNanoSearch
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFMatchType) {
     /** * Equal to (case sensitive) */
     NSFEqualTo = 0,
     /** * Begins with (case sensitive) */
@@ -147,81 +147,81 @@ typedef enum {
     NSFLessThan,
     /** * Not Equal to from */
     NSFNotEqualTo
-} NSFMatchType;
+};
 
 /** * Column types for the Attributes table.
  * These values represent the columns available used for searching.
  @see NSFNanoPredicate
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFTableColumnType) {
     /** * The key column. */
     NSFKeyColumn = 1,
     /** * The attribute column. */
     NSFAttributeColumn,
     /** * The value column. */
     NSFValueColumn
-} NSFTableColumnType;
+};
 
 /** * Comparison criteria operators.
  * These values represent the operations available for concatenating predicates in an expression.
  @see NSFNanoExpression, NSFNanoPredicate
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFOperator) {
     /** * And */
     NSFAnd = 1,
     /** * Or */
     NSFOr,
-} NSFOperator;
+};
 
 /** * Date comparison options.
  * These values represent the options available when searching and comparing dates.
  @see NSFNanoSearch, NSFNanoPredicate
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFDateMatchType) {
     /** * Before the specified date */
     NSFBeforeDate = 1,
     /** * On the exact date */
     NSFOnDate,
     /** * After the specified date */
     NSFAfterDate
-} NSFDateMatchType;
+};
 
 /** * Obtaining search results options.
  * These values represent the options used by the search mechanism to return results.
  @see NSFNanoSearch
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFReturnType) {
     /** * Returns the objects. */
     NSFReturnObjects = 1,
     /** * Returns the keys */
     NSFReturnKeys,
-} NSFReturnType;
+};
 
 /** * Caching mechanism options.
  * These values represent the options used by the search mechanism to cache results.
  @see NSFNanoEngine
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFCacheMethod) {
     /** * Load data at as soon as it's available. Uses more memory, but data is available quicker. */
     CacheAllData = 1,
     /** * Loads data lazily. First access to data is slow because it retrieves it from disk, but is faster on subsequent requests because the data already exists in memory. */
     CacheDataOnDemand,
     /** * Don't cache data. Slowest mode, uses less memory because it retrieves data from disk every time it's needed. */
     DoNotCacheData,
-} NSFCacheMethod;
+};
 
 /** * Text encoding options.
  * The following constants are provided by SQLite as possible string encodings.
  @see NSFNanoEngine
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFEncodingType) {
     /** * An 8-bit representation of Unicode characters. */
     NSFEncodingUTF8 = 1,
     /** * A 16-bit representation of Unicode characters. */
     NSFEncodingUTF16,
     /** * The encoding representation could not be determined. */
     NSFEncodingUnknown
-} NSFEncodingType;
+};
 
 /** * Synchronous options.
  * These values represent the options used to manipulate the synchronous flag. In NSFNanoEngine it's obtained via
@@ -229,7 +229,7 @@ typedef enum {
 
  @see NSFNanoStore, NSFNanoEngine
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFSynchronousMode) {
     /** * SQLite continues without pausing as soon as it has handed data off to the operating system.
      If the application running SQLite crashes, the data will be safe, but the database might become corrupted if
      the operating system crashes or the computer loses power before that data has been written to the disk surface.
@@ -244,13 +244,13 @@ typedef enum {
      the disk surface before continuing. This ensures that if the operating system crashes or if there is a power failure,
      the database will be uncorrupted after rebooting. FULL synchronous is very safe, but it is also slower. */
     SynchronousModeFull,
-} NSFSynchronousMode;
+};
 
 /** * Temporary files location options.
  * These values represent the options used by SQLite to create the temporary files it creates.
  @see NSFNanoEngine
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFTempStoreMode) {
     /** * When temp_store is DEFAULT (0), the compile-time C preprocessor macro SQLITE_TEMP_STORE is used to determine
      where temporary tables and indices are stored. */
     TempStoreModeDefault = 0,
@@ -260,7 +260,7 @@ typedef enum {
     TempStoreModeFile,
     /** * When temp_store is MEMORY (2) temporary tables and indices are kept in as if they were pure in-memory databases memory. */
     TempStoreModeMemory,
-} NSFTempStoreMode;
+};
 
 /** * Journal mode.
  * These values represent the options used by SQLite to the the journal mode for databases associated with the current database connection.
@@ -269,7 +269,7 @@ typedef enum {
  while a transaction is active.
  @see NSFNanoEngine
  */
-typedef enum {
+typedef NS_ENUM(unsigned int, NSFJournalModeMode) {
     /** * The DELETE journaling mode is the normal behavior. In the DELETE mode, the rollback journal is deleted at the conclusion
      of each transaction. Indeed, the delete operation is the action that causes the transaction to commit. (See the document titled
      Atomic Commit In SQLite for additional detail.) */
@@ -295,7 +295,7 @@ typedef enum {
      no longer works; it behaves in an undefined way. Applications must avoid using the ROLLBACK command when the journal mode is OFF.
      If the application crashes in the middle of a transaction when the OFF journaling mode is set, then the database file will very likely go corrupt. */
     JournalModeOFF
-} NSFJournalModeMode;
+};
 
 /** * Memory-backed document store descriptor.
  * This value represents the descriptor used by NanoStore to identify memory-backed document stores. In NSFNanoStore is available via

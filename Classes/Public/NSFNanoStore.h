@@ -151,7 +151,7 @@
  * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (id)initStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath;
+- (instancetype)initStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -189,13 +189,13 @@
  * @note If the document store is file-based, its path will be returned. If it's a memory-backed document store, \link :Globals::NSFMemoryDatabase NSFMemoryDatabase \endlink will be returned instead.
  */
 
-- (NSString *)filePath;
+@property (nonatomic, readonly, copy) NSString *filePath;
 
 /** * Checks whether the document store is closed or open.
  * @see \link close - (void)close \endlink
  */
 
-- (BOOL)isClosed;
+@property (nonatomic, getter=isClosed, readonly) BOOL closed;
 
 //@}
 
@@ -287,7 +287,7 @@
  * @see \link bagsContainingObjectWithKey: - (NSArray *)bagsContainingObjectWithKey:(NSString *)theKey \endlink
  */
 
-- (NSArray *)bags;
+@property (nonatomic, readonly, copy) NSArray *bags;
 
 /** * Retrieves the bag associated with the specified name.
  * @param theName the name of the bag.
@@ -335,7 +335,7 @@
  * @note The classes can be NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
  */
 
-- (NSArray *)allObjectClasses;
+@property (nonatomic, readonly, copy) NSArray *allObjectClasses;
 
 /** * Returns an array containing the objects in the document store which match a specific class name.
  * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
@@ -475,12 +475,12 @@
  * @note Check properties nanoEngineProcessingMode and saveInterval to find out the current state of the object.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the store.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy) NSString *JSONDescription;
 
 //@}
 

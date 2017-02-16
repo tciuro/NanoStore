@@ -37,11 +37,11 @@
 @interface NSFNanoEngine (Private)
 - (NSFOrderedDictionary *)dictionaryDescription;
 + (NSArray *)NSFP_sharedROWIDKeywords;
-- (NSString *)NSFP_cacheMethodToString;
+@property (nonatomic, readonly, copy) NSString *NSFP_cacheMethodToString;
 - (NSString*)NSFP_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
 + (NSDictionary *)_plistToDictionary:(NSString *)aPlist;
 + (void)NSFP_decodeQuantum:(unsigned char *)dest andSource:(const char *)src;
-- (NSArray *)NSFP_flattenAllTables;
+@property (nonatomic, readonly, copy) NSArray *NSFP_flattenAllTables;
 - (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString *)aSQLQuery;
 + (int)NSFP_stripBitsFromExtendedResultCode:(int)extendedResult;
 
