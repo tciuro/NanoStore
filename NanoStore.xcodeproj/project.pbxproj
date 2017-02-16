@@ -190,19 +190,12 @@
 		748D3457139772B600FD5565 /* libnanostore2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libnanostore2-Prefix.pch"; sourceTree = "<group>"; };
 		748EB008153F09A600F5C7F2 /* NanoStoreGlobalsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreGlobalsTests.h; sourceTree = "<group>"; };
 		748EB009153F09A600F5C7F2 /* NanoStoreGlobalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreGlobalsTests.m; sourceTree = "<group>"; };
-		74987EE812DB1B1A00E5D7CB /* OCUnitExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCUnitExtensions.h; sourceTree = "<group>"; };
-		74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCUnitExtensions.m; sourceTree = "<group>"; };
-		74987F1B12DB1B9D00E5D7CB /* Icon-Fail.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Fail.tiff"; sourceTree = "<group>"; };
-		74987F1C12DB1B9D00E5D7CB /* Icon-Pass.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Pass.tiff"; sourceTree = "<group>"; };
 		74A4EF10138E3EBD00FBC46C /* NSFNanoSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NSFNanoSortDescriptor.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NSFNanoSortDescriptor.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		74A4EF18138E47B100FBC46C /* NanoStoreSortTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreSortTests.h; sourceTree = "<group>"; };
 		74A4EF19138E47B100FBC46C /* NanoStoreSortTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NanoStoreSortTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		74ACCBA8168FA05800585114 /* NSFOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFOrderedDictionary.h; sourceTree = "<group>"; };
 		74ACCBA9168FA05800585114 /* NSFOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFOrderedDictionary.m; sourceTree = "<group>"; };
-		74B20983122B280C0079E2FF /* NanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStore.m; sourceTree = "<group>"; };
-		74B20984122B280C0079E2FF /* NanoStoreTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreTester.h; sourceTree = "<group>"; };
-		74B20985122B280C0079E2FF /* NanoStoreTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreTester.m; sourceTree = "<group>"; };
 		74B20988122B280C0079E2FF /* NanoStoreExpressionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreExpressionTests.h; sourceTree = "<group>"; };
 		74B20989122B280C0079E2FF /* NanoStoreExpressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NanoStoreExpressionTests.m; sourceTree = "<group>"; };
 		74B2098A122B280C0079E2FF /* NanoStoreSearchTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStoreSearchTests.h; sourceTree = "<group>"; };
@@ -414,43 +407,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		74987EE712DB1B1A00E5D7CB /* OCUnitExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				74987EE812DB1B1A00E5D7CB /* OCUnitExtensions.h */,
-				74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */,
-			);
-			path = OCUnitExtensions;
-			sourceTree = "<group>";
-		};
-		74987F1A12DB1B9D00E5D7CB /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				74987F1B12DB1B9D00E5D7CB /* Icon-Fail.tiff */,
-				74987F1C12DB1B9D00E5D7CB /* Icon-Pass.tiff */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		74B20981122B280C0079E2FF /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				74B20982122B280C0079E2FF /* EasyDebugging */,
-				74987EE712DB1B1A00E5D7CB /* OCUnitExtensions */,
-				74987F1A12DB1B9D00E5D7CB /* Resources */,
 				74B20986122B280C0079E2FF /* UnitTests */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		74B20982122B280C0079E2FF /* EasyDebugging */ = {
-			isa = PBXGroup;
-			children = (
-				74B20983122B280C0079E2FF /* NanoStore.m */,
-				74B20984122B280C0079E2FF /* NanoStoreTester.h */,
-				74B20985122B280C0079E2FF /* NanoStoreTester.m */,
-			);
-			path = EasyDebugging;
 			sourceTree = "<group>";
 		};
 		74B20986122B280C0079E2FF /* UnitTests */ = {

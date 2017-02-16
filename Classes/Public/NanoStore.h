@@ -425,9 +425,6 @@
  
  // Perform the search
  NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
- 
- // Cleanup
- [sortByLastName release];
  @endcode
 
  @section paging_limit_sec Paging using Limit and Offset

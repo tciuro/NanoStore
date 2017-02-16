@@ -64,9 +64,6 @@
  NSLog(@"%@", [[object info]objectForKey:@"City"]);
  }
  
- // Cleanup
- [sortCities release];
- 
  // Close the document store
  [nanoStore closeWithError:nil];
  @endcode
