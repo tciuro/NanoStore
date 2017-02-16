@@ -623,7 +623,6 @@
 				74C1FA871538DDD60077DAD1 /* Sources */,
 				74C1FA881538DDD60077DAD1 /* Frameworks */,
 				74C1FA891538DDD60077DAD1 /* Resources */,
-				74C1FA8A1538DDD60077DAD1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -678,7 +677,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0830;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "NanoStore" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -745,19 +744,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# #################################################\n# Distribution build script\n# \n# Builds simulator and device builds into a single binary, \n# for both debug and release.\n# #################################################\n\n# GLOBAL SETTINGS\n\nMY_BUILD_RELEASE=\"Release\"\n\nMY_LIBRARY_TARGET=\"libnanostore2\"\nMY_BUILD_DIRECTORY=${BUILD_ROOT}\nMY_BINARY_NAME=\"libnanostore2.a\"\nMY_TEMP_LIBRARY_IPHONEOS_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos\"\nMY_TEMP_LIBRARY_IPHONESIMULATOR_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator\"\nsetenv BUILD_STYLE=$MY_BUILD_RELEASE\n\n#### BUILD ######\n\n# Build for Device\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphoneos TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONEOS_DIR}\n\n# Build for Simulator\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphonesimulator TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\n\nNANOSTORE_OUTPUT_PATH=\"${PROJECT_DIR}/Distribution/NanoStore2/${MY_BUILD_RELEASE}\"\n\necho \"*************************************************\"\necho \"Distribution directory located at: \" $NANOSTORE_OUTPUT_PATH\necho \"*************************************************\"\n\n# Build the NanoStore distro directory if needed\nif [[ ! -d ${NANOSTORE_OUTPUT_PATH} ]]; then\nmkdir -p \"$NANOSTORE_OUTPUT_PATH/Library\"\nfi\n\n# Combine lib files for various platforms into one\nlipo -create \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos/${MY_BINARY_NAME}\" \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator/${MY_BINARY_NAME}\" -output \"${NANOSTORE_OUTPUT_PATH}/Library/${MY_BINARY_NAME}\"\n\n#Delete 'Release-iphoneos' and 'Release-iphonesimulator' directories\nrm -rf ${MY_TEMP_LIBRARY_IPHONEOS_DIR}\nrm -rf ${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\nrm -rf ${PROJECT_DIR}/build\n";
-		};
-		74C1FA8A1538DDD60077DAD1 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\nXcodeCoverage/exportenv.sh";
 		};
 		74C1FABC1538E14B0077DAD1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -933,7 +919,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.webbo.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = NanoStore;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
@@ -957,7 +944,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.webbo.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = NanoStore;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
@@ -967,17 +955,22 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -986,7 +979,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = "";
@@ -997,16 +990,20 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1014,7 +1011,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = "";
 				"WARNING_CFLAGS[arch=*]" = "-Wall";
@@ -1031,7 +1028,7 @@
 				GCC_PREFIX_HEADER = "libnanostore2/libnanostore2-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;
@@ -1047,7 +1044,7 @@
 				DSTROOT = /tmp/libnanostore2.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libnanostore2/libnanostore2-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;
 				SDKROOT = iphoneos;
@@ -1058,6 +1055,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1066,6 +1064,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1096,6 +1095,7 @@
 				INFOPLIST_FILE = "UnitTestMac/UnitTestMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.webbo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1121,6 +1121,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "UnitTestMac/UnitTestMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.webbo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1147,7 +1148,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "UnitTestiOS/UnitTestiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.webbo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -1168,7 +1170,8 @@
 				GCC_PREFIX_HEADER = "UnitTestiOS/UnitTestiOS-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "UnitTestiOS/UnitTestiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.webbo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

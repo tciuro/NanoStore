@@ -922,7 +922,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     unsigned char *bytes = (unsigned char *)malloc(decodedDataSize);
     
     // Extract the bytes
-    [data getBytes:bytes];
+    [data getBytes:bytes length:decodedDataSize];
     
     unsigned char inBuffer[3];
     unsigned char outBuffer[4];
@@ -1084,13 +1084,14 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     if ([NSPropertyListSerialization propertyList:aPlist isValidForFormat:NSPropertyListXMLFormat_v1_0] == NO)
         return nil;
     
-    NSString *errorString = nil;
+    NSError *error = nil;
     NSPropertyListFormat *format = nil;
     NSData *data = [aPlist dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSDictionary *dict = [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListImmutable format:format errorDescription:&errorString];
+    
+    NSDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:format error:&error];
     
     if (nil == dict) {
-        NSLog(@"*** -[%@ %@]: [NSPropertyListSerialization propertyListFromData] failure. %@", [self class], NSStringFromSelector(_cmd), errorString);
+        NSLog(@"*** -[%@ %@]: [NSPropertyListSerialization propertyListFromData] failure. %@", [self class], NSStringFromSelector(_cmd), error);
         NSLog(@"     Plist data: %@", aPlist);
         return nil;
     }

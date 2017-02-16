@@ -1,5 +1,5 @@
 export BUILT_PRODUCTS_DIR="/Users/tito/Library/Developer/Xcode/DerivedData/NanoStore-exwkrllvigpqafdfpvaoxwdfdxbv/Build/Products/Debug"
 export CURRENT_ARCH="x86_64"
-export OBJECT_FILE_DIR_normal="/Users/tito/Library/Developer/Xcode/DerivedData/NanoStore-exwkrllvigpqafdfpvaoxwdfdxbv/Build/Intermediates/NanoStore.build/Debug/NanoStore.build/Objects-normal"
+export OBJECT_FILE_DIR_normal="/Users/tito/Library/Developer/Xcode/DerivedData/NanoStore-exwkrllvigpqafdfpvaoxwdfdxbv/Build/Intermediates/NanoStore.build/Debug/UnitTestMac.build/Objects-normal"
 export OBJROOT="/Users/tito/Library/Developer/Xcode/DerivedData/NanoStore-exwkrllvigpqafdfpvaoxwdfdxbv/Build/Intermediates"
 export SRCROOT="/Users/tito/Desktop/Backup/NanoStore"
