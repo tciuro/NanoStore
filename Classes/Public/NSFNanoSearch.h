@@ -155,33 +155,33 @@
 @interface NSFNanoSearch : NSObject
 
 /** * The document store used for searching. */
-@property (nonatomic, weak, readonly) NSFNanoStore *nanoStore;
+@property (nonatomic, readonly, nonnull) NSFNanoStore *nanoStore;
 /** * The set of attributes to be returned on matching objects. */
-@property (nonatomic, strong, readwrite) NSArray *attributesToBeReturned;
+@property (nonatomic, strong, readwrite, nullable) NSArray *attributesToBeReturned;
 /** * The key used for searching. */
-@property (nonatomic, copy, readwrite) NSString *key;
+@property (nonatomic, copy, readwrite, nullable) NSString *key;
 /** * The attribute used for searching. */
-@property (nonatomic, copy, readwrite) NSString *attribute;
+@property (nonatomic, copy, readwrite, nullable) NSString *attribute;
 /** * The value used for searching. */
-@property (nonatomic, copy, readwrite) id value;
+@property (nonatomic, copy, readwrite, nullable) id value;
 /** * The comparison operator used for searching. */
 @property (nonatomic, assign, readwrite) NSFMatchType match;
 /** * The list of NSFNanoExpression objects used for searching. */
-@property (nonatomic, strong, readwrite) NSArray *expressions;
+@property (nonatomic, strong, readwrite, nullable) NSArray *expressions;
 /** * If set to YES, specifying NSFReturnKeys applies the DISTINCT function and groups the values. */
 @property (nonatomic, assign, readwrite) BOOL groupValues;
 /** * The SQL statement used for searching. Set when executeSQL: is invoked. */
-@property (nonatomic, copy, readonly) NSString *sql;
+@property (nonatomic, copy, readonly, nonnull) NSString *sql;
 /** * The sort holds an array of one or more sort descriptors of type \link NSFNanoSortDescriptor NSFNanoSortDescriptor \endlink. */
-@property (nonatomic, strong, readwrite) NSArray *sort;
+@property (nonatomic, strong, readwrite, nullable) NSArray *sort;
 /** * The filterClass allows to filter the results based on a specific object class. */
-@property (nonatomic, copy, readwrite) NSString *filterClass;
+@property (nonatomic, copy, readwrite, nullable) NSString *filterClass;
 /** * If an expression has an offset clause, then the first M rows are omitted from the result set returned by the search operation and the next N rows are returned, where M and N are the values that the offset and limit clauses evaluate to, respectively. Or, if the search would return less than M+N rows if it did not have a limit clause, then the first M rows are skipped and the remaining rows (if any) are returned. */
 @property (nonatomic, assign, readwrite) NSUInteger offset;
 /** * The limit clause is used to place an upper bound on the number of rows returned by a Search operation. */
 @property (nonatomic, assign, readwrite) NSUInteger limit;
 /** * limit a Search to a particular bag. */
-@property (nonatomic, assign, readwrite) NSFNanoBag *bag;
+@property (nonatomic, assign, readwrite, nullable) NSFNanoBag *bag;
 
 /** @name Creating and Initializing a Search
  */
@@ -194,7 +194,7 @@
  * @see \link initWithStore: - (id)initWithStore:(NSFNanoStore *)theNanoStore \endlink
  */
 
-+ (NSFNanoSearch *)searchWithStore:(NSFNanoStore *)theNanoStore;
++ (nonnull NSFNanoSearch *)searchWithStore:(nonnull NSFNanoStore *)theNanoStore;
 
 /** * Initializes a newly allocated search element for a given document store.
  * @param theNanoStore the document store where the search will be performed. Must not be nil.
@@ -202,7 +202,7 @@
  * @see \link searchWithStore: + (NSFNanoSearch *)searchWithStore:(NSFNanoStore *)theNanoStore \endlink
  */
 
-- (instancetype)initWithStore:(NSFNanoStore *)theNanoStore;
+- (nonnull instancetype)initWithStore:(nonnull NSFNanoStore *)theNanoStore;
 
 //@}
 
@@ -219,7 +219,7 @@
  * @see \link searchObjectsAdded:date:returnType:error: - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError;
+- (nonnull id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Performs a search using the values of the properties before, on or after a given date.
  * @param theDateMatch the type of date comparison. Can be \link Globals::NSFBeforeDate NSFBeforeDate \endlink, \link Globals::NSFOnDate NSFOnDate \endlink or \link Globals::NSFAfterDate NSFAfterDate \endlink.
@@ -231,7 +231,7 @@
  * @see \link searchObjectsWithReturnType:error: - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError;
+- (nonnull id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(nonnull NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Returns the result of the aggregate function.
  * @param theFunctionType is the function type to be applied.
@@ -252,7 +252,7 @@
  @note The sort descriptor will be ignored when executing aggregate operations.
  */
 
-- (NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute;
+- (nonnull NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(nonnull NSString *)theAttribute;
 
 /** * Performs a search with a given SQL statement.
  * @param theSQLStatement is the SQL statement to be executed. Must not be nil or an empty string.
@@ -290,7 +290,7 @@
  * @see \link executeSQL: - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement \endlink
  */
 
-- (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError;
+- (nonnull id)executeSQL:(nonnull NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Performs a search with a given SQL statement.
  * @param theSQLStatement is the SQL statement to be executed. Must not be nil or an empty string.
@@ -324,7 +324,7 @@
  * @note The sort descriptor will be ignored when executing custom SQL statements.
  */
 
-- (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement;
+- (nonnull NSFNanoResult *)executeSQL:(nonnull NSString *)theSQLStatement;
 
 /** * Performs an analysis of the given SQL statement.
  * @param theSQLStatement is the SQL statement to be analyzed. Must not be nil or an empty string.
@@ -357,7 +357,7 @@
  * @see \link executeSQL:returnType:error: - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (NSFNanoResult *)explainSQL:(NSString *)theSQLStatement;
+- (nonnull NSFNanoResult *)explainSQL:(nonnull NSString *)theSQLStatement;
 
 //@}
 
@@ -389,11 +389,11 @@
 /** Returns a string representation of the search.
  */
 
-@property (nonatomic, readonly, copy) NSString *description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the search.
  */
 
-@property (nonatomic, readonly, copy) NSString *JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 @end

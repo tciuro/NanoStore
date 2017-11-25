@@ -72,7 +72,7 @@
 /** * Number of rows contained in the result set. */
 @property (nonatomic, assign, readonly) NSUInteger numberOfRows;
 /** * A reference to the error encountered while processing the request, otherwise nil if the request was successful. */
-@property (nonatomic, strong, readonly) NSError *error;
+@property (nonatomic, strong, readonly, nullable) NSError *error;
 
 /** @name Accessors
  */
@@ -83,7 +83,7 @@
  * @returns An array with the columns retrieved from the result set.
  */
 
-@property (nonatomic, readonly, copy) NSArray *columns;
+@property (nonatomic, readonly, copy, nonnull) NSArray *columns;
 
 /** * Returns a new array containing the values for a given column.
  * @param theIndex is the index of the value in the result set.
@@ -92,20 +92,20 @@
  * @throws NSRangeException is thrown if the index is out of bounds.
  */
 
-- (NSString *)valueAtIndex:(NSUInteger)theIndex forColumn:(NSString *)theColumn;
+- (nullable NSString *)valueAtIndex:(NSUInteger)theIndex forColumn:(nonnull NSString *)theColumn;
 
 /** * Returns a new array containing the values for a given column.
  * @param theColumn is the name of the column in the result set.
  * @returns An array with the values associated with a given column.
  */
 
-- (NSArray *)valuesForColumn:(NSString *)theColumn;
+- (nonnull NSArray *)valuesForColumn:(nonnull NSString *)theColumn;
 
 /** * Returns the first value.
  * @returns The value of the first element from the result set.
  */
 
-@property (nonatomic, readonly, copy) NSString *firstValue;
+@property (nonatomic, readonly, copy, nullable) NSString *firstValue;
 
 //@}
 
@@ -118,7 +118,7 @@
  * @param thePath is the location where the result will be saved to a file.
  */
 
-- (void)writeToFile:(NSString *)thePath;
+- (void)writeToFile:(nonnull NSString *)thePath;
 
 //@}
 
@@ -130,12 +130,12 @@
 /** * Returns a string representation of the result.
  */
 
-@property (nonatomic, readonly, copy) NSString *description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the result.
  */
 
-@property (nonatomic, readonly, copy) NSString *JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

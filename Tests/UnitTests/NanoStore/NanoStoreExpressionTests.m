@@ -67,7 +67,10 @@
 {
     NSFNanoPredicate *predicate = nil;
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         predicate = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
@@ -77,7 +80,10 @@
 {
     NSFNanoExpression *expression = nil;
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         expression = [NSFNanoExpression expressionWithPredicate:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }

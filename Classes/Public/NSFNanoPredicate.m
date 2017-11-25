@@ -51,7 +51,10 @@
 
 - (instancetype)init
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     return [self initWithColumn:NSFKeyColumn matching:NSFEqualTo value:nil];
+#pragma clang diagnostic pop
 }
 
 - (instancetype)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue

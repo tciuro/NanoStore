@@ -182,13 +182,13 @@
 @interface NSFNanoObject : NSObject <NSFNanoObjectProtocol, NSCopying>
 
 /** * The store where the object is saved.  */
-@property (nonatomic, weak, readonly) NSFNanoStore *store;
+@property (nonatomic, readonly, nullable) NSFNanoStore *store;
 /** * The UUID of the NanoObject.  */
-@property (nonatomic, copy, readonly) NSString *key;
+@property (nonatomic, copy, readonly, nullable) NSString *key;
 /** * The user-supplied information of the NanoObject.  */
-@property (nonatomic, copy, readonly) NSDictionary *info;
+@property (nonatomic, copy, readonly, nullable) NSDictionary *info;
 /** * The class name used to store the NanoObject.  */
-@property (nonatomic, copy, readonly) NSString *originalClassString;
+@property (nonatomic, copy, readonly, nullable) NSString *originalClassString;
 /** * To determine whether the object has uncommited changes.  */
 @property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
@@ -201,7 +201,7 @@
  * @return An empty NanoObject upon success, nil otherwise.
  */
 
-+ (NSFNanoObject*)nanoObject;
++ (nullable NSFNanoObject *)nanoObject;
 
 /** * Creates and returns a NanoObject with the given dictionary.
  * @param theDictionary the information associated with the object. Must not be nil.
@@ -210,7 +210,7 @@
  * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink
  */
 
-+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary;
++ (nullable NSFNanoObject *)nanoObjectWithDictionary:(nullable NSDictionary *)theDictionary;
 
 /** * Creates and returns a NanoObject with the given dictionary and key.
  * @param theDictionary the information associated with the object. Must not be nil.
@@ -220,7 +220,7 @@
  * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink
  */
 
-+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary key:(NSString *)theKey;
++ (nullable NSFNanoObject *)nanoObjectWithDictionary:(nullable NSDictionary *)theDictionary key:(nullable NSString *)theKey;
 
 /** * Initializes a newly allocated NanoObject with the given dictionary.
  * @param theDictionary the information associated with the object. Must not be nil.
@@ -229,7 +229,7 @@
  * @see \link nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary \endlink
  */
 
-- (instancetype)initFromDictionaryRepresentation:(NSDictionary *)theDictionary;
+- (nullable instancetype)initFromDictionaryRepresentation:(nullable NSDictionary *)theDictionary;
 
 /** * Initializes a newly allocated NanoObject with the given dictionary and key.
  * @param theDictionary the information associated with the object. Must not be nil.
@@ -238,7 +238,7 @@
  * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
  */
 
-- (instancetype)initFromDictionaryRepresentation:(NSDictionary *)theDictionary key:(NSString *)theKey;
+- (nullable instancetype)initFromDictionaryRepresentation:(nullable NSDictionary *)theDictionary key:(nullable NSString *)theKey;
 
 //@}
 
@@ -251,7 +251,7 @@
  * @param otherDictionary The dictionary from which to add entries.
 */
 
-- (void)addEntriesFromDictionary:(NSDictionary *)otherDictionary;
+- (void)addEntriesFromDictionary:(nonnull NSDictionary *)otherDictionary;
 
 /** * Adds a given key-value pair to the NanoObject.
  * @param anObject the value for key. Must not be nil.
@@ -260,8 +260,8 @@
  * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink
  */
 
-- (void)setObject:(id)anObject forKey:(NSString *)aKey;
-- (void)setObject:(id)anObject forKeyedSubscript:(NSString *)aKey;
+- (void)setObject:(nonnull id)anObject forKey:(nonnull NSString *)aKey;
+- (void)setObject:(nonnull id)anObject forKeyedSubscript:(nonnull NSString *)aKey;
 
 /** * Returns the value associated with a given key.
  * @param aKey the key for value. Must not be nil.
@@ -269,8 +269,8 @@
  * @see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString *)aKey \endlink
  */
 
-- (id)objectForKey:(NSString *)aKey;
-- (id)objectForKeyedSubscript:(NSString *)aKey;
+- (nullable id)objectForKey:(nonnull NSString *)aKey;
+- (nullable id)objectForKeyedSubscript:(nonnull NSString *)aKey;
 
 /** * Removes a given key and its associated value from the NanoObject.
  * @param aKey the key to remove. Must not be nil.
@@ -278,7 +278,7 @@
  * @see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString *)aKey \endlink
  */
 
-- (void)removeObjectForKey:(NSString *)aKey;
+- (void)removeObjectForKey:(nonnull NSString *)aKey;
 
 /** * Empties the NanoObject of its entries.
  * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink
@@ -294,7 +294,7 @@
  * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink
  */
 
-- (void)removeObjectsForKeys:(NSArray *)keyArray;
+- (void)removeObjectsForKeys:(nonnull NSArray *)keyArray;
 
 //@}
 
@@ -308,31 +308,31 @@
  * @return YES if the contents of otherNanoObject are equal to the contents of the receiving NanoObject, otherwise NO.
  */
 
-- (BOOL)isEqualToNanoObject:(NSFNanoObject *)otherNanoObject;
+- (BOOL)isEqualToNanoObject:(nonnull NSFNanoObject *)otherNanoObject;
 
 /** * Saves the uncommitted changes to the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @return YES upon success, NO otherwise.
  */
 
-- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)saveStoreAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Returns a dictionary that contains the information stored in the object.
  * @note Check properties info and key to find out the current state of the object.
  * @see \link description - (NSString *)description \endlink
  */
 
-- (NSDictionary *)dictionaryRepresentation;
+- (nonnull NSDictionary *)dictionaryRepresentation;
 
 /** * Returns a string representation of the nano object.
  */
 
-@property (nonatomic, readonly, copy) NSString *description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the nano object.
  */
 
-@property (nonatomic, readonly, copy) NSString *JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

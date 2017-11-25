@@ -43,7 +43,10 @@
 
 - (instancetype)init
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     return [self initWithPredicate:nil];
+#pragma clang diagnostic pop
 }
 
 - (instancetype)initWithPredicate:(NSFNanoPredicate *)aPredicate

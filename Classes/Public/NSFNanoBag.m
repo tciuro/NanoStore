@@ -42,7 +42,7 @@
     /** \endcond */
 }
 
-+ (NSFNanoBag*)bag
++ (NSFNanoBag *)bag
 {
     return [[self alloc]initBagWithName:nil andObjects:@[]];
 }

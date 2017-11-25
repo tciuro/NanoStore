@@ -31,7 +31,10 @@
 {
     NSFNanoSortDescriptor *sort = nil;
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:nil ascending:YES];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }

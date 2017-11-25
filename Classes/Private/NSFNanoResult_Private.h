@@ -29,13 +29,13 @@
 /** \cond */
 
 @interface NSFNanoResult (Private)
-+ (NSFNanoResult *)_resultWithDictionary:(NSDictionary *)results;
-+ (NSFNanoResult *)_resultWithError:(NSError *)error;
++ (nonnull NSFNanoResult *)_resultWithDictionary:(nonnull NSDictionary *)results;
++ (nonnull NSFNanoResult *)_resultWithError:(nonnull NSError *)error;
 
-- (id)_initWithDictionary:(NSDictionary *)results;
-- (id)_initWithError:(NSError *)error;
+- (nonnull id)_initWithDictionary:(nonnull NSDictionary *)results;
+- (nonnull id)_initWithError:(nonnull NSError *)error;
 
-- (void)_setError:(NSError *)error;
+- (void)_setError:(nonnull NSError *)error;
 - (void)_reset;
 - (void)_calculateNumberOfRows;
 @end

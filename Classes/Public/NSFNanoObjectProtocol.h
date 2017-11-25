@@ -60,13 +60,13 @@
  @endcode
  */
 
-- (instancetype)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore;
+- (nullable instancetype)initNanoObjectFromDictionaryRepresentation:(nullable NSDictionary *)theDictionary forKey:(nullable NSString *)aKey store:(nullable NSFNanoStore *)theStore;
 
 /** * Returns a dictionary that contains the information stored in the object.
  * @see \link nanoObjectKey - (NSString *)nanoObjectKey \endlink
  */
 
-@property (nonatomic, readonly, copy) NSDictionary *nanoObjectDictionaryRepresentation;
+@property (nonatomic, readonly, copy, nonnull) NSDictionary *nanoObjectDictionaryRepresentation;
 
 /** * Returns the key associated with the object.
  * @note
@@ -75,7 +75,7 @@
  * @see \link nanoObjectDictionaryRepresentation - (NSDictionary *)nanoObjectDictionaryRepresentation \endlink
  */
 
-@property (nonatomic, readonly, copy) NSString *nanoObjectKey;
+@property (nonatomic, readonly, copy, nonnull) NSString *nanoObjectKey;
 
 /** * Returns a reference to the object holding the private data or information that will be used for sorting.
  * Most custom objects will return <i>self</i>, as is the case for NSFNanoBag. Since we can sort a bag by <i>name</i>, <i>key</i> or <i>hasUnsavedChanges</i>,
@@ -114,6 +114,6 @@
  @endcode
  */
 
-@property (nonatomic, readonly, strong) id rootObject;
+@property (nonatomic, readonly, nonnull) id rootObject;
 
 @end

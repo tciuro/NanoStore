@@ -29,20 +29,18 @@
 /** \cond */
 
 @interface NSFNanoSearch (Private)
-- (NSDictionary *)_retrieveDataWithError:(NSError * __autoreleasing *)outError;
-- (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match;
-- (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match returning:(NSFReturnType)returnedObjectType;
-- (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(NSError * __autoreleasing *)outError;
-@property (nonatomic, readonly, copy) NSString *_preparedSQL;
-- (NSString *)_prepareSQLQueryStringWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(id)aValue matching:(NSFMatchType)match;
-- (NSString *)_prepareSQLQueryStringWithExpressions:(NSArray *)someExpressions;
-- (NSArray *)_resultsFromSQLQuery:(NSString *)theSQLStatement;
-+ (NSString *)_prepareSQLQueryStringWithKeys:(NSArray *)someKeys;
-+ (NSString *)_querySegmentForColumn:(NSString *)aColumn value:(id)aValue matching:(NSFMatchType)match;
-+ (NSString *)_querySegmentForAttributeColumnWithValue:(id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(id)aValue;
-- (NSDictionary *)_dictionaryForKeyPath:(NSString *)keyPath value:(id)value;
-+ (NSString *)_quoteStrings:(NSArray *)strings joiningWithDelimiter:(NSString *)delimiter;
-- (id)_sortResultsIfApplicable:(NSDictionary *)results returnType:(NSFReturnType)theReturnType;
+- (nullable NSDictionary *)_retrieveDataWithError:(NSError * _Nullable * _Nullable)outError;
+- (nullable NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(nonnull NSDate *)aDate error:(NSError * _Nullable * _Nullable)outError;
+@property (nonatomic, readonly, copy, nonnull) NSString *_preparedSQL;
+- (nonnull NSString *)_prepareSQLQueryStringWithKey:(nullable NSString *)aKey attribute:(nullable NSString *)anAttribute value:(nullable id)aValue matching:(NSFMatchType)match;
+- (nonnull NSString *)_prepareSQLQueryStringWithExpressions:(nonnull NSArray *)someExpressions;
+- (nonnull NSArray *)_resultsFromSQLQuery:(nonnull NSString *)theSQLStatement;
++ (nonnull NSString *)_prepareSQLQueryStringWithKeys:(nonnull NSArray *)someKeys;
++ (nonnull NSString *)_querySegmentForColumn:(nonnull NSString *)aColumn value:(nonnull id)aValue matching:(NSFMatchType)match;
++ (nonnull NSString *)_querySegmentForAttributeColumnWithValue:(nonnull id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(nonnull id)aValue;
+- (nonnull NSDictionary *)_dictionaryForKeyPath:(nonnull NSString *)keyPath value:(nonnull id)value;
++ (nonnull NSString *)_quoteStrings:(nonnull NSArray *)strings joiningWithDelimiter:(nonnull NSString *)delimiter;
+- (nonnull id)_sortResultsIfApplicable:(nonnull NSDictionary *)results returnType:(NSFReturnType)theReturnType;
 @end
 
 /** \endcond */

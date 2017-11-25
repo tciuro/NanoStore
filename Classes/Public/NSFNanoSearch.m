@@ -64,15 +64,6 @@
     return self;
 }
 
-/** \cond */
-
-- (void)dealloc
-{
-    [self reset];
-}
-
-/** \endcond */
-
 #pragma mark -
 
 - (NSString *)sql

@@ -72,7 +72,7 @@
 @interface NSFNanoSortDescriptor : NSObject
 
 /** * The property key to use when performing a comparison */
-@property (nonatomic, copy, readonly) NSString *attribute;
+@property (nonatomic, copy, readonly, nonnull) NSString *attribute;
 /** * The property to indicate whether the comparison should be performed in ascending mode */
 @property (nonatomic, readonly) BOOL isAscending;
 
@@ -90,7 +90,7 @@
  * @see \link initWithKey:ascending: - (id)initWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
  */
 
-+ (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
++ (nonnull NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(nonnull NSString *)theAttribute ascending:(BOOL)ascending;
 
 /** * Initializes a newly allocated sort descriptor with the specified key and ordering.
  * @param theKey the property key to use when performing a comparison. Must not be nil or empty.
@@ -101,7 +101,7 @@
  * @see \link sortDescriptorWithKey:ascending: - (NSFNanoSortDescriptor *)sortDescriptorWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
  */
 
-- (instancetype)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAttribute:(nonnull NSString *)theAttribute ascending:(BOOL)ascending NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -114,13 +114,13 @@
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-@property (nonatomic, readonly, copy) NSString *description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the sort.
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-@property (nonatomic, readonly, copy) NSString *JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

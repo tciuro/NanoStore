@@ -261,7 +261,7 @@
     }
 }
 
-+ (NSString *)_NSObjectToJSONString:(id)object error:(NSError **)error
++ (nonnull NSString *)_NSObjectToJSONString:(nonnull id)object error:(NSError **)error
 {
     // Make sure we have a safe object
     object = [NSFNanoObject _safeObjectFromObject:object];
@@ -280,7 +280,7 @@
     return tempError.localizedDescription;
 }
 
-+ (id)_safeObjectFromObject:(id)object
++ (nonnull id)_safeObjectFromObject:(nonnull id)object
 {
     if ([object isKindOfClass:[NSArray class]]) {
         return [NSFNanoObject _safeArrayFromArray:object];

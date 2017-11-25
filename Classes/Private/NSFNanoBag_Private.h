@@ -31,9 +31,9 @@
 @interface NSFNanoBag (Private)
 @property (nonatomic, readwrite) BOOL hasUnsavedChanges;
 
-- (void)_setStore:(NSFNanoStore *)aStore;
-- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(NSError * __autoreleasing *)outError;
-- (void)_inflateObjectsWithKeys:(NSArray *)someKeys;
+- (void)_setStore:(nonnull NSFNanoStore *)aStore;
+- (BOOL)_saveInStore:(nonnull NSFNanoStore *)someStore error:(NSError * _Nullable * _Nullable)outError;
+- (void)_inflateObjectsWithKeys:(nonnull NSArray *)someKeys;
 @end
 
 /** \endcond */

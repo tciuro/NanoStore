@@ -72,11 +72,16 @@
 {
     NSFNanoBag *bag = nil;
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    
     @try {
         bag = [NSFNanoBag bagWithObjects:nil];
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
+    
+#pragma clang diagnostic pop
 }
 
 - (void)testBagSettingNameManually
@@ -293,7 +298,10 @@
     
     @try {
         NSError *outError = nil;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         [bag addObject:nil error:&outError];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
@@ -327,9 +335,14 @@
 {
     NSFNanoBag *bag = [NSFNanoBag bag];
     NSError *outError = nil;
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     BOOL success = [bag addObjectsFromArray:nil error:&outError];
-    BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
+#pragma clang diagnostic pop
 
+    BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
+    
     NSDictionary *info = [bag dictionaryRepresentation];
     NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
     
@@ -410,7 +423,10 @@
     [bag addObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo] error:nil];
     
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         [bag removeObject:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }

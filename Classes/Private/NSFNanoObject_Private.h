@@ -29,15 +29,15 @@
 /** \cond */
 
 @interface NSFNanoObject ()
-@property (nonatomic, weak, readwrite) NSFNanoStore *store;
-@property (nonatomic, copy, readwrite) NSString *key;
+@property (nonatomic, readwrite, nullable) NSFNanoStore *store;
+@property (nonatomic, copy, readwrite, nullable) NSString *key;
 @property (nonatomic, readwrite) BOOL hasUnsavedChanges;
 
-- (void)_setOriginalClassString:(NSString *)theClassString;
-+ (NSString *)_NSObjectToJSONString:(id)object error:(NSError **)error;
-+ (NSDictionary *)_safeDictionaryFromDictionary:(NSDictionary *)dictionary;
-+ (NSArray *)_safeArrayFromArray:(NSArray *)array;
-+ (id)_safeObjectFromObject:(id)object;
+- (void)_setOriginalClassString:(nullable NSString *)theClassString;
++ (nonnull NSString *)_NSObjectToJSONString:(nonnull id)object error:(NSError * _Nullable * _Nullable)error;
++ (nonnull NSDictionary *)_safeDictionaryFromDictionary:(nonnull NSDictionary *)dictionary;
++ (nonnull NSArray *)_safeArrayFromArray:(nonnull NSArray *)array;
++ (nonnull id)_safeObjectFromObject:(nonnull id)object;
 @end
 
 /** \endcond */

@@ -29,7 +29,7 @@
 /** \cond */
 
 @interface NSFNanoExpression (Private)
-- (NSArray *)arrayDescription;
+- (nonnull NSArray *)arrayDescription;
 @end
 
 /** \endcond */

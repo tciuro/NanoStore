@@ -53,7 +53,10 @@
     NSFNanoSearch *search = nil;
     
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         search = [NSFNanoSearch searchWithStore:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
@@ -760,7 +763,10 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         [search executeSQL:nil returnType:NSFReturnObjects error:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
@@ -1176,7 +1182,10 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
 
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         [search explainSQL:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
