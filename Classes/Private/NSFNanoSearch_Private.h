@@ -37,7 +37,7 @@
 - (nonnull NSArray *)_resultsFromSQLQuery:(nonnull NSString *)theSQLStatement;
 + (nonnull NSString *)_prepareSQLQueryStringWithKeys:(nonnull NSArray *)someKeys;
 + (nonnull NSString *)_querySegmentForColumn:(nonnull NSString *)aColumn value:(nonnull id)aValue matching:(NSFMatchType)match;
-+ (nonnull NSString *)_querySegmentForAttributeColumnWithValue:(nonnull id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(nonnull id)aValue;
++ (nonnull NSString *)_querySegmentForAttributeColumnWithValue:(nonnull id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(nullable id)aValue;
 - (nonnull NSDictionary *)_dictionaryForKeyPath:(nonnull NSString *)keyPath value:(nonnull id)value;
 + (nonnull NSString *)_quoteStrings:(nonnull NSArray *)strings joiningWithDelimiter:(nonnull NSString *)delimiter;
 - (nonnull id)_sortResultsIfApplicable:(nonnull NSDictionary *)results returnType:(NSFReturnType)theReturnType;
