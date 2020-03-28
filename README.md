@@ -1,3 +1,5 @@
+![CI](https://github.com/tciuro/NanoStore/workflows/CI/badge.svg?branch=master)
+
 # Welcome To NanoStore
 
 **What is NanoStore?**
