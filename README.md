@@ -1,4 +1,4 @@
-![CI](https://github.com/tciuro/NanoStore/workflows/CI/badge.svg?branch=master)
+![Tests](https://github.com/tciuro/NanoStore/workflows/CI/badge.svg?branch=master)
 
 # Welcome To NanoStore
 
