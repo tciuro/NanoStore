@@ -2,7 +2,7 @@
      NSFNanoBag_Private.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -29,9 +29,11 @@
 /** \cond */
 
 @interface NSFNanoBag (Private)
-- (void)_setStore:(NSFNanoStore *)aStore;
-- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(NSError * __autoreleasing *)outError;
-- (void)_inflateObjectsWithKeys:(NSArray *)someKeys;
+@property (nonatomic, readwrite) BOOL hasUnsavedChanges;
+
+- (void)_setStore:(nonnull NSFNanoStore *)aStore;
+- (BOOL)_saveInStore:(nonnull NSFNanoStore *)someStore error:(NSError * _Nullable * _Nullable)outError;
+- (void)_inflateObjectsWithKeys:(nonnull NSArray *)someKeys;
 @end
 
 /** \endcond */

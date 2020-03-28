@@ -2,7 +2,7 @@
      NSFNanoExpression.m
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -49,7 +49,15 @@
     return [[self alloc]initWithColumn:type matching:matching value:aValue];
 }
 
-- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
+- (instancetype)init
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    return [self initWithColumn:NSFKeyColumn matching:NSFEqualTo value:nil];
+#pragma clang diagnostic pop
+}
+
+- (instancetype)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
 {
     NSAssert(nil != aValue, @"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd));
     NSAssert([aValue isKindOfClass:[NSString class]] || [aValue isKindOfClass:[NSNull class]], @"*** -[%@ %@]: value must be of type NSString or NSNull.", [self class], NSStringFromSelector(_cmd));
@@ -65,7 +73,7 @@
 
 - (NSString *)description
 {
-    return [[self arrayDescription]lastObject];
+    return [self arrayDescription].lastObject;
 }
 
 - (NSArray *)arrayDescription
@@ -119,7 +127,7 @@
             mutatedString = [NSMutableString stringWithString:_value];
             mutatedStringLength = [_value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [values addObject:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [_value uppercaseString], columnValue, [mutatedString uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [_value uppercaseString], columnValue, mutatedString.uppercaseString]];
             break;
         case NSFInsensitiveContains:
             [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", _value, @"%"]];

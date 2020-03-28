@@ -2,7 +2,7 @@
      NSFNanoSortDescriptor.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -57,15 +57,12 @@
  
  // Perform the search
  NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
- STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
- STAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+ XCTAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+ XCTAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
  
  for (NSFNanoObject *object in searchResults) {
  NSLog(@"%@", [[object info]objectForKey:@"City"]);
  }
- 
- // Cleanup
- [sortCities release];
  
  // Close the document store
  [nanoStore closeWithError:nil];
@@ -75,7 +72,7 @@
 @interface NSFNanoSortDescriptor : NSObject
 
 /** * The property key to use when performing a comparison */
-@property (nonatomic, copy, readonly) NSString *attribute;
+@property (nonatomic, copy, readonly, nonnull) NSString *attribute;
 /** * The property to indicate whether the comparison should be performed in ascending mode */
 @property (nonatomic, readonly) BOOL isAscending;
 
@@ -93,7 +90,7 @@
  * @see \link initWithKey:ascending: - (id)initWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
  */
 
-+ (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
++ (nonnull NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(nonnull NSString *)theAttribute ascending:(BOOL)ascending;
 
 /** * Initializes a newly allocated sort descriptor with the specified key and ordering.
  * @param theKey the property key to use when performing a comparison. Must not be nil or empty.
@@ -104,7 +101,7 @@
  * @see \link sortDescriptorWithKey:ascending: - (NSFNanoSortDescriptor *)sortDescriptorWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
  */
 
-- (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
+- (nonnull instancetype)initWithAttribute:(nonnull NSString *)theAttribute ascending:(BOOL)ascending NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -117,13 +114,13 @@
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the sort.
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

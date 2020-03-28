@@ -3,7 +3,7 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 5/26/12.
-//  Copyright (c) 2012 Webbo, LLC. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
 #import "NanoCarTestClass.h"
@@ -12,10 +12,10 @@
 
 @implementation NanoCarTestClass
 
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore
+- (instancetype)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore
 {
     if (self = [self init]) {
-        _name = [theDictionary objectForKey:kName];
+        _name = theDictionary[kName];
         _key = aKey;
     }
     
@@ -24,7 +24,7 @@
 
 - (NSDictionary *)nanoObjectDictionaryRepresentation
 {
-    return [NSDictionary dictionaryWithObject:_name forKey:kName];
+    return @{kName: _name};
 }
 
 - (NSString *)nanoObjectKey

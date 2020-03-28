@@ -1,8 +1,8 @@
 /*
-     NSFNanoObject.h
+     NSFNanoObject_Private.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -28,12 +28,16 @@
 
 /** \cond */
 
-@interface NSFNanoObject (Private)
-- (void)_setOriginalClassString:(NSString *)theClassString;
-+ (NSString *)_NSObjectToJSONString:(id)object error:(NSError **)error;
-+ (NSDictionary *)_safeDictionaryFromDictionary:(NSDictionary *)dictionary;
-+ (NSArray *)_safeArrayFromArray:(NSArray *)array;
-+ (id)_safeObjectFromObject:(id)object;
+@interface NSFNanoObject ()
+@property (nonatomic, readwrite, nullable) NSFNanoStore *store;
+@property (nonatomic, copy, readwrite, nullable) NSString *key;
+@property (nonatomic, readwrite) BOOL hasUnsavedChanges;
+
+- (void)_setOriginalClassString:(nullable NSString *)theClassString;
++ (nonnull NSString *)_NSObjectToJSONString:(nonnull id)object error:(NSError * _Nullable * _Nullable)error;
++ (nonnull NSDictionary *)_safeDictionaryFromDictionary:(nonnull NSDictionary *)dictionary;
++ (nonnull NSArray *)_safeArrayFromArray:(nonnull NSArray *)array;
++ (nonnull id)_safeObjectFromObject:(nonnull id)object;
 @end
 
 /** \endcond */

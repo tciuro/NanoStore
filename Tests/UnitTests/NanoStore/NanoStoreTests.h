@@ -3,12 +3,12 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 3/12/08.
-//  Copyright 2010 Webbo, L.L.C. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface NanoStoreTests : SenTestCase
+@interface NanoStoreTests : XCTestCase
 {
     NSDictionary *_defaultTestInfo;
 }

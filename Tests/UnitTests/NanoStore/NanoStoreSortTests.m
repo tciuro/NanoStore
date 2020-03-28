@@ -3,7 +3,7 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 5/26/11.
-//  Copyright 2010 Webbo, L.L.C. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
 #import "NanoStore.h"
@@ -31,24 +31,27 @@
 {
     NSFNanoSortDescriptor *sort = nil;
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:nil ascending:YES];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
 - (void)testSortParametersAscending
 {
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Foo" ascending:YES];
-    STAssertTrue ([[sort attribute]isEqualToString:@"Foo"], @"Expected the key to be the same.");
-    STAssertTrue (sort.isAscending, @"Expected the sort order to be the same.");
+    XCTAssertTrue ([[sort attribute]isEqualToString:@"Foo"], @"Expected the key to be the same.");
+    XCTAssertTrue (sort.isAscending, @"Expected the sort order to be the same.");
 }
 
 - (void)testSortParametersDescending
 {
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Bar" ascending:NO];
-    STAssertTrue ([[sort attribute]isEqualToString:@"Bar"], @"Expected the key to be the same.");
-    STAssertTrue (NO == sort.isAscending, @"Expected the sort order to be the same.");
+    XCTAssertTrue ([[sort attribute]isEqualToString:@"Bar"], @"Expected the key to be the same.");
+    XCTAssertTrue (NO == sort.isAscending, @"Expected the sort order to be the same.");
 }
 
 - (void)testSortObjectsAscending
@@ -57,25 +60,28 @@
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
-    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"Madrid" forKey:@"City"]];
-    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"Barcelona" forKey:@"City"]];
-    NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"San Sebastian" forKey:@"City"]];
-    NSFNanoObject *obj4 = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"Zaragoza" forKey:@"City"]];
-    NSFNanoObject *obj5 = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObject:@"Tarragona" forKey:@"City"]];
+    NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:@{@"City": @"Madrid"}];
+    NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:@{@"City": @"Barcelona"}];
+    NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:@{@"City": @"San Sebastian"}];
+    NSFNanoObject *obj4 = [NSFNanoObject nanoObjectWithDictionary:@{@"City": @"Zaragoza"}];
+    NSFNanoObject *obj5 = [NSFNanoObject nanoObjectWithDictionary:@{@"City": @"Tarragona"}];
 
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, obj4, obj5, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2, obj3, obj4, obj5] error:nil];
     
     // Prepare the sort
     NSFNanoSortDescriptor *sortCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"City" ascending: YES];
     
     // Prepare the search
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    search.sort = [NSArray arrayWithObjects: sortCities, nil];
+    search.sort = @[sortCities];
     
     // Perform the search
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
-    STAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+    XCTAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+    
+    XCTAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+    
+    XCTAssertTrue ([[searchResults[0] info][@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
     
@@ -94,18 +100,18 @@
     NSFNanoBag *bagThree = [NSFNanoBag bagWithName:@"Madrid"];
     NSFNanoBag *bagFour = [NSFNanoBag bagWithName:@"Zaragoza"];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:bagOne, bagTwo, bagThree, bagFour, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[bagOne, bagTwo, bagThree, bagFour] error:nil];
     
     // Prepare the sort
     NSFNanoSortDescriptor *sortBagNameDescriptor = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"name" ascending: YES];
     
     // Prepare the search
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    search.sort = [NSArray arrayWithObject: sortBagNameDescriptor];
+    search.sort = @[sortBagNameDescriptor];
     
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 4, @"Expected to find four objects.");
-    STAssertTrue ([[[searchResults objectAtIndex:0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+    XCTAssertTrue ([searchResults count] == 4, @"Expected to find four objects.");
+    XCTAssertTrue ([[searchResults[0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
     

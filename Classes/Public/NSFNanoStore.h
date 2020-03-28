@@ -2,7 +2,7 @@
      NSFNanoStore.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -72,7 +72,7 @@
 @interface NSFNanoStore : NSObject
 
 /** * A reference to the engine used by the document store, which contains a reference to the SQLite database. */
-@property (nonatomic, strong, readonly) NSFNanoEngine *nanoStoreEngine;
+@property (nonatomic, strong, readonly, nonnull) NSFNanoEngine *nanoStoreEngine;
 /** * The type of engine mode used by NanoStore to process data in the document store.
  The mode can be one of two options: <i>NSFEngineProcessingDefaultMode</i> and <i>NSFEngineProcessingFastMode</i>. See <i>NSFEngineProcessingMode</i>
  to learn more about how these options affect the engine behavior.
@@ -119,7 +119,7 @@
  * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink
  */
 
-+ (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath;
++ (nonnull NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(nullable NSString *)thePath;
 
 /** * Creates, opens and returns a document store of a specific type at a given file path.
  * @param theType the type of document store that will be created.
@@ -135,7 +135,7 @@
  * @see \link createStoreWithType:path: + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath \endlink
  */
 
-+ (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError;
++ (nonnull NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(nullable NSString *)thePath error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Initializes a newly allocated document store of a specific type at a given file path.
  * @param theType the type of document store that will be created.
@@ -151,7 +151,7 @@
  * @see \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (id)initStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath;
+- (nonnull instancetype)initStoreWithType:(NSFNanoStoreType)theType path:(nonnull NSString *)thePath NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -169,14 +169,14 @@
  * @see \link createStoreWithType:path: + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath \endlink
  */
 
-- (BOOL)openWithError:(NSError * __autoreleasing *)outError;
+- (BOOL)openWithError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Closes the document store.
  * @param outError is used if an error occurs. May be NULL.
  * @see \link isClosed - (BOOL)isClosed \endlink
  */
 
-- (BOOL)closeWithError:(NSError * __autoreleasing *)outError;
+- (BOOL)closeWithError:(NSError * _Nullable * _Nullable)outError;
 
 //@}
 
@@ -189,13 +189,13 @@
  * @note If the document store is file-based, its path will be returned. If it's a memory-backed document store, \link :Globals::NSFMemoryDatabase NSFMemoryDatabase \endlink will be returned instead.
  */
 
-- (NSString *)filePath;
+@property (nonatomic, readonly, copy, nonnull) NSString *filePath;
 
 /** * Checks whether the document store is closed or open.
  * @see \link close - (void)close \endlink
  */
 
-- (BOOL)isClosed;
+@property (nonatomic, getter=isClosed, readonly) BOOL closed;
 
 //@}
 
@@ -213,7 +213,7 @@
  * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError;
+- (BOOL)addObject:(nonnull id <NSFNanoObjectProtocol>)theObject error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Adds a series of \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant objects to the document store.
  * @param theObjects is an array of objects to be added to the document store. The objects must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
@@ -224,7 +224,7 @@
  * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError;
+- (BOOL)addObjectsFromArray:(nonnull NSArray *)theObjects error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Removes an object from the document store.
  * @param theObject the object to be removed from the document store.
@@ -236,7 +236,7 @@
  * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError;
+- (BOOL)removeObject:(nonnull id <NSFNanoObjectProtocol>)theObject error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Removes the list of objects with the specified keys from the document store.
  * @param theKeys the list of keys to be removed from the document store.
@@ -248,7 +248,7 @@
  * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError;
+- (BOOL)removeObjectsWithKeysInArray:(nonnull NSArray *)theKeys error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Removes the list of objects from the document store.
  * @param theObjects the list of objects to be removed from the document store.
@@ -260,7 +260,7 @@
  * @see \link removeAllObjectsFromStoreAndReturnError: - (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError;
+- (BOOL)removeObjectsInArray:(nonnull NSArray *)theObjects error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Removes all objects from the document store.
  * @param outError is used if an error occurs. May be NULL.
@@ -272,7 +272,7 @@
  * @see \link removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 //@}
 
@@ -287,7 +287,7 @@
  * @see \link bagsContainingObjectWithKey: - (NSArray *)bagsContainingObjectWithKey:(NSString *)theKey \endlink
  */
 
-- (NSArray *)bags;
+@property (nonatomic, readonly, copy, nonnull) NSArray *bags;
 
 /** * Retrieves the bag associated with the specified name.
  * @param theName the name of the bag.
@@ -295,14 +295,14 @@
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  */
 
-- (NSFNanoBag *)bagWithName:(NSString *)theName;
+- (nonnull NSFNanoBag *)bagWithName:(nonnull NSString *)theName;
 
 /** * Retrieves all bags associated with the specified name.
  * @param theName the name of the bag.
  * @returns The bags that match the specified name, an empty array otherwise.
  */
 
-- (NSArray *)bagsWithName:(NSString *)theName;
+- (nonnull NSArray *)bagsWithName:(nonnull NSString *)theName;
 
 /** * Returns a new array containing the bags found in the document store matching the specified list of keys.
  * @param theKeys the list of bag keys.
@@ -311,7 +311,7 @@
  * @see \link bagsContainingObjectWithKey: - (NSArray *)bagsContainingObjectWithKey:(NSString *)theKey \endlink
  */
 
-- (NSArray *)bagsWithKeysInArray:(NSArray *)theKeys;
+- (nonnull NSArray *)bagsWithKeysInArray:(nonnull NSArray *)theKeys;
 
 /** * Returns a new array containing the bags found in the document store which contain the object specified by the key.
  * @param theKey the key of the object.
@@ -320,7 +320,7 @@
  * @see \link bagsWithKeysInArray: - (NSArray *)bagsWithKeysInArray:(NSArray *)theKeys \endlink
  */
 
-- (NSArray *)bagsContainingObjectWithKey:(NSString *)theKey;
+- (nonnull NSArray *)bagsContainingObjectWithKey:(nonnull NSString *)theKey;
 
 /** * Returns a new array containing the objects found in the document store matching the specified list of keys.
  * @param theKeys the list of \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object keys.
@@ -328,14 +328,14 @@
  * @note The keys can belong to any object class: NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
  */
 
-- (NSArray *)objectsWithKeysInArray:(NSArray *)theKeys;
+- (nonnull NSArray *)objectsWithKeysInArray:(nonnull NSArray *)theKeys;
 
 /** * Returns a new array containing the objects classes in the document store.
  * @returns An array of the class names found in the document store.
  * @note The classes can be NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
  */
 
-- (NSArray *)allObjectClasses;
+@property (nonatomic, readonly, copy, nonnull) NSArray *allObjectClasses;
 
 /** * Returns an array containing the objects in the document store which match a specific class name.
  * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
@@ -344,7 +344,7 @@
  * @throws NSFUnexpectedParameterException is thrown if the class name is nil or empty.
  */
 
-- (NSArray *)objectsOfClassNamed:(NSString *)theClassName;
+- (nonnull NSArray *)objectsOfClassNamed:(nonnull NSString *)theClassName;
 
 /** * Returns a sorted array containing the objects in the document store which match a specific class name.
  * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
@@ -354,7 +354,7 @@
  * @throws NSFUnexpectedParameterException is thrown if the class name is nil or empty.
  */
 
-- (NSArray *)objectsOfClassNamed:(NSString *)theClassName usingSortDescriptors:(NSArray *)theSortDescriptors;
+- (nonnull NSArray *)objectsOfClassNamed:(nonnull NSString *)theClassName usingSortDescriptors:(nullable NSArray *)theSortDescriptors;
 
 /** * Returns the number of objects in the document store which match a specific class name.
  * @param theClassName the name of the class that will be used for searching. Cannot be NULL.
@@ -363,7 +363,7 @@
  * @throws NSFUnexpectedParameterException is thrown if the class name is nil or empty.
  */
 
-- (long long)countOfObjectsOfClassNamed:(NSString *)theClassName;
+- (long long)countOfObjectsOfClassNamed:(nonnull NSString *)theClassName;
 
 //@}
 
@@ -380,7 +380,7 @@
  * @see \link discardUnsavedChanges - (void)discardUnsavedChanges \endlink
  */
 
-- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)saveStoreAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Discards the uncommitted changes that were added to the document store.
  * @see \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink
@@ -393,7 +393,7 @@
  * @return YES upon success, NO otherwise.
  */
 
-- (BOOL)compactStoreAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)compactStoreAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Remove all indexes from the document store.
  * @param outError is used if an error occurs. May be NULL.
@@ -402,7 +402,7 @@
  * @see \link rebuildIndexesAndReturnError: - (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)clearIndexesAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Recreate all indexes from the document store.
  * @param outError is used if an error occurs. May be NULL.
@@ -411,7 +411,7 @@
  * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)rebuildIndexesAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Makes a copy of the document store to a different location and optionally compacts it to its minimum size.
  * @param thePath is the location where the document store should be copied to.
@@ -422,7 +422,7 @@
  * @see \link clearIndexesAndReturnError: - (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)saveStoreToDirectoryAtPath:(NSString *)thePath compactDatabase:(BOOL)shouldCompact error:(NSError * __autoreleasing *)outError;
+- (BOOL)saveStoreToDirectoryAtPath:(nonnull NSString *)thePath compactDatabase:(BOOL)shouldCompact error:(NSError * _Nullable * _Nullable)outError;
 
 //@}
 
@@ -440,7 +440,7 @@
  * @see \link rollbackTransactionAndReturnError: - (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)beginTransactionAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)beginTransactionAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Commit a transaction.
  * @param outError is used if an error occurs. May be NULL.
@@ -451,7 +451,7 @@
  * @see \link rollbackTransactionAndReturnError: - (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)commitTransactionAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)commitTransactionAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Rollback a transaction.
  * @param outError is used if an error occurs. May be NULL.
@@ -462,7 +462,7 @@
  * @see \link commitTransactionAndReturnError: - (BOOL)commitTransactionAndReturnError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)rollbackTransactionAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 //@}
 
@@ -475,12 +475,12 @@
  * @note Check properties nanoEngineProcessingMode and saveInterval to find out the current state of the object.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the store.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

@@ -2,7 +2,7 @@
      NSFNanoStore_Private.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -30,30 +30,30 @@
 /** \cond */
 
 @interface NSFNanoStore (Private)
-- (NSFOrderedDictionary *)dictionaryDescription;
-+ (NSFNanoStore *)_createAndOpenDebugDatabase;
-- (NSFNanoResult *)_executeSQL:(NSString *)theSQLStatement;
-- (NSString*)_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
-- (BOOL)_initializePreparedStatementsWithError:(NSError * __autoreleasing *)outError;
+- (nonnull NSFOrderedDictionary *)dictionaryDescription;
++ (nonnull NSFNanoStore *)_createAndOpenDebugDatabase;
+- (nonnull NSFNanoResult *)_executeSQL:(nonnull NSString *)theSQLStatement;
+- (nonnull NSString *)_nestedDescriptionWithPrefixedSpace:(nonnull NSString *)prefixedSpace;
+- (BOOL)_initializePreparedStatementsWithError:(NSError * _Nullable * _Nullable)outError;
 - (void)_releasePreparedStatements;
 - (void)_setIsOurTransaction:(BOOL)value;
-- (BOOL)_isOurTransaction;
-- (BOOL)_setupCachingSchema;
-- (BOOL)_storeDictionary:(NSDictionary *)someInfo forKey:(NSString *)aKey forClassNamed:(NSString *)classType error:(NSError * __autoreleasing *)outError;
-- (BOOL)__storeDictionaries:(NSArray *)someObjects forKeys:(NSArray *)someKeys error:(NSError * __autoreleasing *)outError;
-- (BOOL)_bindValue:(id)aValue forAttribute:(NSString *)anAttribute parameterNumber:(NSInteger)aParamNumber usingSQLite3Statement:(sqlite3_stmt *)aStatement;
-- (BOOL)_checkNanoStoreIsReadyAndReturnError:(NSError * __autoreleasing *)outError;
-- (NSFNanoDatatype)_NSFDatatypeOfObject:(id)value;
-- (NSString *)_stringFromValue:(id)aValue;
-+ (NSString *)_calendarDateToString:(NSDate *)aDate;
-- (void)_flattenCollection:(NSDictionary *)info keys:(NSMutableArray **)flattenedKeys values:(NSMutableArray **)flattenedValues;
-- (void)_flattenCollection:(id)someObject keyPath:(NSMutableArray **)aKeyPath keys:(NSMutableArray **)someKeys values:(NSMutableArray **)someValues;
-- (BOOL)_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString *)aSQLQuery;
-- (void)_executeSQLite3StepUsingSQLite3Statement:(sqlite3_stmt *)aStatement;
-- (BOOL)_addObjectsFromArray:(NSArray *)someObjects forceSave:(BOOL)forceSave error:(NSError * __autoreleasing *)outError;
-+ (NSDictionary *)_defaultTestData;
-- (BOOL)_backupFileStoreToDirectoryAtPath:(NSString *)aPath extension:(NSString *)anExtension compact:(BOOL)flag error:(NSError * __autoreleasing *)outError;
-- (BOOL)_backupMemoryStoreToDirectoryAtPath:(NSString *)aPath extension:(NSString *)anExtension compact:(BOOL)flag error:(NSError * __autoreleasing *)outError;
+@property (nonatomic, readonly) BOOL _isOurTransaction;
+@property (nonatomic, readonly) BOOL _setupCachingSchema;
+- (BOOL)_storeDictionary:(nonnull NSDictionary *)someInfo forKey:(nonnull NSString *)aKey forClassNamed:(nonnull NSString *)classType error:(NSError * _Nullable * _Nullable)outError;
+- (BOOL)__storeDictionaries:(nonnull NSArray *)someObjects forKeys:(nonnull NSArray *)someKeys error:(NSError * _Nullable * _Nullable)outError;
+- (BOOL)_bindValue:(nonnull id)aValue forAttribute:(nonnull NSString *)anAttribute parameterNumber:(NSInteger)aParamNumber usingSQLite3Statement:(sqlite3_stmt * _Nonnull)aStatement;
+- (BOOL)_checkNanoStoreIsReadyAndReturnError:(NSError * _Nullable * _Nullable)outError;
+- (NSFNanoDatatype)_NSFDatatypeOfObject:(nonnull id)value;
+- (nonnull NSString *)_stringFromValue:(nonnull id)aValue;
++ (nonnull NSString *)_calendarDateToString:(nonnull NSDate *)aDate;
+- (void)_flattenCollection:(nonnull NSDictionary *)info keys:(NSMutableArray * _Nullable * _Nullable)flattenedKeys values:(NSMutableArray * _Nullable * _Nullable)flattenedValues;
+- (void)_flattenCollection:(nonnull id)someObject keyPath:(NSMutableArray * _Nullable * _Nullable)aKeyPath keys:(NSMutableArray * _Nullable * _Nullable)someKeys values:(NSMutableArray * _Nullable * _Nullable)someValues;
+- (BOOL)_prepareSQLite3Statement:(sqlite3_stmt * _Nonnull * _Nonnull)aStatement theSQLStatement:(nonnull NSString *)aSQLQuery;
+- (void)_executeSQLite3StepUsingSQLite3Statement:(sqlite3_stmt * _Nonnull)aStatement;
+- (BOOL)_addObjectsFromArray:(nonnull NSArray *)someObjects forceSave:(BOOL)forceSave error:(NSError * _Nullable * _Nullable)outError;
++ (nonnull NSDictionary *)_defaultTestData;
+- (BOOL)_backupFileStoreToDirectoryAtPath:(nonnull NSString *)aPath extension:(nullable NSString *)anExtension compact:(BOOL)flag error:(NSError * _Nullable * _Nullable)outError;
+- (BOOL)_backupMemoryStoreToDirectoryAtPath:(nonnull NSString *)aPath extension:(nullable NSString *)anExtension compact:(BOOL)flag error:(NSError * _Nullable * _Nullable)outError;
 @end
 
 /** \endcond */

@@ -2,7 +2,7 @@
      NSFNanoExpression.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -62,9 +62,9 @@
 @interface NSFNanoExpression : NSObject
 
 /** * Array of NSFNanoPredicate */
-@property (nonatomic, readonly) NSArray      *predicates;
+@property (nonatomic, readonly, nonnull) NSArray      *predicates;
 /** * Array of NSNumber wrapping \link NSFGlobals::NSFOperator NSFOperator \endlink */
-@property (nonatomic, readonly) NSArray      *operators;
+@property (nonatomic, readonly, nonnull) NSArray      *operators;
 
 /** @name Creating and Initializing Expressions
  */
@@ -79,7 +79,7 @@
  * @see \link initWithPredicate: - (id)initWithPredicate:(NSFNanoPredicate *)aPredicate \endlink
  */
 
-+ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate;
++ (nonnull NSFNanoExpression *)expressionWithPredicate:(nonnull NSFNanoPredicate *)thePredicate;
 
 /** * Initializes a newly allocated expression with a given expression.
  * @param thePredicate the predicate used to initialize the expression. Must not be nil.
@@ -89,7 +89,7 @@
  * @see \link expressionWithPredicate: + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate \endlink
  */
 
-- (id)initWithPredicate:(NSFNanoPredicate *)thePredicate;
+- (nonnull instancetype)initWithPredicate:(nonnull NSFNanoPredicate *)thePredicate NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -105,7 +105,7 @@
  * @throws NSFUnexpectedParameterException is thrown if the predicate is nil.
  */
 
-- (void)addPredicate:(NSFNanoPredicate *)thePredicate withOperator:(NSFOperator)theOperator;
+- (void)addPredicate:(nonnull NSFNanoPredicate *)thePredicate withOperator:(NSFOperator)theOperator;
 
 //@}
 
@@ -118,13 +118,13 @@
  * @note Check properties predicates and operators to find out the current state of the expression.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the expression.
  * @note Check properties predicates and operators to find out the current state of the expression.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

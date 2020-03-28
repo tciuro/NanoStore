@@ -2,7 +2,7 @@
      NSFNanoBag.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -69,19 +69,19 @@
 @interface NSFNanoBag : NSObject <NSFNanoObjectProtocol, NSCopying>
 
 /** * The store where the bag is located.  */
-@property (nonatomic, weak, readonly) NSFNanoStore *store;
+@property (nonatomic, readonly, nullable) NSFNanoStore *store;
 /** * The name of the bag.  */
-@property (nonatomic, copy, readwrite) NSString *name;
+@property (nonatomic, copy, readwrite, nullable) NSString *name;
 /** * The UUID of the bag.  */
-@property (nonatomic, copy, readonly) NSString *key;
+@property (nonatomic, copy, readonly, nonnull) NSString *key;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
-@property (nonatomic, readonly) NSDictionary *savedObjects;
+@property (nonatomic, readonly, nonnull) NSDictionary *savedObjects;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
-@property (nonatomic, readonly) NSDictionary *unsavedObjects;
+@property (nonatomic, readonly, nonnull) NSDictionary *unsavedObjects;
 /** * Dictionary of NSString (key) and id<NSFNanoObjectProtocol> (value). */
-@property (nonatomic, readonly) NSDictionary *removedObjects;
+@property (nonatomic, readonly, nonnull) NSDictionary *removedObjects;
 /** * To determine whether the bag has uncommited changes.  */
-@property (nonatomic, assign, readonly) BOOL hasUnsavedChanges;
+@property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
 /** @name Creating and Initializing Bags
  */
@@ -92,7 +92,7 @@
  * @return An empty bag upon success, nil otherwise.
  */
 
-+ (NSFNanoBag *)bag;
++ (nonnull NSFNanoBag *)bag;
 
 /** * Creates and returns a bag adding to it the objects contained in the given array.
  * @param theObjects an array of objects conforming to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink.
@@ -102,14 +102,14 @@
  * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
  */
 
-+ (NSFNanoBag *)bagWithObjects:(NSArray *)theObjects;
++ (nullable NSFNanoBag *)bagWithObjects:(nonnull NSArray *)theObjects;
 
 /** * Creates and returns an empty bag with the specified name
  * @param theName the name of the bag. Can be nil.
  * @return An empty bag upon success, nil otherwise.
  */
 
-+ bagWithName:(NSString *)theName;
++ (nonnull instancetype) bagWithName:(nullable NSString *)theName;
 
 /** * Creates and returns a bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
@@ -120,7 +120,7 @@
  * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
  */
 
-+ bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
++ (nullable instancetype) bagWithName:(nullable NSString *)theName andObjects:(nonnull NSArray *)theObjects;
 
 /** * Initializes a newly allocated bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
@@ -131,7 +131,7 @@
  * @see \link bagWithObjects: + (NSFNanoBag*)bagWithObjects:(NSArray *)theObjects \endlink
  */
 
-- (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects;
+- (nullable instancetype)initBagWithName:(nullable NSString *)theName andObjects:(nonnull NSArray *)someObjects;
 
 //@}
 
@@ -149,7 +149,7 @@
  * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError;
+- (BOOL)addObject:(nonnull id <NSFNanoObjectProtocol>)theObject error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Adds a series of \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant objects to the bag.
  * @param theObjects is an array of objects to be added to the bag. The objects must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
@@ -160,7 +160,7 @@
  * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError;
+- (BOOL)addObjectsFromArray:(nonnull NSArray *)theObjects error:(NSError * _Nullable * _Nullable)outError;
 
 /** * Removes the specified object from the bag.
  * @param theObject the object to be removed from the bag.
@@ -171,7 +171,7 @@
  * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
-- (void)removeObject:(id <NSFNanoObjectProtocol>)theObject;
+- (void)removeObject:(nonnull id <NSFNanoObjectProtocol>)theObject;
 
 /** * Empties the bag of all its elements.
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
@@ -191,7 +191,7 @@
  * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
-- (void)removeObjectsInArray:(NSArray *)theObjects;
+- (void)removeObjectsInArray:(nonnull NSArray *)theObjects;
 
 /** * Removes the object with a given key from the bag.
  * @param theObjectKey the key of the object to be removed from the bag.
@@ -202,7 +202,7 @@
  * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
-- (void)removeObjectWithKey:(NSString *)theObjectKey;
+- (void)removeObjectWithKey:(nonnull NSString *)theObjectKey;
 
 /** * Removes from the bag the objects specified by elements in a given array.
  * @param theKeys an array of objects specifying the keys to remove from the bag
@@ -213,7 +213,7 @@
  * @see \link removeAllObjects - (void)removeAllObjects \endlink
  */
 
-- (void)removeObjectsWithKeysInArray:(NSArray *)theKeys;
+- (void)removeObjectsWithKeysInArray:(nonnull NSArray *)theKeys;
 
 //@}
 
@@ -230,7 +230,7 @@
  * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)saveAndReturnError:(NSError * __autoreleasing *)outError;
+- (BOOL)saveAndReturnError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Refreshes the bag to match the contents stored in the document store. The unsaved contents are preserved.
  * @param outError is used if an error occurs. May be NULL.
@@ -240,7 +240,7 @@
  * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)reloadBagWithError:(NSError * __autoreleasing *)outError;
+- (BOOL)reloadBagWithError:(NSError * _Nullable * _Nullable)outError;
 
 /** * Discards the changes made in the bag.
  * @param outError is used if an error occurs. May be NULL.
@@ -250,7 +250,7 @@
  * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(NSError * __autoreleasing *)outError \endlink
  */
 
-- (BOOL)undoChangesWithError:(NSError * __autoreleasing *)outError;
+- (BOOL)undoChangesWithError:(NSError * _Nullable * _Nullable)outError;
 
 //@}
 
@@ -284,33 +284,33 @@
  * @return The number of objects currently in the bag.
  */
 
-- (NSUInteger)count;
+@property (nonatomic, readonly) NSUInteger count;
 
 /** * Compares the receiving bag to another bag.
  * @param otherNanoBag is a bag.
  * @return YES if the contents of otherNanoBag are equal to the contents of the receiving bag, otherwise NO.
  */
 
-- (BOOL)isEqualToNanoBag:(NSFNanoBag *)otherNanoBag;
+- (BOOL)isEqualToNanoBag:(nullable NSFNanoBag *)otherNanoBag;
 
 /** * Returns a dictionary that contains the information stored in the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  * @see \link description - (NSString *)description \endlink
  */
 
-- (NSDictionary *)dictionaryRepresentation;
+- (nonnull NSDictionary *)dictionaryRepresentation;
 
 /** * Returns a string representation of the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** Returns a JSON representation of the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

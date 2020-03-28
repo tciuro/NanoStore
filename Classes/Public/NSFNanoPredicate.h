@@ -2,7 +2,7 @@
      NSFNanoPredicate.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -77,7 +77,7 @@
 /** * The comparison operator to be used. */
 @property (nonatomic, assign, readonly) NSFMatchType match;
 /** * The value to be used for comparison.  */
-@property (nonatomic, readonly) id value;
+@property (nonatomic, readonly, nonnull) id value;
 
 /** @name Creating and Initializing a Predicate
  */
@@ -92,7 +92,7 @@
  * @see \link initWithColumn:matching:value: - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
  */
 
-+ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue;
++ (nullable NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(nonnull id)theValue;
 
 /** * Initializes a newly allocated predicate.
  * @param theType is the column type. Can be \link Globals::NSFKeyColumn NSFKeyColumn \endlink, \link Globals::NSFAttributeColumn NSFAttributeColumn \endlink or \link Globals::NSFValueColumn NSFValueColumn \endlink.
@@ -102,7 +102,7 @@
  * @see \link predicateWithColumn:matching:value: + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
  */
 
-- (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue;
+- (nullable instancetype)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(nonnull id)theValue NS_DESIGNATED_INITIALIZER;
 
 //@}
 
@@ -115,13 +115,13 @@
  * @note Check properties column, match and value to find out the current state of the predicate.
  */
 
-- (NSString *)description;
+@property (nonatomic, readonly, copy, nonnull) NSString *description;
 
 /** * Returns a JSON representation of the predicate.
  * @note Check properties column, match and value to find out the current state of the predicate.
  */
 
-- (NSString *)JSONDescription;
+@property (nonatomic, readonly, copy, nonnull) NSString *JSONDescription;
 
 //@}
 

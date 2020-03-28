@@ -35,30 +35,30 @@
 /** \cond */
 
 @interface NSFNanoEngine (Private)
-- (NSFOrderedDictionary *)dictionaryDescription;
-+ (NSArray *)NSFP_sharedROWIDKeywords;
-- (NSString *)NSFP_cacheMethodToString;
-- (NSString*)NSFP_nestedDescriptionWithPrefixedSpace:(NSString *)prefixedSpace;
-+ (NSDictionary *)_plistToDictionary:(NSString *)aPlist;
-+ (void)NSFP_decodeQuantum:(unsigned char *)dest andSource:(const char *)src;
-- (NSArray *)NSFP_flattenAllTables;
-- (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString *)aSQLQuery;
+- (nonnull NSFOrderedDictionary *)dictionaryDescription;
++ (nonnull NSArray *)NSFP_sharedROWIDKeywords;
+@property (nonatomic, readonly, copy, nonnull ) NSString *NSFP_cacheMethodToString;
+- (nonnull NSString *)NSFP_nestedDescriptionWithPrefixedSpace:(nonnull NSString *)prefixedSpace;
++ (nullable NSDictionary *)_plistToDictionary:(nonnull NSString *)aPlist;
++ (void)NSFP_decodeQuantum:(unsigned char * _Nonnull)dest andSource:(const char * _Nonnull)src;
+@property (nonatomic, readonly, copy, nonnull) NSArray *NSFP_flattenAllTables;
+- (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt * _Nonnull * _Nonnull)aStatement theSQLStatement:(nonnull NSString *)aSQLQuery;
 + (int)NSFP_stripBitsFromExtendedResultCode:(int)extendedResult;
 
-- (BOOL)NSFP_beginTransactionMode:(NSString *)theSQLStatement;
-- (BOOL)NSFP_createTable:(NSString *)table withColumns:(NSArray *)tableColumns datatypes:(NSArray *)tableDatatypes isTemporary:(BOOL)isTemporaryFlag;
-- (BOOL)NSFP_removeColumn:(NSString *)column fromTable:(NSString *)table;
+- (BOOL)NSFP_beginTransactionMode:(nonnull NSString *)theSQLStatement;
+- (BOOL)NSFP_createTable:(nonnull NSString *)table withColumns:(nonnull NSArray *)tableColumns datatypes:(nonnull NSArray *)tableDatatypes isTemporary:(BOOL)isTemporaryFlag;
+- (BOOL)NSFP_removeColumn:(nonnull NSString *)column fromTable:(nonnull NSString *)table;
 - (void)NSFP_rebuildDatatypeCache;
-- (BOOL)NSFP_insertStringValues:(NSArray *)values forColumns:(NSArray *)columns table:(NSString *)table;
+- (BOOL)NSFP_insertStringValues:(nonnull NSArray *)values forColumns:(nonnull NSArray *)columns table:(nonnull NSString *)table;
 
-- (void)NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray *)tags quoteTags:(BOOL)flag;
-- (void)NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray *)columns;
-- (BOOL)NSFP_sqlString:(NSMutableString*)theSQLStatement forTable:(NSString *)table withColumns:(NSArray *)columns datatypes:(NSArray *)datatypes;
+- (void)NSFP_sqlString:(nonnull NSMutableString *)theSQLStatement appendingTags:(nonnull NSArray *)tags quoteTags:(BOOL)flag;
+- (void)NSFP_sqlString:(nonnull NSMutableString *)theSQLStatement appendingTags:(nonnull NSArray *)columns;
+- (BOOL)NSFP_sqlString:(nonnull NSMutableString *)theSQLStatement forTable:(nonnull NSString *)table withColumns:(nonnull NSArray *)columns datatypes:(nonnull NSArray *)datatypes;
 
-- (NSInteger)NSFP_ROWIDPresenceLocation:(NSArray *)tableColumns datatypes:(NSArray *)datatypes;
+- (NSInteger)NSFP_ROWIDPresenceLocation:(nonnull NSArray *)tableColumns datatypes:(nonnull NSArray *)datatypes;
 
-- (NSString *)NSFP_prefixWithDotDelimiter:(NSString *)tableAndColumn;
-- (NSString *)NSFP_suffixWithDotDelimiter:(NSString *)tableAndColumn;
+- (nonnull NSString *)NSFP_prefixWithDotDelimiter:(nonnull NSString *)tableAndColumn;
+- (nonnull NSString *)NSFP_suffixWithDotDelimiter:(nonnull NSString *)tableAndColumn;
 
 - (void)NSFP_installCommitCallback;
 - (void)NSFP_uninstallCommitCallback;

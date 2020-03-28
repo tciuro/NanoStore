@@ -42,7 +42,7 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 	} else if ([object respondsToSelector:@selector(descriptionWithLocale:)]) {
 		objectString = [(NSSet *)object descriptionWithLocale:locale];
 	} else {
-		objectString = [object description];
+		objectString = object.description;
 	}
     
 	return objectString;
@@ -50,12 +50,19 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 
 @implementation NSFOrderedDictionary
 
-- (id)init
+- (instancetype)init
 {
-	return [self initWithCapacity:0];
+    self = [super init];
+    
+    if (self) {
+        _dictionary = [NSMutableDictionary new];
+        _array = [NSMutableArray new];
+    }
+    
+    return self;
 }
 
-- (id)initWithCapacity:(NSUInteger)capacity
+- (instancetype)initWithCapacity:(NSUInteger)capacity
 {
 	self = [super init];
     
@@ -74,11 +81,11 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 
 - (void)setObject:(id)anObject forKey:(id)aKey
 {
-	if (![_dictionary objectForKey:aKey]) {
+	if (!_dictionary[aKey]) {
 		[_array addObject:aKey];
 	}
     
-	[_dictionary setObject:anObject forKey:aKey];
+	_dictionary[aKey] = anObject;
 }
 
 - (void)removeObjectForKey:(id)aKey
@@ -89,12 +96,12 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 
 - (NSUInteger)count
 {
-	return [_dictionary count];
+	return _dictionary.count;
 }
 
 - (id)objectForKey:(id)aKey
 {
-	return [_dictionary objectForKey:aKey];
+	return _dictionary[aKey];
 }
 
 - (NSEnumerator *)keyEnumerator
@@ -109,17 +116,17 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 
 - (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex
 {
-	if ([_dictionary objectForKey:aKey]) {
+	if (_dictionary[aKey]) {
 		[self removeObjectForKey:aKey];
 	}
     
 	[_array insertObject:aKey atIndex:anIndex];
-	[_dictionary setObject:anObject forKey:aKey];
+	_dictionary[aKey] = anObject;
 }
 
 - (id)keyAtIndex:(NSUInteger)anIndex
 {
-	return [_array objectAtIndex:anIndex];
+	return _array[anIndex];
 }
 
 - (NSString *)descriptionWithLocale:(id)locale indent:(NSUInteger)level
@@ -138,7 +145,7 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 		[description appendFormat:@"%@    %@ = %@;\n",
 			indentString,
 			DescriptionForObject(key, locale, level),
-			DescriptionForObject([self objectForKey:key], locale, level)];
+			DescriptionForObject(self[key], locale, level)];
 	}
     
 	[description appendFormat:@"%@}\n", indentString];

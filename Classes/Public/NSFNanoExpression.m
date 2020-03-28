@@ -2,7 +2,7 @@
      NSFNanoExpression.m
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -41,7 +41,15 @@
     return [[self alloc]initWithPredicate:aPredicate];
 }
 
-- (id)initWithPredicate:(NSFNanoPredicate *)aPredicate
+- (instancetype)init
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    return [self initWithPredicate:nil];
+#pragma clang diagnostic pop
+}
+
+- (instancetype)initWithPredicate:(NSFNanoPredicate *)aPredicate
 {
     if (nil == aPredicate) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -53,7 +61,7 @@
         _predicates = [NSMutableArray new];
         [_predicates addObject:aPredicate];
         _operators = [NSMutableArray new];
-        [_operators addObject:[NSNumber numberWithInt:NSFAnd]];
+        [_operators addObject:@(NSFAnd)];
     }
     
     return self;
@@ -86,14 +94,14 @@
 
 - (NSArray *)arrayDescription
 {
-    NSUInteger i, count = [_predicates count];
+    NSUInteger i, count = _predicates.count;
     NSMutableArray *values = [NSMutableArray new];
     
     // We always have one predicate, so make sure add it
-    [values addObject:[[_predicates objectAtIndex:0]description]];
+    [values addObject:[_predicates[0]description]];
     
     for (i = 1; i < count; i++) {
-        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[_operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[_predicates objectAtIndex:i]description]];
+        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([_operators[i]intValue] == NSFAnd) ? @"AND" : @"OR", [_predicates[i]description]];
         [values addObject:compound];
     }
     

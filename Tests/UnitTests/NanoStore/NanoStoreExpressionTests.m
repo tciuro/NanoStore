@@ -3,7 +3,7 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 3/30/08.
-//  Copyright 2010 Webbo, L.L.C. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
 #import "NanoStore.h"
@@ -35,7 +35,7 @@
 {
     NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
-    STAssertTrue (1 == expression.predicates.count, @"Expected to obtain one predicate.");
+    XCTAssertTrue (1 == expression.predicates.count, @"Expected to obtain one predicate.");
 }
 
 - (void)testPredicateTwoPredicatesProperty
@@ -44,14 +44,14 @@
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
     NSFNanoPredicate *predicateTwo = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     [expression addPredicate:predicateTwo withOperator:NSFOr];
-    STAssertTrue (2 == expression.predicates.count, @"Expected to obtain two predicates.");
+    XCTAssertTrue (2 == expression.predicates.count, @"Expected to obtain two predicates.");
 }
 
 - (void)testPredicateOneOperatorProperty
 {
     NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
-    STAssertTrue (1 == expression.operators.count, @"Expected to obtain one operator.");
+    XCTAssertTrue (1 == expression.operators.count, @"Expected to obtain one operator.");
 }
 
 - (void)testPredicateTwoOperatorsProperty
@@ -60,16 +60,19 @@
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
     NSFNanoPredicate *predicateTwo = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     [expression addPredicate:predicateTwo withOperator:NSFOr];
-    STAssertTrue (2 == expression.operators.count, @"Expected to obtain two operators.");
+    XCTAssertTrue (2 == expression.operators.count, @"Expected to obtain two operators.");
 }
 
 - (void)testPredicateWithNilValue
 {
     NSFNanoPredicate *predicate = nil;
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         predicate = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -77,9 +80,12 @@
 {
     NSFNanoExpression *expression = nil;
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
         expression = [NSFNanoExpression expressionWithPredicate:nil];
+#pragma clang diagnostic pop
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
@@ -87,17 +93,17 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"hello", @"name", nil]]] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"world", @"name", nil]]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:@{@"name": @"hello"}]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:@{@"name": @"world"}]] error:nil];
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray array]];
+    search.expressions = [NSArray array];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
     
     searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
-    STAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
+    XCTAssertTrue ([searchResults count] == 2, @"Expected to find two objects.");
     
     [nanoStore closeWithError:nil];
 }
@@ -106,161 +112,161 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"FirstName"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionBeginsWith
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    BOOL success = [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    BOOL success = [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
-    STAssertTrue (success, @"Expected to store the object.");
+    XCTAssertTrue (success, @"Expected to store the object.");
 
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFBeginsWith value:@"First"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionContains
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFContains value:@"irs"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionEndsWith
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEndsWith value:@"Name"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
+    XCTAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionInsensitiveEqualTo
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveEqualTo value:@"LASTNamE"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionInsensitiveBeginsWith
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveBeginsWith value:@"FIrsT"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionInsensitiveContains
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveContains value:@"IrsT"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testOnePredicateOneExpressionInsensitiveEndsWith
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateFirstName = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFInsensitiveEndsWith value:@"NaMe"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicateFirstName];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testTwoPredicatesOneExpression
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoPredicate *predicateAttribute = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"FirstName"];
     NSFNanoPredicate *predicateValue = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:@"Tito"];
@@ -268,26 +274,26 @@
     [expression addPredicate:predicateValue withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    search.expressions = @[expression];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
+    XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
 - (void)testSearchBetweenDatesSQLOne
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSError *error = nil;
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKeys WHERE NSFKey IN (SELECT t1.NSFKey FROM NSFValues t1 INNER JOIN NSFValues t2 ON t1.NSFKey = t2.NSFKey WHERE t1.NSFAttribute = 'CreatedAt' AND t2.NSFAttribute = 'UpdatedAt' AND t1.NSFValue < t2.NSFValue)" returnType:NSFReturnObjects error:&error];
-    STAssertNil(error, @"Did not expect an error. Got: %@", error);
-    STAssertTrue ([result count] == 1, @"Expected to find one object.");
+    XCTAssertNil(error, @"Did not expect an error. Got: %@", error);
+    XCTAssertTrue ([result count] == 1, @"Expected to find one object.");
     
     [nanoStore closeWithError:nil];
 }
@@ -296,13 +302,13 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSError *error = nil;
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKeys WHERE NSFKey IN (SELECT o1.NSFKey FROM NSFValues o1 JOIN NSFValues o2 ON o1.NSFKey = o2.NSFKey WHERE o1.NSFAttribute = 'UpdatedAt' AND o2.NSFAttribute = 'CreatedAt' AND o1.NSFValue > o2.NSFValue)" returnType:NSFReturnObjects error:&error];
-    STAssertNil(error, @"Did not expect an error. Got: %@", error);
-    STAssertTrue ([result count] == 1, @"Expected to find one object.");
+    XCTAssertNil(error, @"Did not expect an error. Got: %@", error);
+    XCTAssertTrue ([result count] == 1, @"Expected to find one object.");
     
     [nanoStore closeWithError:nil];
 }
