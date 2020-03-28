@@ -447,6 +447,5 @@ While several attempts have been made to make the documentation easy to read and
 * Twitter: http://twitter.com/nanostoredev
 
 # Official Source Repository
--
 
 The official repository for NanoStore is hosted on GitHub: https://github.com/tciuro/NanoStore
